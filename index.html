@@ -1,96 +1,117 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>PUSLAT KODIKLATAU</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-            background-color: #000;
-        }
-        h1 {
-            color: #00FF00;
-            font-size: 75px;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #00FF00;
-            font-size: 20px;
-        }
-        .button-container {
-            margin-top: 30px;
-        }
-        button {
-            color: #00FF00;
-            background: none;
-            border: 2px solid #00FF00;
-            padding: 15px 15px;
-            margin: 10px;
-            cursor: pointer;
-            font-size: 16px;            
-            transition: all 0.3s ease;
-        }
-        button:hover {
-            background-color: #00FF00;
-            color: #000;
-            transform: scale(1.05);
-        }
-        #output {
-            margin-top: 40px;
-            font-size: 18px;
-            color: #00FF00;
-            letter-spacing: 2px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>PUSLAT KODIKLATAU</title>
+<style>
+    body {
+        font-family: Consolas, monospace;
+        background-color: #000;
+        color: #00FF00;
+        margin: 50px;
+        text-align: center;
+    }
+    h1 {
+        font-size: 75px;
+        margin-bottom: 40px;
+    }
+
+    /* Kontainer teks */
+    #typing-container {
+        font-size: 22px;
+        border-right: 3px solid #00FF00;
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        margin-bottom: 40px;
+    }
+
+    /* Tombol */
+    .button-container {
+        margin-top: 20px;
+    }
+    button {
+        color: #00FF00;
+        background: none;
+        border: 2px solid #00FF00;
+        padding: 15px 25px;
+        margin: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+    button:hover {
+        background-color: #00FF00;
+        color: #000;
+        transform: scale(1.05);
+    }
+
+    #output {
+        margin-top: 40px;
+        font-size: 18px;
+        color: #00FF00;
+        letter-spacing: 2px;
+    }
+
+    /* Kursor berkedip */
+    @keyframes blink {
+        50% { border-color: transparent; }
+    }
+    #typing-container {
+        animation: blink 0.8s step-end infinite;
+    }
+</style>
 </head>
 <body>
     <h1>PUSLAT KODIKLATAU</h1>
-    <p>Klik salah satu tombol di bawah untuk membuka halaman.</p>
 
-    <!-- Kelompok tombol 1 -->
+    <!-- Efek teks -->
+    <div id="typing-container"></div>
+
+    <!-- Tombol menu -->
     <div class="button-container">
         <button onclick="window.location.href='hal-1.html'">Komandan</button>
         <button onclick="window.location.href='hal-2.html'">Struktur Organisasi</button>
         <button onclick="window.location.href='hal-3.html'">Daftar Personel</button>
-    </div>
-
-    <!-- Kelompok tombol 2 -->
-    <div class="button-container">
         <button onclick="window.location.href='hal-4.html'">Formulir</button>
         <button onclick="window.location.href='hal-5.html'">Informasi</button>
-        <button onclick="window.location.href='hal-6.html'">Tombol 6</button>
-        <button onclick="window.location.href='hal-7.html'">Tombol 7</button>
+        <button onclick="window.location.href='hal-6.html'">Back</button>
+        <button onclick="window.location.href='hal-7.html'">Next</button>
         <button onclick="window.location.href='hal-8.html'">Tombol 8</button>
-    </div>
-    
-    <div class="button-container">
-        <button onclick="window.location.href='hal-9.html'">Back</button>
-        <button onclick="window.location.href='hal-10.html'">Next</button> 
+        <button onclick="window.location.href='hal-9.html'">Tombol 9</button>
+        <button onclick="window.location.href='hal-10.html'">Tombol 10</button> 
     </div>
 
     <div id="output">evolutionismyrevolution</div>
 
     <script>
-        // Fungsi opsional (bisa dipakai nanti kalau mau menampilkan pesan)
-        function showMessage(number) {
-            const messages = [
-                "Tombol 3 diklik, mantap!",
-                "Hai dari Tombol 4!",
-                "Tombol 5 aktif!",
-                "Wow, kamu pilih Tombol 6!",
-                "Tombol 7 berjalan lancar!",
-                "Tombol 8 ditekan!",
-                "Sudah sampai Tombol 9!",
-            ];
-            document.getElementById("output").innerText = messages[number - 1];
+        const text = "Klik salah satu tombol di bawah untuk membuka halaman.";
+        const typingContainer = document.getElementById("typing-container");
+        let index = 0;
+        let isDeleting = false;
+        const speed = 70;  // kecepatan ketik
+        const pause = 1500; // jeda sebelum menghapus teks
+
+        function typeEffect() {
+            if (!isDeleting && index < text.length) {
+                // Mengetik dari kiri ke kanan
+                typingContainer.textContent = text.substring(0, index + 1);
+                index++;
+                setTimeout(typeEffect, speed);
+            } else if (isDeleting && index > 0) {
+                // Menghapus huruf satu per satu
+                typingContainer.textContent = text.substring(0, index - 1);
+                index--;
+                setTimeout(typeEffect, speed / 2);
+            } else {
+                // Ganti mode (ketik <-> hapus)
+                isDeleting = !isDeleting;
+                setTimeout(typeEffect, pause);
+            }
         }
+
+        window.onload = typeEffect;
     </script>
 </body>
 </html>
-
-
-
-
-
