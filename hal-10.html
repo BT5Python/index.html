@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUSLAT KODIKLATAU - Intelligence Database</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: black;
+            color: #00FF00;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: black;
+            color: #00FF00;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .text { font-size: 75px; }
+        .text1 { font-size: 30px; }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            border-top: 1px solid #00FF00;
+        }
+
+        .search-panel {
+            width: 35%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #00FF00;
+        }
+
+        .search-panel h2 { text-align: center; margin-bottom: 20px; }
+
+        input {
+            background: transparent;
+            border: 1px solid #00FF00;
+            color: #00FF00;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .info-text { font-size: 14px; text-align: center; margin-top: 10px; }
+
+        .output-panel {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            border-left: 2px solid #00FF00;
+        }
+
+        /* ===== AGENT PROFILE: Biodata kiri, foto kanan ===== */
+        .agent-profile {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .agent-profile pre {
+            flex: 1;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .agent-profile img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 2px solid #00FF00;
+            border-radius: 8px;
+        }
+
+        .not-found { color: #FF0000; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .main-container { flex-direction: column; }
+            .search-panel, .output-panel { width: 100%; border: none; border-bottom: 1px solid #00FF00; }
+            .agent-profile { flex-direction: column; align-items: center; }
+        }
+
+        /* cursor blink */
+        .agent-profile pre::after {
+            content: "_";
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="text">PUSLAT KODIKLATAU</h1>
+        <h1 class="text1">INTELLIGENCE DATABASE TERMINAL</h1>
+    </header>
+
+    <div class="main-container">
+        <div class="search-panel">
+            <h2>🔍 Data Lookup</h2>
+            <label for="search">Masukkan Code Name / Nama Lengkap:</label>
+            <input type="text" id="search" placeholder="Contoh: VIXEN-21 atau Nadia Putri">
+            <p class="info-text">⚠️ Harus ketik nama/kode persis lalu tekan ENTER.</p>
+        </div>
+
+        <div class="output-panel" id="output">
+            <div class="agent-profile">
+                <pre id="agent-dossier">
+⚠️ Tidak ada data yang ditampilkan. Ketik di panel kiri untuk mengakses file personel.
+                </pre>
+                <img id="agent-photo" src="" alt="Agent Photo" style="display:none;">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const personnelDB = [
+            { code_name: "Andi Darmawan, S.E", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", doc: "1979-05-03", nationality: "Indonesia", birth_place: "Subang", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-3", unit: "SIGMA OPERATIONS DIVISION", specialization: "Cyber Reconnaissance / Counterintelligence", alias: "Ghostline, Echo Node", ops_completed: 43, success_rate: 96, photo: "https://i.pravatar.cc/150?img=12" },
+            { code_name: "VIXEN-21", real_name: "Nadia Putri", gender: "Female", dob: "1993-09-21", nationality: "Indonesia", birth_place: "Bandung", status: "ACTIVE", clearance: "ALPHA-2", unit: "STEALTH INTEL UNIT", specialization: "Undercover Operations / Infiltration", alias: "Black Orchid", ops_completed: 58, success_rate: 89, photo: "https://i.pravatar.cc/150?img=12" },
+            { code_name: "FALCON-03", real_name: "Arif Nugraha", gender: "Male", dob: "1988-07-02", nationality: "Indonesia", birth_place: "Surabaya", status: "INACTIVE", clearance: "BETA-1", unit: "TACTICAL RESPONSE TEAM", specialization: "Field Strategy / Weapons Expert", alias: "Falcon", ops_completed: 71, success_rate: 93, photo: "photos/falcon.jpg" }
+        ];
+
+        function typeWriter(element, text, speed = 10) {
+            element.textContent = "";
+            let i = 0;
+            function typing() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typing, speed);
+                }
+            }
+            typing();
+        }
+
+        function simulateAccessSequence(element, callback) {
+            const steps = [
+                ">>> initializing connection...",
+                ">>> ACCESSING DATABASE NODE...",
+                ">>> VERIFYING SECURITY CLEARANCE...",
+                ">>> CLEARANCE LEVEL VERIFIED ✔",
+                ">>> RETRIEVING PERSONNEL DATA..."
+            ];
+            let i = 0;
+            element.textContent = "";
+
+            function nextStep() {
+                if (i < steps.length) {
+                    element.textContent += steps[i] + "\n";
+                    i++;
+                    setTimeout(nextStep, 800);
+                } else {
+                    setTimeout(callback, 800);
+                }
+            }
+            nextStep();
+        }
+
+        document.getElementById("search").addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+                const query = this.value.trim().toLowerCase().replace(/\s+/g, " ");
+                const dossierEl = document.getElementById("agent-dossier");
+                const photoEl = document.getElementById("agent-photo");
+
+                if (!query) {
+                    photoEl.style.display = "none";
+                    dossierEl.textContent = "⚠️ Tidak ada data yang ditampilkan. Ketik di panel kiri untuk mengakses file personel.";
+                    return;
+                }
+
+                const agent = personnelDB.find(p => p.code_name.toLowerCase() === query || p.real_name.toLowerCase() === query);
+
+                if (agent) {
+                    simulateAccessSequence(dossierEl, () => {
+                        photoEl.src = agent.photo;
+                        photoEl.style.display = "block";
+
+                        const dossier = `
+========================================
+|   FILE: PERSONNEL PUSLAT KODILATAU   |
+|   CLASSIFICATION: RAHASIA            |
+========================================
+
+[IDENTITY DATA]
+--------------------------------------------------
+NAMA LENGKAP   : ${agent.code_name}
+PANGKAT        : ${agent.real_name}
+JENIS KELAMIN  : ${agent.gender}
+TANGGAL LAHIR  : ${agent.doc}
+KEBANGSAAN     : ${agent.nationality}
+TEMPAT LAHIR   : ${agent.birth_place}
+JABATAN         : ${agent.status}
+CLEARANCE LVL  : ${agent.clearance}
+
+[OPERATIONAL RECORD]
+--------------------------------------------------
+ASSIGNED UNIT  : ${agent.unit}
+SPECIALIZATION : ${agent.specialization}
+COMPLETED OPS  : ${agent.ops_completed}
+SUCCESS RATE   : ${agent.success_rate}%
+KNOWN ALIASES  : ${agent.alias}
+
+[SECURITY FOOTNOTE]
+--------------------------------------------------
+This dossier is property of the Directorate of Covert Operations.
+Unauthorized access or duplication is punishable under Directive 47-A.
+
+<END OF FILE>
+========================================
+Retrieved on: ${new Date().toLocaleString()}
+                        `;
+                        typeWriter(dossierEl, dossier, 5);
+                    });
+                } else {
+                    photoEl.style.display = "none";
+                    dossierEl.innerHTML = `<span class="not-found">❌ ACCESS DENIED: No personnel record found for "${this.value}".</span>`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
