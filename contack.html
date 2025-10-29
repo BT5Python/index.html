@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kontak</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            text-align: center;
+        }
+        nav a {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+        }
+        nav a:hover {
+            background-color: #0056b3;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input, textarea {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #1f8c36;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kontak</h1>
+    <p>Silakan kirim pesan ke saya melalui form di bawah ini (contoh saja):</p>
+
+    <form>
+        <input type="text" placeholder="Nama Anda"><br>
+        <input type="email" placeholder="Email Anda"><br>
+        <textarea placeholder="Pesan Anda"></textarea><br>
+        <button type="button" onclick="alert('Pesan terkirim! (simulasi)')">Kirim</button>
+    </form>
+
+    <nav>
+        <a href="index.html">Beranda</a>
+        <a href="about.html">Tentang</a>
+    </nav>
+</body>
+</html>
