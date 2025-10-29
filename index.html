@@ -7,23 +7,30 @@
     body {
         font-family: Consolas, monospace;
         background-color: #000;
-        color: #00FF00;
+        color: #FFD700; /* warna kuning emas */
         margin: 50px;
         text-align: center;
     }
     h1 {
         font-size: 75px;
         margin-bottom: 40px;
+        color: #FFD700;
     }
 
-    /* Kontainer teks */
+    /* Kontainer teks dengan efek kursor */
     #typing-container {
         font-size: 22px;
-        border-right: 3px solid #00FF00;
+        border-right: 3px solid #FFD700;
         display: inline-block;
         white-space: nowrap;
         overflow: hidden;
         margin-bottom: 40px;
+        animation: blink 0.8s step-end infinite;
+    }
+
+    /* Efek kursor berkedip */
+    @keyframes blink {
+        50% { border-color: transparent; }
     }
 
     /* Tombol */
@@ -31,9 +38,9 @@
         margin-top: 20px;
     }
     button {
-        color: #00FF00;
+        color: #FFD700;
         background: none;
-        border: 2px solid #00FF00;
+        border: 2px solid #FFD700;
         padding: 15px 25px;
         margin: 10px;
         cursor: pointer;
@@ -42,7 +49,7 @@
         transition: all 0.3s ease;
     }
     button:hover {
-        background-color: #00FF00;
+        background-color: #FFD700;
         color: #000;
         transform: scale(1.05);
     }
@@ -50,16 +57,8 @@
     #output {
         margin-top: 40px;
         font-size: 18px;
-        color: #00FF00;
+        color: #FFD700;
         letter-spacing: 2px;
-    }
-
-    /* Kursor berkedip */
-    @keyframes blink {
-        50% { border-color: transparent; }
-    }
-    #typing-container {
-        animation: blink 0.8s step-end infinite;
     }
 </style>
 </head>
@@ -86,26 +85,27 @@
     <div id="output">evolutionismyrevolution</div>
 
     <script>
+        // Efek ketikan berulang warna kuning
         const text = "Klik salah satu tombol di bawah untuk membuka halaman.";
         const typingContainer = document.getElementById("typing-container");
         let index = 0;
         let isDeleting = false;
-        const speed = 70;  // kecepatan ketik
-        const pause = 1500; // jeda sebelum menghapus teks
+        const speed = 70;   // kecepatan ketik
+        const pause = 1500; // jeda sebelum hapus
 
         function typeEffect() {
             if (!isDeleting && index < text.length) {
-                // Mengetik dari kiri ke kanan
+                // Ketik dari kiri ke kanan
                 typingContainer.textContent = text.substring(0, index + 1);
                 index++;
                 setTimeout(typeEffect, speed);
             } else if (isDeleting && index > 0) {
-                // Menghapus huruf satu per satu
+                // Hapus dari kanan ke kiri
                 typingContainer.textContent = text.substring(0, index - 1);
                 index--;
                 setTimeout(typeEffect, speed / 2);
             } else {
-                // Ganti mode (ketik <-> hapus)
+                // Ganti mode
                 isDeleting = !isDeleting;
                 setTimeout(typeEffect, pause);
             }
