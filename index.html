@@ -1,39 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Beranda</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            text-align: center;
-        }
-        nav a {
-            text-decoration: none;
-            color: white;
-            background-color: #007bff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin: 5px;
-            display: inline-block;
-        }
-        nav a:hover {
-            background-color: #0056b3;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚠ SYSTEM MAINTENANCE ⚠</title>
+<style>
+  body {
+    background-color: #000;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  h1 {
+    font-size: 2em;
+    text-shadow: 0 0 20px #00ff00;
+    margin-bottom: 10px;
+    animation: fastBlink 0.6s infinite;
+    color: #00ff00;
+  }
+
+  .typing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .typing-rtl {
+    color: #00ff00;
+    border-left: 2px solid #00ff00;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    text-align: left;
+    animation: typingRTL 4s steps(50,end) infinite;
+  }
+
+  #timer {
+    font-size: 2em;
+    font-weight: bold;
+    text-shadow: 0 0 15px #00ff00;
+    margin-top: 20px;
+    letter-spacing: 2px;
+    color: #00ff00;
+  }
+
+  @keyframes fastBlink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  @keyframes typingRTL {
+    0% { width: 0ch; border-left-color: #00ff00; }
+    50% { width: 38ch; border-left-color: #00ff00; }
+    51% { width: 38ch; border-left-color: transparent; }
+    100% { width: 0ch; border-left-color: #00ff00; }
+  }
+
+  /* Login form */
+  #login-form {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #login-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    width: 200px;
+  }
+
+  #login-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background: #00ff00;
+    color: #000;
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
-    <h1>Selamat Datang di Website Saya</h1>
-    <p>Ini adalah halaman utama (index.html)</p>
+<canvas id="matrix"></canvas>
 
-    <nav>
-        <a href="about.html">Komandan</a>
-        <a href="contact.html">anggota</a>
-        <a href="password.html">password</a>
-        <a href="login.html">login</a>
-        
-    </nav>
+<h1>⚠ SYSTEM UNDER MAINTENANCE ⚠</h1>
+<div class="typing-container">
+  <p class="typing-rtl">Access temporarily restricted...</p>
+  <p class="typing-rtl">Please wait until system reboot completes.</p>
+</div>
+
+<div id="timer">--:--:--.--</div>
+
+<!-- LOGIN FORM -->
+<div id="login-form">
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button id="login-btn">LOGIN</button>
+</div>
+
+<script>
+/* MATRIX BACKGROUND */
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()";
+const fontSize = 16;
+const columns = Math.floor(canvas.width / fontSize);
+const drops = Array(columns).fill(1);
+
+function drawMatrix() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#f00"; // warna matrix merah
+  ctx.font = fontSize + "px monospace";
+  for (let i = 0; i < drops.length; i++) {
+    const text = chars.charAt(Math.floor(Math.random() * chars.length));
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+    drops[i]++;
+  }
+}
+const matrixInterval = setInterval(drawMatrix, 35);
+
+/* COUNTDOWN TIMER DENGAN MILIDETIK */
+const targetTime = new Date().getTime() + (1 * 60 * 60 * 1000); // 1 jam
+const timer = document.getElementById("timer");
+
+const countdown = setInterval(() => {
+  const now = new Date().getTime();
+  const distance = targetTime - now;
+
+  if (distance < 0) {
+    clearInterval(countdown);
+    clearInterval(matrixInterval);
+
+    canvas.style.display = "none";
+    document.querySelector("h1").style.display = "none";
+    document.querySelector(".typing-container").style.display = "none";
+    timer.style.display = "none";
+
+    document.getElementById("login-form").style.display = "flex";
+    return;
+  }
+
+  const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((distance / (1000 * 60)) % 60);
+  const seconds = Math.floor((distance / 1000) % 60);
+  const milliseconds = Math.floor((distance % 1000) / 10); // 2 digit milidetik
+
+  timer.textContent =
+    `${String(hours).padStart(2,'0')}:` +
+    `${String(minutes).padStart(2,'0')}:` +
+    `${String(seconds).padStart(2,'0')}.` +
+    `${String(milliseconds).padStart(2,'0')}`;
+}, 10); // update tiap 10ms
+
+/* RESIZE MATRIX */
+window.addEventListener("resize", () => {
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+});
+</script>
 </body>
 </html>
-
-
