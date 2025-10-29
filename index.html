@@ -1,77 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Website dengan 10 Tombol</title>
+    <title>Kontak</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 40px;
             text-align: center;
-            margin: 50px;
-            background-color: #f4f4f4;
         }
-        h1 {
-            color: #333;
+        nav a {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
         }
-        .button-container {
-            margin-top: 30px;
+        nav a:hover {
+            background-color: #0056b3;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input, textarea {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
         button {
-            background-color: #007bff;
+            padding: 10px 20px;
+            background-color: #28a745;
             color: white;
             border: none;
-            padding: 15px 25px;
-            margin: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
+            border-radius: 5px;
         }
         button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-        #output {
-            margin-top: 30px;
-            font-size: 18px;
-            color: #333;
+            background-color: #1f8c36;
         }
     </style>
 </head>
 <body>
-    <h1>Website dengan 10 Tombol</h1>
-    <p>Klik salah satu tombol di bawah untuk melihat aksi.</p>
+    <h1>Kontak</h1>
+    <p>Silakan kirim pesan ke saya melalui form di bawah ini (contoh saja):</p>
 
-    <div class="button-container">
-        <button onclick="showMessage(1)">Tombol 1</button>
-        <button onclick="showMessage(2)">Tombol 2</button>
-        <button onclick="showMessage(3)">Tombol 3</button>
-        <button onclick="showMessage(4)">Tombol 4</button>
-        <button onclick="showMessage(5)">Tombol 5</button>
-        <button onclick="showMessage(6)">Tombol 6</button>
-        <button onclick="showMessage(7)">Tombol 7</button>
-        <button onclick="showMessage(8)">Tombol 8</button>
-        <button onclick="showMessage(9)">Tombol 9</button>
-        <button onclick="showMessage(10)">Tombol 10</button>
-    </div>
+    <form>
+        <input type="text" placeholder="Nama Anda"><br>
+        <input type="email" placeholder="Email Anda"><br>
+        <textarea placeholder="Pesan Anda"></textarea><br>
+        <button type="button" onclick="alert('Pesan terkirim! (simulasi)')">Kirim</button>
+    </form>
 
-    <div id="output">Klik tombol untuk melihat hasil.</div>
-
-    <script>
-        function showMessage(number) {
-            const messages = [
-                "Kamu menekan Tombol 1!",
-                "Keren! Ini Tombol 2.",
-                "Tombol 3 diklik, mantap!",
-                "Hai dari Tombol 4!",
-                "Tombol 5 aktif!",
-                "Wow, kamu pilih Tombol 6!",
-                "Tombol 7 berjalan lancar!",
-                "Tombol 8 ditekan!",
-                "Sudah sampai Tombol 9!",
-                "Tombol 10 — yang terakhir!"
-            ];
-            document.getElementById("output").innerText = messages[number - 1];
-        }
-    </script>
+    <nav>
+        <a href="index.html">Beranda</a>
+        <a href="about.html">Tentang</a>
+    </nav>
 </body>
 </html>
