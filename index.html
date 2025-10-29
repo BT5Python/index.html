@@ -18,10 +18,10 @@
         color: #00FF00;
     }
 
-    /* Efek teks mengetik */
+    /* Efek teks mengetik warna kuning */
     #typing-container {
         font-size: 22px;
-        color: #FFD700; /* teks ketikan berwarna kuning */
+        color: #FFD700; /* teks ketikan kuning */
         border-right: 3px solid #FFD700; /* kursor kuning */
         display: inline-block;
         white-space: nowrap;
@@ -35,10 +35,11 @@
         50% { border-color: transparent; }
     }
 
-    /* Tombol */
+    /* Tombol umum */
     .button-container {
         margin-top: 20px;
     }
+
     button {
         color: #00FF00;
         background: none;
@@ -47,13 +48,25 @@
         margin: 10px;
         cursor: pointer;
         font-size: 16px;
-        border-radius: 5px;
+        border-radius: 0; /* sudut kotak */
         transition: all 0.3s ease;
     }
+
     button:hover {
         background-color: #00FF00;
         color: #000;
         transform: scale(1.05);
+    }
+
+    /* Tombol Komandan khusus */
+    .komandan {
+        border-color: red;
+        color: red;
+    }
+
+    .komandan:hover {
+        background-color: red;
+        color: #000;
     }
 
     #output {
@@ -72,7 +85,7 @@
 
     <!-- Tombol menu -->
     <div class="button-container">
-        <button onclick="window.location.href='hal-1.html'">Komandan</button>
+        <button class="komandan" onclick="window.location.href='hal-1.html'">Komandan</button>
         <button onclick="window.location.href='hal-2.html'">Struktur Organisasi</button>
         <button onclick="window.location.href='hal-3.html'">Daftar Personel</button>
         <button onclick="window.location.href='hal-4.html'">Formulir</button>
@@ -87,7 +100,7 @@
     <div id="output">evolutionismyrevolution</div>
 
     <script>
-        // Efek ketikan berulang (hanya teks kuning)
+        // Efek ketikan berulang
         const text = "Klik salah satu tombol di bawah untuk membuka halaman.";
         const typingContainer = document.getElementById("typing-container");
         let index = 0;
