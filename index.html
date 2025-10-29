@@ -21,21 +21,21 @@
     /* Efek teks mengetik warna kuning */
     #typing-container {
         font-size: 22px;
-        color: #FFD700; /* teks ketikan kuning */
-        border-right: 3px solid #FFD700; /* kursor kuning */
+        color: #FFD700;
+        border-right: 3px solid #FFD700;
         display: inline-block;
         white-space: nowrap;
         overflow: hidden;
         margin-bottom: 40px;
+        /* hanya kursor berkedip, tombol tidak terganggu */
         animation: blink 0.8s step-end infinite;
     }
 
-    /* Efek kursor berkedip */
     @keyframes blink {
         50% { border-color: transparent; }
     }
 
-    /* Tombol umum */
+    /* Tombol */
     .button-container {
         margin-top: 20px;
     }
@@ -48,36 +48,36 @@
         margin: 10px;
         cursor: pointer;
         font-size: 16px;
-        border-radius: 0; /* tanpa lengkungan */
-        transition: all 0.3s ease;
+        border-radius: 0;
+        transition: all 0.3s ease; /* tetap ada efek hover */
     }
 
+    /* Hover untuk tombol */
     button:hover {
-        background-color: #00FF00;
-        color: #000;
         transform: scale(1.05);
     }
 
-    /* Tombol Komandan merah */
+    /* Komandan merah */
     .komandan {
-        border-color: red;
         color: red;
+        border-color: red;
     }
     .komandan:hover {
         background-color: red;
         color: #000;
     }
 
-    /* Tombol kuning: Dispers, Satintel, Satprov */
+    /* Kuning untuk Dispers, Satintel, Satprov */
     .kuning {
-        border-color: #FFD700;
         color: #FFD700;
+        border-color: #FFD700;
     }
     .kuning:hover {
         background-color: #FFD700;
         color: #000;
     }
 
+    /* Tombol lainnya tetap hijau */
     #output {
         margin-top: 40px;
         font-size: 18px;
@@ -89,10 +89,8 @@
 <body>
     <h1>PUSLAT KODIKLATAU</h1>
 
-    <!-- Efek teks mengetik warna kuning -->
     <div id="typing-container"></div>
 
-    <!-- Tombol menu -->
     <div class="button-container">
         <button class="komandan" onclick="window.location.href='hal-1.html'">Komandan</button>
         <button class="kuning" onclick="window.location.href='hal-2.html'">Dispers</button>
@@ -109,7 +107,6 @@
     <div id="output">evolutionismyrevolution</div>
 
     <script>
-        // Efek ketikan berulang (teks kuning)
         const text = "Klik salah satu tombol di bawah untuk membuka halaman.";
         const typingContainer = document.getElementById("typing-container");
         let index = 0;
