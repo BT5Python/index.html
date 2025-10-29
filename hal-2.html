@@ -1,77 +1,122 @@
-<!DOCTYPE html>
-<html>
 <head>
-    <title>Website dengan 10 Tombol</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            color: #333;
-        }
-        .button-container {
-            margin-top: 30px;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 15px 25px;
-            margin: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-        #output {
-            margin-top: 30px;
-            font-size: 18px;
-            color: #333;
-        }
-    </style>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+  <style>
+
+
+/* -----------------------------------------------
+login page Style
+Name  : Andi Darmawan
+Youtube : Go For Edu
+Date    : 15 Oktober 2025
+----------------------------------------------- */
+
+ .inputtext {
+  width: 100%;
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;  
+  border: 1px solid #00FF00;
+  border-radius: 0px;
+  box-sizing: border-box;
+  color: 00ff00;
+  background:transparent
+
+}
+
+.tombol {
+  width: 100%;
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;  
+  border: 1px solid #00FF00;
+  border-radius: 0px;
+  box-sizing: border-box;
+  color: 00ff00;
+  background:transparent  
+}
+
+div {
+  font-family: arial;
+  font-weight: bold;
+  
+}
+
+#timer{ 
+color: red;
+}
+
+ body {
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+</style>
+
 <body>
-    <h1>Website dengan 10 Tombol</h1>
-    <p>Klik salah satu tombol di bawah untuk melihat aksi.</p>
 
-    <div class="button-container">
-        <button onclick="showMessage(1)">Tombol 1</button>
-        <button onclick="showMessage(2)">Tombol 2</button>
-        <button onclick="showMessage(3)">Tombol 3</button>
-        <button onclick="showMessage(4)">Tombol 4</button>
-        <button onclick="showMessage(5)">Tombol 5</button>
-        <button onclick="showMessage(6)">Tombol 6</button>
-        <button onclick="showMessage(7)">Tombol 7</button>
-        <button onclick="showMessage(8)">Tombol 8</button>
-        <button onclick="showMessage(9)">Tombol 9</button>
-        <button onclick="showMessage(10)">Tombol 10</button>
-    </div>
+<center>
 
-    <div id="output">Klik tombol untuk melihat hasil.</div>
+<center>
 
-    <script>
-        function showMessage(number) {
-            const messages = [
-                "Kamu menekan Tombol 1!",
-                "Keren! Ini Tombol 2.",
-                "Tombol 3 diklik, mantap!",
-                "Hai dari Tombol 4!",
-                "Tombol 5 aktif!",
-                "Wow, kamu pilih Tombol 6!",
-                "Tombol 7 berjalan lancar!",
-                "Tombol 8 ditekan!",
-                "Sudah sampai Tombol 9!",
-                "Tombol 10 — yang terakhir!"
-            ];
-            document.getElementById("output").innerText = messages[number - 1];
-        }
-    </script>
+<div class="div1">
+
+<form name="myform" method="post">
+
+  <input type="text" name="uname" class="inputtext" autocomplete="off" placeholder="username">
+  <br>
+  <input type="password" name="pass" class="inputtext" autocomplete="off" placeholder="password">
+  <br>
+  <div id="timer"></div>
+  <br>
+  <input type="button" class="tombol" name="log" id="logbutton" value="LOGIN" onclick="myfunction()">
+  <br><br>
+
+
+</form>
+  
+
+
+</div>
+
+</center>
+
+</center>
+
 </body>
-</html>
+
+<script type="text/javascript">
+  
+  function myfunction ()
+  {
+
+    var un = document.forms["myform"]["uname"].value;
+    var pw = document.forms["myform"]["pass"].value;
+    if (un=="KOMANDAN" && pw=="#f4t4*")
+  {
+    window.open('https://sites.google.com/view/disperspuslatkodiklatau/komandan');
+  }
+
+/* ---------Copy code user dibawah ini---------- */
+
+
+
+
+
+
+
+
+/* ---------Copy code user diatas ini-------- */
+
+
+    else
+  {
+    Swal.fire({
+      title: 'Not allowed',
+      
+    });
+  }
+  }
+  
+</script>
+
