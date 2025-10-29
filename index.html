@@ -11,7 +11,7 @@
         }
         h1 {
             color: #00FF00;
-            font-size: 50px;
+            font-size: 75px;
         }
         .button-container {
             margin-top: 30px;
@@ -50,9 +50,9 @@
         <button onclick="showMessage(8)">Tombol 8</button>
         <button onclick="showMessage(9)">Tombol 9</button>
         <button onclick="showMessage(10)">Tombol 10</button>
-        <button onclick="window.location.href='Hal-6.html'">Tentang</button>
-        <button onclick="window.location.href='Hal-7.html'">password</button>
-        <button onclick="window.location.href='Hal-8.html'">Komandan</button>
+        <button onclick="window.location.href='Hal-6.html">Tentang</button>
+        <button onclick="window.location.href='Hal-7.html">password</button>
+        <button onclick="window.location.href='Hal-8.html">Komandan</button>
     </div>
 
     <div id="output">Klik tombol untuk melihat hasil.</div>
@@ -69,13 +69,14 @@
                 "Tombol 7 berjalan lancar!",
                 "Tombol 8 ditekan!",
                 "Sudah sampai Tombol 9!",
-                "window.location.href='Hal-8.html'",                
+                <button onclick="window.location.href='Hal-8.html">Komandan</button>                
             ];
             document.getElementById("output").innerText = messages[number - 1];
         }
     </script>
 </body>
 </html>
+
 
 
 
