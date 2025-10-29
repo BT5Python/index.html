@@ -7,7 +7,7 @@
     body {
         font-family: Consolas, monospace;
         background-color: #000;
-        color: #00FF00; /* warna utama hijau */
+        color: #00FF00;
         margin: 50px;
         text-align: center;
     }
@@ -48,7 +48,7 @@
         margin: 10px;
         cursor: pointer;
         font-size: 16px;
-        border-radius: 0; /* sudut kotak */
+        border-radius: 0; /* tanpa lengkungan */
         transition: all 0.3s ease;
     }
 
@@ -58,28 +58,24 @@
         transform: scale(1.05);
     }
 
-    /* Tombol Komandan khusus */
+    /* Tombol Komandan merah */
     .komandan {
         border-color: red;
         color: red;
     }
-
     .komandan:hover {
         background-color: red;
         color: #000;
-
     }
 
-    /* Tombol Dispers Khusus */
-    .Dispers {
-        border-color: yeloow;
-        color: yellow;
+    /* Tombol kuning: Dispers, Satintel, Satprov */
+    .kuning {
+        border-color: #FFD700;
+        color: #FFD700;
     }
-
-    .Dispers:hover {
-        background-color: yellow;
-        color: yellow;
-        
+    .kuning:hover {
+        background-color: #FFD700;
+        color: #000;
     }
 
     #output {
@@ -99,27 +95,27 @@
     <!-- Tombol menu -->
     <div class="button-container">
         <button class="komandan" onclick="window.location.href='hal-1.html'">Komandan</button>
-        <button onclick="window.location.href='hal-2.html'">Dispers</button>
-        <button onclick="window.location.href='hal-3.html'">Satintel</button>
-        <button onclick="window.location.href='hal-4.html'">Satprov</button>
+        <button class="kuning" onclick="window.location.href='hal-2.html'">Dispers</button>
+        <button class="kuning" onclick="window.location.href='hal-3.html'">Satintel</button>
+        <button class="kuning" onclick="window.location.href='hal-4.html'">Satprov</button>
         <button onclick="window.location.href='hal-5.html'">Struktur Organisasi</button>
         <button onclick="window.location.href='hal-6.html'">Daftar Personel</button>
-        <button onclick="window.location.href='hal-7.html'">Informasi</button>
-        <button onclick="window.location.href='hal-8.html'">Formulir</button>
+        <button onclick="window.location.href='hal-7.html'">Formulir</button>
+        <button onclick="window.location.href='hal-8.html'">Informasi</button>
         <button onclick="window.location.href='hal-9.html'">Back</button>
-        <button onclick="window.location.href='hal-10.html'">Next</button> 
+        <button onclick="window.location.href='hal-10.html'">Next</button>
     </div>
 
     <div id="output">evolutionismyrevolution</div>
 
     <script>
-        // Efek ketikan berulang
+        // Efek ketikan berulang (teks kuning)
         const text = "Klik salah satu tombol di bawah untuk membuka halaman.";
         const typingContainer = document.getElementById("typing-container");
         let index = 0;
         let isDeleting = false;
-        const speed = 70;   // kecepatan ketik
-        const pause = 1500; // jeda sebelum hapus
+        const speed = 70;
+        const pause = 1500;
 
         function typeEffect() {
             if (!isDeleting && index < text.length) {
@@ -140,5 +136,3 @@
     </script>
 </body>
 </html>
-
-
