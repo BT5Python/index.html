@@ -3,124 +3,116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grid Tombol Dua Bagian Hover Hijau Penuh</title>
+<title>Tombol 3 Bagian (onclick versi penuh)</title>
 <style>
   body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #000; /* Latar gelap supaya hijau terlihat */
+    background-color: #000;
     font-family: Arial, sans-serif;
   }
 
   .grid-tombol {
-    display: grid;
-    grid-template-columns: repeat(4, 200px);
-    grid-gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
   }
 
   .tombol {
-    width: 200px;
-    height: 50px;
-    border: 2px solid #00ff00;    
-    overflow: hidden;
+    border: 2px solid #00ff00;
+    border-radius: 8px;
     cursor: pointer;
-    padding: 0;
     display: flex;
     flex-direction: column;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    align-items: stretch;
     background: transparent;
-    color: #00ff00; /* Default teks hijau */
+    color: #00ff00;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    padding: 0;
   }
 
   .tombol:hover {
-    background-color: #00ff00; /* Tombol jadi hijau penuh */
-    color: #000; /* Teks jadi hitam supaya terbaca */
+    background-color: #00ff00; /* Hijau penuh saat hover */
+    color: #000; /* Teks jadi hitam agar kontras */
+    border-color: #00ff00;
   }
 
-  .bagian-atas, .bagian-bawah, .bagian-bawah {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s ease;
+  .bagian-atas,
+  .bagian-tengah,
+  .bagian-bawah {
+    text-align: center;
+    padding: 6px 20px;
+    position: relative;
+    white-space: nowrap;
+    transition: color 0.25s ease;
   }
 
   .bagian-atas {
-    font-size: 12px;
-    font-weight: ;
-    position: relative;
-  }
-
-  /* Garis tipis di tengah mengikuti warna teks */
-  .bagian-atas::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 10%;
-    width: 80%;
-    height: 1px;
-    background-color: currentColor;
+    font-size: 14px;
+    font-weight: bold;
   }
 
   .bagian-tengah {
-    font-size: 12px;
+    font-size: 18px;
+    font-weight: bold;
   }
 
   .bagian-bawah {
     font-size: 12px;
   }
 
-  /* Responsive grid untuk layar kecil */
-  @media (max-width: 900px) {
-    .grid-tombol {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  /* Garis pemisah penuh menempel kiri dan kanan */
+  .bagian-atas::after,
+  .bagian-tengah::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: currentColor; /* mengikuti warna teks */
   }
 
-  @media (max-width: 500px) {
-    .grid-tombol {
-      grid-template-columns: 1fr;
-    }
+  /* Efek klik: sedikit menekan */
+  .tombol:active {
+    transform: scale(0.97);
   }
 </style>
 </head>
 <body>
 
 <div class="grid-tombol">
-  <button class="tombol">
-    <div class="bagian-atas">Komandan Puslat kodiklatau</div>
-    <div class="bagian-tengah">Fata Patria</div>
-    <div class="bagian-bawah">Maresekal Pertama TNI</div>
+  <button class="tombol" onclick="window.location.href='manager.html'">
+    <div class="bagian-atas">Manager</div>
+    <div class="bagian-tengah">Budi Santoso</div>
+    <div class="bagian-bawah">Senior</div>
   </button>
-  <button class="tombol">
-    <div class="bagian-atas">Endriady, S.H</div>
-    <div class="bagian-bawah">Letkol Adm NRP 522726</div>
+
+  <button class="tombol" onclick="window.location.href='supervisor.html'">
+    <div class="bagian-atas">Supervisor</div>
+    <div class="bagian-tengah">Siti Rahma</div>
+    <div class="bagian-bawah">Mid-Level</div>
   </button>
-  <button class="tombol">
-    <div class="bagian-atas">Andi Pratama</div>
-    <div class="bagian-bawah">Staff</div>
+
+  <button class="tombol" onclick="window.location.href='staff.html'">
+    <div class="bagian-atas">Staff</div>
+    <div class="bagian-tengah">Andi Pratama</div>
+    <div class="bagian-bawah">Junior</div>
   </button>
-  <button class="tombol">
-    <div class="bagian-atas">Rina Lestari</div>
-    <div class="bagian-bawah">HRD</div>
+
+  <button class="tombol" onclick="window.location.href='direktur.html'">
+    <div class="bagian-atas">Direktur Utama</div>
+    <div class="bagian-tengah">Joko Widodo</div>
+    <div class="bagian-bawah">Eksekutif Senior</div>
   </button>
-  <button class="tombol">
-    <div class="bagian-atas">Joko Widodo</div>
-    <div class="bagian-bawah">Direktur</div>
-  </button>
-  <button class="tombol">
-    <div class="bagian-atas">Putri Ayu</div>
-    <div class="bagian-bawah">Marketing</div>
-  </button>
-  <button class="tombol">
-    <div class="bagian-atas">Rizky Ananda</div>
-    <div class="bagian-bawah">IT Support</div>
-  </button>
-  <button class="tombol">
-    <div class="bagian-atas">Lina Kartika</div>
-    <div class="bagian-bawah">Finance</div>
+
+  <button class="tombol" onclick="window.location.href='it-support.html'">
+    <div class="bagian-atas">IT Support</div>
+    <div class="bagian-tengah">Rizky Ananda</div>
+    <div class="bagian-bawah">Junior</div>
   </button>
 </div>
 
