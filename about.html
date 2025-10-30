@@ -1,23 +1,41 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Website Saya</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <img src="header.png" alt="Header Website">
-  </header>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
 
-  <marquee behavior="scroll" direction="left" scrollamount="6">
-    🌟 Selamat datang di Website Saya! Ini adalah contoh teks berjalan di bawah header. 🌟
-  </marquee>
+/* Header */
+header img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-  <main>
-    <h1>Selamat Datang di Website Saya</h1>
-    <p>Ini contoh website sederhana dengan gambar header.</p>
-  </main>
-</body>
-</html>
+/* Running text */
+.running-text {
+  background-color: #000;      /* hitam */
+  color: #00ff00;             /* hijau neon */
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+  padding: 10px 0;
+  font-weight: bold;
+  font-size: 18px;
+  border-top: 2px solid #00ff00;
+  border-bottom: 2px solid #00ff00;
+}
+
+.running-text p {
+  display: inline-block;
+  padding-left: 100%;
+  animation: berjalan 15s linear infinite;
+}
+
+@keyframes berjalan {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
