@@ -1,155 +1,123 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PUSLAT KODIKLATAU</title>
-  <style>
-    body {
-        font-family: "Book Antiqua", monospace;
-        background-color: #000;
-        color: #00FF00;
-        margin: 50px;
-        text-align: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grid Tombol Dua Bagian Hover Hijau Penuh</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #000; /* Latar gelap supaya hijau terlihat */
+    font-family: Arial, sans-serif;
+  }
 
-    h1 {
-        font-size: 75px;
-        margin-bottom: 40px;
-        color: #00FF00;
-    }
+  .grid-tombol {
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    grid-gap: 20px;
+  }
 
-    /* Efek teks mengetik warna kuning */
-    #typing-container {
-        font-size: 22px;
-        color: #FFD700;
-        border-right: 3px solid #FFD700;
-        display: inline-block;
-        white-space: nowrap;
-        overflow: hidden;
-        margin-bottom: 40px;
-        animation: blink 0.8s step-end infinite;
-    }
+  .tombol {
+    width: 200px;
+    height: 100px;
+    border: 2px solid #00ff00;    
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    background: transparent;
+    color: #00ff00; /* Default teks hijau */
+  }
 
-    @keyframes blink {
-        50% { border-color: transparent; }
-    }
+  .tombol:hover {
+    background-color: #00ff00; /* Tombol jadi hijau penuh */
+    color: #000; /* Teks jadi hitam supaya terbaca */
+  }
 
-    .button-container {
-        margin-top: 20px;
-    }
+  .bagian-atas, .bagian-bawah {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
 
-    .button-row {
-        margin: 10px 0;
-    }
+  .bagian-atas {
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+  }
 
-    button {
-        color: #00FF00;
-        background: none;
-        border: 2px solid #00FF00;
-        padding: 15px 25px;
-        margin: 10px;
-        cursor: pointer;
-        font-size: 16px;
-        border-radius: 0;
-        transition: all 0.3s ease;
-    }
+  /* Garis tipis di tengah mengikuti warna teks */
+  .bagian-atas::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background-color: currentColor;
+  }
 
-    button:hover {
-        background-color: #00FF00;
-        color: #000;
-    }
+  .bagian-bawah {
+    font-size: 14px;
+  }
 
-    .komandan {
-        border-color: red;
-        color: red;
+  /* Responsive grid untuk layar kecil */
+  @media (max-width: 900px) {
+    .grid-tombol {
+      grid-template-columns: repeat(2, 1fr);
     }
+  }
 
-    .komandan:hover {
-        background-color: red;
-        color: #000;
+  @media (max-width: 500px) {
+    .grid-tombol {
+      grid-template-columns: 1fr;
     }
-
-    .kuning {
-        border-color: #FFD700;
-        color: #FFD700;
-    }
-
-    .kuning:hover {
-        background-color: #FFD700;
-        color: #000;
-    }
-
-    .separator {
-        border: 1px solid #00FF00;
-        margin: 20px auto;
-        width: 60%;
-    }
-
-    #output {
-        margin-top: 40px;
-        font-size: 18px;
-        color: #00FF00;
-        letter-spacing: 2px;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-    <h1>PUSLAT KODIKLATAU</h1>
 
-    <!-- Efek teks mengetik warna kuning -->
-    <div id="typing-container"></div>
+<div class="grid-tombol">
+  <button class="tombol">
+    <div class="bagian-atas">Fata Patria</div>
+    <div class="bagian-bawah">Komandan Pulat Kodiklatau</div>
+  </button>
+  <button class="tombol">
+    <div class="bagian-atas">Siti Rahma</div>
+    <div class="bagian-bawah">Supervisor</div>
+  </button>
+  <button class="tombol">
+    <div class="bagian-atas">Andi Pratama</div>
+    <div class="bagian-bawah">Staff</div>
+  </button>
+  <button class="tombol">
+    <div class="bagian-atas">Rina Lestari</div>
+    <div class="bagian-bawah">HRD</div>
+  </button>
+  <button class="tombol">
+    <div class="bagian-atas">Joko Widodo</div>
+    <div class="bagian-bawah">Direktur</div>
+  </button>
+  <button class="tombol">
+    <div class="bagian-atas">Putri Ayu</div>
+    <div class="bagian-bawah">Marketing</div>
+  </button>
+  <button class="tombol">
+    <div class="bagian-atas">Rizky Ananda</div>
+    <div class="bagian-bawah">IT Support</div>
+  </button>
+  <button class="tombol">
+    <div class="bagian-atas">Lina Kartika</div>
+    <div class="bagian-bawah">Finance</div>
+  </button>
+</div>
 
-    <!-- Tombol menu -->
-    <div class="button-container">
-        <!-- Baris Nama -->
-        <div class="button-row">
-            <button onclick="window.location.href='Login.html'">Iin Indrawati</button>
-            <button onclick="window.location.href='https://drive.google.com/file/d/1_8j-ZAwPz3lBd9wvWO8AsBfW_3wZsUCc/view?usp=drive_link'">Andi Darmawan</button>
-        </div>
-
-        <!-- Garis pemisah -->
-        <hr class="separator">
-
-        <!-- Baris Jabatan -->
-        <div class="button-row">
-            <button onclick="window.location.href='Login.html'">S.E</button>
-            <button onclick="window.location.href='https://drive.google.com/file/d/1_8j-ZAwPz3lBd9wvWO8AsBfW_3wZsUCc/view?usp=drive_link'">S.E</button>
-        </div>
-
-        <!-- Tombol navigasi -->
-        <div class="button-row">
-            <button onclick="window.location.href='about.html'">Back</button>
-            <button onclick="window.location.href='hal-2.html'">Next</button>
-        </div>
-    </div>
-
-    <div id="output">evolutionismyrevolution</div>
-
-    <script>
-        const text = "DATA RIWAYAT HIDUP PNS PUSLAT KODIKLATAU";
-        const typingContainer = document.getElementById("typing-container");
-        let index = 0;
-        let isDeleting = false;
-        const speed = 70;
-        const pause = 1500;
-
-        function typeEffect() {
-            if (!isDeleting && index < text.length) {
-                typingContainer.textContent = text.substring(0, index + 1);
-                index++;
-                setTimeout(typeEffect, speed);
-            } else if (isDeleting && index > 0) {
-                typingContainer.textContent = text.substring(0, index - 1);
-                index--;
-                setTimeout(typeEffect, speed / 2);
-            } else {
-                isDeleting = !isDeleting;
-                setTimeout(typeEffect, pause);
-            }
-        }
-
-        window.onload = typeEffect;
-    </script>
 </body>
 </html>
