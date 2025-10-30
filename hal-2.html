@@ -1,137 +1,106 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Website Saya</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <img src="google form BARU.png" alt="Header Website">
-  </header>
-</body>
-</html>
-<head>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-  <style>
-
-
-/* -----------------------------------------------
-login page Style
-Name  : Andi Darmawan
-Youtube : Go For Edu
-Date    : 15 Oktober 2025
------------------------------------------------ */
-
- .inputtext {
-  width: 100%;
-  vertical-align: middle;
-  margin: 5px 10px 5px 0;
-  padding: 10px;  
-  border: 1px solid #00FF00;
-  border-radius: 0px;
-  box-sizing: border-box;
-  color: 00ff00;
-  background:transparent
-
+/* ===== Dasar ===== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #00ff00;
+  text-align: center;
 }
 
-.tombol {
+/* ===== Header ===== */
+header img {
   width: 100%;
-  vertical-align: middle;
-  margin: 5px 10px 5px 0;
-  padding: 10px;  
-  border: 1px solid #00FF00;
-  border-radius: 0px;
-  box-sizing: border-box;
-  color: 00ff00;
-  background:transparent  
+  height: auto;
+  display: block;
 }
 
-div {
-  font-family: arial;
+/* ===== Running Text ===== */
+.running-text {
+  background-color: #000;
+  color: #00ff00;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 10px 0;
   font-weight: bold;
-  
+  font-size: 18px;
+  border-top: 2px solid #00ff00;
+  border-bottom: 2px solid #00ff00;
+  text-shadow: 0 0 8px #00ff00;
 }
 
-#timer{ 
-color: red;
+.running-text p {
+  display: inline-block;
+  padding-left: 100%;
+  animation: berjalan 15s linear infinite;
 }
 
- body {
-  overflow-y: hidden; /* Hide vertical scrollbar */
-  overflow-x: hidden; /* Hide horizontal scrollbar */
+@keyframes berjalan {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
 }
 
-</style>
+/* ===== Tombol Navigasi ===== */
+.tombol-container {
+  margin: 30px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
 
-<body>
+.tombol-container button {
+  background-color: #000;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  text-shadow: 0 0 8px #00ff00;
+}
 
-<center>
+.tombol-container button:hover {
+  background-color: #00ff00;
+  color: #000;
+  box-shadow: 0 0 15px #00ff00;
+  transform: scale(1.05);
+}
 
-<center>
+/* ===== 3 Kolom Konten ===== */
+.kolom-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
 
-<div class="div1">
+.kolom {
+  background-color: #111;
+  border: 2px solid #00ff00;
+  padding: 20px;
+  flex: 1 1 300px;  /* fleksibel, minimal 300px */
+  max-width: 400px; /* maksimal lebar kolom */
+  box-sizing: border-box;
+  text-align: left;
+  border-radius: 8px;
+}
 
-<form name="myform" method="post">
-
-  <input type="text" name="uname" class="inputtext" autocomplete="off" placeholder="username">
-  <br>
-  <input type="password" name="pass" class="inputtext" autocomplete="off" placeholder="password">
-  <br>
-  <div id="timer"></div>
-  <br>
-  <input type="button" class="tombol" name="log" id="logbutton" value="LOGIN" onclick="myfunction()">
-  <br><br>
-
-
-</form>
-  
-
-
-</div>
-
-</center>
-
-</center>
-
-</body>
-
-<script type="text/javascript">
-  
-  function myfunction ()
-  {
-
-    var un = document.forms["myform"]["uname"].value;
-    var pw = document.forms["myform"]["pass"].value;
-    if (un=="KOMANDAN" && pw=="#f4t4*")
-  {
-    window.open('https://sites.google.com/view/disperspuslatkodiklatau/komandan');
+/* ===== Responsif ===== */
+@media screen and (max-width: 768px) {
+  .kolom-container {
+    flex-direction: column;
+    align-items: center;
   }
 
-/* ---------Copy code user dibawah ini---------- */
-
-
-
-
-
-
-
-
-/* ---------Copy code user diatas ini-------- */
-
-
-    else
-  {
-    Swal.fire({
-      title: 'Not allowed',
-      
-    });
+  .tombol-container button {
+    width: 90%;
   }
+
+  .running-text p {
+    font-size: 16px;
   }
-  
-</script>
-
-
+}
