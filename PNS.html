@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Saya</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>  
+<title>PUSLAT KODIKLATAU</title>
+<style>
+    body {
+        font-family: book antiqua, monospace;
+        background-color: #000;
+        color: #00FF00;
+        margin: 50px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 75px;
+        margin-bottom: 40px;
+        color: #00FF00;
+    }
+
+    /* Efek teks mengetik warna kuning */
+    #typing-container {
+        font-size: 22px;
+        color: #FFD700; /* teks ketikan kuning */
+        border-right: 3px solid #FFD700; /* kursor kuning */
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        margin-bottom: 40px;
+        animation: blink 0.8s step-end infinite;
+    }
+
+    @keyframes blink {
+        50% { border-color: transparent; }
+    }
+
+    /* Tombol umum */
+    .button-container {
+        margin-top: 20px;
+    }
+
+    button {
+        color: #00FF00;
+        background: none;
+        border: 2px solid #00FF00;
+        padding: 15px 25px;
+        margin: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 0; /* tanpa lengkungan */
+        transition: all 0.3s ease;
+    }
+
+    /* Efek hover untuk semua tombol */
+    button:hover {
+        background-color: #00FF00;
+        color: #000;
+        
+    }
+
+    /* Tombol Komandan merah */
+    .komandan {
+        border-color: red;
+        color: red;
+    }
+    .komandan:hover {
+        background-color: red;
+        color: #000;
+    }
+
+    /* Tombol kuning: Dispers, Satintel, Satprov */
+    .kuning {
+        border-color: #FFD700;
+        color: #FFD700;
+    }
+    .kuning:hover {
+        background-color: #FFD700;
+        color: #000;
+    }
+
+    #output {
+        margin-top: 40px;
+        font-size: 18px;
+        color: #00FF00;
+        letter-spacing: 2px;
+    }
+</style>
+</head>
+<body>
+    <h1>PUSLAT KODIKLATAU</h1>
+
+    <!-- Efek teks mengetik warna kuning -->
+    <div id="typing-container"></div>
+
+    <!-- Tombol menu -->
+    <div class="button-container">
+        <button class="kuning" onclick="window.location.href='Login.html'">Pemuktahiran Data</button>
+        <button class="kuning" onclick="window.location.href='Riwayat Hidup.html'">Riwayat Hidup</button>
+        <button onclick="window.location.href='Radiogram'">Radiogram</button>   
+        <button onclick="window.location.href='about.html'">Back</button>
+        <button onclick="window.location.href='hal-2.html'">Next</button>
+    </div>
+
+    <div id="output">evolutionismyrevolution</div>
+    {
+        font-size: 15px:
+    }
+
+    <script>
+        // Efek ketikan berulang (teks kuning)
+        const text = "Klik salah satu tombol di bawah untuk membuka halaman.";
+        const typingContainer = document.getElementById("typing-container");
+        let index = 0;
+        let isDeleting = false;
+        const speed = 70;
+        const pause = 1500;
+
+        function typeEffect() {
+            if (!isDeleting && index < text.length) {
+                typingContainer.textContent = text.substring(0, index + 1);
+                index++;
+                setTimeout(typeEffect, speed);
+            } else if (isDeleting && index > 0) {
+                typingContainer.textContent = text.substring(0, index - 1);
+                index--;
+                setTimeout(typeEffect, speed / 2);
+            } else {
+                isDeleting = !isDeleting;
+                setTimeout(typeEffect, pause);
+            }
+        }
+
+        window.onload = typeEffect;
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
