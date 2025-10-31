@@ -55,9 +55,6 @@ input {
     padding: 20px;
     overflow-y: auto;
     border-left: 2px solid #00FF00;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
 }
 
 .agent-profile {
@@ -84,18 +81,18 @@ input {
 
 .not-found { color: #FF0000; font-weight: bold; }
 
-#member-buttons button, #single-btn {
+.agent-profile button {
     background: transparent;
     border: 1px solid #00FF00;
     color: #00FF00;
     padding: 8px 12px;
-    margin: 5px;
+    margin-top: 10px;
     cursor: pointer;
     border-radius: 4px;
     font-family: 'Courier New', monospace;
 }
 
-#member-buttons button:hover, #single-btn:hover {
+.agent-profile button:hover {
     background-color: #00FF00;
     color: black;
 }
@@ -133,7 +130,7 @@ input {
     </div>
 
     <div class="output-panel" id="output">
-        <div class="agent-profile">
+        <div class="agent-profile" id="agent-container">
             <pre id="agent-dossier">
 ⚠️ Biodata akan muncul setelah klik tombol anggota.
             </pre>
@@ -155,7 +152,7 @@ const searchInput = document.getElementById("search");
 const dossierEl = document.getElementById("agent-dossier");
 const photoEl = document.getElementById("agent-photo");
 const memberBtnContainer = document.getElementById("member-buttons");
-const outputPanel = document.getElementById("output");
+const agentContainer = document.getElementById("agent-container");
 
 function typeWriter(element, text, callback, speed=5){
     element.textContent = "";
@@ -213,11 +210,11 @@ function showMemberButtons(keyword){
 }
 
 function displayAgent(agent){
-    // Hapus biodata/foto/button sebelumnya
+    // Hilangkan biodata/foto/tombol sebelumnya
     dossierEl.textContent = "";
     photoEl.style.display = "none";
-    const prevBtn = document.getElementById("single-btn");
-    if(prevBtn) prevBtn.remove();
+    const oldBtn = agentContainer.querySelector("button");
+    if(oldBtn) oldBtn.remove();
 
     // Set foto baru
     photoEl.src = agent.photo;
@@ -259,16 +256,15 @@ Unauthorized access or duplication is punishable under Directive 47-A.
 Retrieved on: ${new Date().toLocaleString()}
         `;
         typeWriter(dossierEl, dossier, ()=>{
-            // Tombol kembali
+            // Tombol hanya muncul untuk biodata ini
             const backBtn = document.createElement("button");
-            backBtn.id = "single-btn";
             backBtn.textContent = "Kembali ke daftar anggota";
             backBtn.onclick = () => {
                 dossierEl.textContent="⚠️ Biodata akan muncul setelah klik tombol anggota.";
                 photoEl.style.display="none";
                 backBtn.remove();
             };
-            outputPanel.appendChild(backBtn);
+            agentContainer.appendChild(backBtn);
         });
     });
 }
@@ -277,8 +273,8 @@ Retrieved on: ${new Date().toLocaleString()}
 searchInput.addEventListener("input", ()=>{
     dossierEl.textContent="⚠️ Biodata akan muncul setelah klik tombol anggota.";
     photoEl.style.display="none";
-    const addBtn = document.getElementById("single-btn");
-    if(addBtn) addBtn.remove();
+    const btn = agentContainer.querySelector("button");
+    if(btn) btn.remove();
     memberBtnContainer.innerHTML="";
 });
 
