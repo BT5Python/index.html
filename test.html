@@ -148,7 +148,7 @@ const personnelDB = [
     { code_name: "Bima Pratama", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", doc: "1980-06-15", nationality: "Indonesia", birth_place: "Jakarta", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-2", unit: "DISPERS", specialization: "Field Ops", alias: "Shadow Hawk", ops_completed: 39, success_rate: 92, photo: "https://i.pravatar.cc/150?img=14" },
     { code_name: "Citra Sari", real_name: "Penata Tk.I IIId", gender: "Perempuan", doc: "1985-03-22", nationality: "Indonesia", birth_place: "Bandung", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-1", unit: "DISPERS", specialization: "Signal Intelligence", alias: "Night Owl", ops_completed: 41, success_rate: 95, photo: "https://i.pravatar.cc/150?img=15" },
     { code_name: "Dedi Hartono", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", doc: "1982-11-30", nationality: "Indonesia", birth_place: "Surabaya", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-4", unit: "DISPERS", specialization: "Recon Ops", alias: "Silver Fox", ops_completed: 37, success_rate: 90, photo: "https://i.pravatar.cc/150?img=16" },
-    { code_name: "VIXEN-21", real_name: "Nadia Putri", gender: "Female", dob: "1993-09-21", nationality: "Indonesia", birth_place: "Bandung", status: "ACTIVE", clearance: "ALPHA-2", unit: "STEALTH", specialization: "Undercover Operations / Infiltration", alias: "Black Orchid", ops_completed: 58, success_rate: 89, photo: "https://i.pravatar.cc/150?img=12" }
+    { code_name: "VIXEN-21", real_name: "Nadia Putri", gender: "Perempuan", dob: "1993-09-21", nationality: "Indonesia", birth_place: "Bandung", status: "ACTIVE", clearance: "ALPHA-2", unit: "STEALTH", specialization: "Undercover Operations / Infiltration", alias: "Black Orchid", ops_completed: 58, success_rate: 89, photo: "https://i.pravatar.cc/150?img=12" }
 ];
 
 const searchInput = document.getElementById("search");
@@ -160,7 +160,7 @@ const outputPanel = document.getElementById("output");
 function typeWriter(element, text, callback, speed=5){
     element.textContent = "";
     let i = 0;
-    photoEl.style.display = "block"; // Foto muncul saat mengetik
+    photoEl.style.display = "block"; 
     function typing() {
         if(i < text.length){
             element.textContent += text.charAt(i);
@@ -195,7 +195,11 @@ function simulateAccessSequence(element, callback){
 
 function showMemberButtons(keyword){
     memberBtnContainer.innerHTML = "";
-    const filtered = personnelDB.filter(p => p.unit.toLowerCase().includes(keyword.toLowerCase()));
+    const filtered = personnelDB.filter(p => 
+        p.unit.toLowerCase().includes(keyword.toLowerCase()) ||
+        p.code_name.toLowerCase().includes(keyword.toLowerCase()) ||
+        (p.real_name && p.real_name.toLowerCase().includes(keyword.toLowerCase()))
+    );
     if(filtered.length===0){
         memberBtnContainer.innerHTML='<span class="not-found">❌ Tidak ada anggota ditemukan untuk keyword ini.</span>';
     } else {
@@ -209,7 +213,15 @@ function showMemberButtons(keyword){
 }
 
 function displayAgent(agent){
+    // Hapus biodata/foto/button sebelumnya
+    dossierEl.textContent = "";
+    photoEl.style.display = "none";
+    const prevBtn = document.getElementById("single-btn");
+    if(prevBtn) prevBtn.remove();
+
+    // Set foto baru
     photoEl.src = agent.photo;
+    photoEl.alt = `Photo of ${agent.code_name}`;
 
     simulateAccessSequence(dossierEl, ()=>{
         const dossier = `
@@ -247,23 +259,21 @@ Unauthorized access or duplication is punishable under Directive 47-A.
 Retrieved on: ${new Date().toLocaleString()}
         `;
         typeWriter(dossierEl, dossier, ()=>{
-            // Hanya 1 tombol di bawah biodata
-            let addBtn = document.getElementById("single-btn");
-            if(addBtn) addBtn.remove();
-            addBtn = document.createElement("button");
-            addBtn.id = "single-btn";
-            addBtn.textContent = "Kembali ke daftar anggota";
-            addBtn.onclick = ()=>{
+            // Tombol kembali
+            const backBtn = document.createElement("button");
+            backBtn.id = "single-btn";
+            backBtn.textContent = "Kembali ke daftar anggota";
+            backBtn.onclick = () => {
                 dossierEl.textContent="⚠️ Biodata akan muncul setelah klik tombol anggota.";
                 photoEl.style.display="none";
-                addBtn.remove();
+                backBtn.remove();
             };
-            outputPanel.appendChild(addBtn);
+            outputPanel.appendChild(backBtn);
         });
     });
 }
 
-// Saat mengetik keyword baru, hapus biodata lama dan tombol
+// Reset saat input baru
 searchInput.addEventListener("input", ()=>{
     dossierEl.textContent="⚠️ Biodata akan muncul setelah klik tombol anggota.";
     photoEl.style.display="none";
