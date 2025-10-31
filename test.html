@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tombol 3 Bagian (2 Baris)</title>
+<title>Tombol 3 Bagian (Lebar Dinamis)</title>
 <style>
   body {
     display: flex;
@@ -14,14 +14,15 @@
     font-family: "Times New Roman", sans-serif;
   }
 
-  /* Gunakan grid agar tombol tersusun otomatis */
+  /* Grid: dua tombol per baris */
   .grid-tombol {
     display: grid;
-    grid-template-columns: repeat(2, auto); /* 2 tombol per baris */
+    grid-template-columns: repeat(2, auto); /* otomatis menyesuaikan isi */
     gap: 20px;
     justify-content: center;
   }
 
+  /* Tombol utama */
   .tombol {
     border: 2px solid #00ff00;
     cursor: pointer;
@@ -32,7 +33,7 @@
     color: #00ff00;
     transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     padding: 0;
-    min-width: 220px;
+    width: fit-content; /* lebar menyesuaikan isi */
   }
 
   .tombol:hover {
@@ -47,7 +48,7 @@
     text-align: center;
     padding: 6px 20px;
     position: relative;
-    white-space: nowrap;
+    white-space: nowrap; /* cegah teks turun ke baris baru */
   }
 
   .bagian-atas {
@@ -76,6 +77,7 @@
     background-color: currentColor;
   }
 
+  /* Efek klik */
   .tombol:active {
     transform: scale(0.97);
   }
