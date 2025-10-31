@@ -154,7 +154,7 @@ input {
 <script>
 const personnelDB = [
     // ==== 10 anggota DISPERS ====
-    { nama_lengkap: "Andi Darmawan, S.E", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", dob: "1979-05-03", nationality: "Indonesia", birth_place: "Subang", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-3", unit: "DISPERS", specialization: "Cyber Recon / Counterintelligence", alias: "Ghostline", ops_completed: 43, success_rate: 96, photo: "danpus pdh.jpg" },
+    { code_name: "Andi Darmawan, S.E", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", dob: "1979-05-03", nationality: "Indonesia", birth_place: "Subang", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-3", unit: "DISPERS", specialization: "Cyber Recon / Counterintelligence", alias: "Ghostline", ops_completed: 43, success_rate: 96, photo: "danpus pdh.jpg" },
     { code_name: "Bima Pratama", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", dob: "1980-06-15", nationality: "Indonesia", birth_place: "Jakarta", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-2", unit: "DISPERS", specialization: "Field Ops", alias: "Shadow Hawk", ops_completed: 39, success_rate: 92, photo: "https://i.pravatar.cc/150?img=14" },
     { code_name: "Citra Sari", real_name: "Penata Tk.I IIId", gender: "Perempuan", dob: "1985-03-22", nationality: "Indonesia", birth_place: "Bandung", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-1", unit: "DISPERS", specialization: "Signal Intelligence", alias: "Night Owl", ops_completed: 41, success_rate: 95, photo: "https://i.pravatar.cc/150?img=15" },
     { code_name: "Dedi Hartono", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", dob: "1982-11-30", nationality: "Indonesia", birth_place: "Surabaya", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-4", unit: "DISPERS", specialization: "Recon Ops", alias: "Silver Fox", ops_completed: 37, success_rate: 90, photo: "https://i.pravatar.cc/150?img=16" },
@@ -259,7 +259,7 @@ function displayAgent(agent){
 
 [IDENTITY DATA]
 --------------------------------------------------
-NAMA LENGKAP   : ${agent.nama_lengkap}
+NAMA LENGKAP   : ${agent.code_name}
 PANGKAT        : ${agent.real_name}
 JENIS KELAMIN  : ${agent.gender}
 TANGGAL LAHIR  : ${agent.dob}
