@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tombol 3 Bagian (onclick versi penuh)</title>
+<title>Tombol 3 Bagian (2 Baris)</title>
 <style>
   body {
     display: flex;
@@ -11,18 +11,19 @@
     align-items: center;
     min-height: 100vh;
     background-color: #000;
-    font-family: Times new roman, sans-serif;
+    font-family: "Times New Roman", sans-serif;
   }
 
+  /* Gunakan grid agar tombol tersusun otomatis */
   .grid-tombol {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, auto); /* 2 tombol per baris */
     gap: 20px;
+    justify-content: center;
   }
 
   .tombol {
-    border: 2px solid #00ff00;    
+    border: 2px solid #00ff00;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -31,11 +32,12 @@
     color: #00ff00;
     transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     padding: 0;
+    min-width: 220px;
   }
 
   .tombol:hover {
-    background-color: #00ff00; /* Hijau penuh saat hover */
-    color: #000; /* Teks jadi hitam agar kontras */
+    background-color: #00ff00;
+    color: #000;
     border-color: #00ff00;
   }
 
@@ -46,7 +48,6 @@
     padding: 6px 20px;
     position: relative;
     white-space: nowrap;
-    transition: color 0.25s ease;
   }
 
   .bagian-atas {
@@ -63,7 +64,7 @@
     font-size: 12px;
   }
 
-  /* Garis pemisah penuh menempel kiri dan kanan */
+  /* Garis pemisah */
   .bagian-atas::after,
   .bagian-tengah::after {
     content: "";
@@ -72,10 +73,9 @@
     left: 0;
     right: 0;
     height: 1px;
-    background-color: currentColor; /* mengikuti warna teks */
+    background-color: currentColor;
   }
 
-  /* Efek klik: sedikit menekan */
   .tombol:active {
     transform: scale(0.97);
   }
@@ -84,26 +84,22 @@
 <body>
 
 <div class="grid-tombol">
+  <!-- 🔹 Baris pertama -->
   <button class="tombol" onclick="window.location.href='manager.html'">
     <div class="bagian-atas">Komandan Puslat Kodiklatau</div>
-    <div class="bagian-tengah">fata Patria</div>
+    <div class="bagian-tengah">Fata Patria</div>
     <div class="bagian-bawah">Marsekal Pertama TNI</div>
   </button>
-</div>
 
-</style>
-</head>
-<body>
-
-<div class="grid-tombol">
   <button class="tombol" onclick="window.location.href='supervisor.html'">
     <div class="bagian-atas">KABID K/L</div>
     <div class="bagian-tengah">Yekti</div>
-    <div class="bagian-bawah">Kolonel Tek NRP </div>
+    <div class="bagian-bawah">Kolonel Tek NRP</div>
   </button>
 
+  <!-- 🔹 Baris kedua -->
   <button class="tombol" onclick="window.location.href='staff.html'">
-    <div class="bagian-atas">kadispers</div>
+    <div class="bagian-atas">Kadispers</div>
     <div class="bagian-tengah">Endriady, S.H</div>
     <div class="bagian-bawah">Letkol Adm NRP 522726</div>
   </button>
@@ -111,13 +107,7 @@
   <button class="tombol" onclick="window.location.href='https://drive.google.com/file/d/1NocuG9rBdBaAGtIMUGWv4YfOMdvaHhEy/view?usp=drive_link'">
     <div class="bagian-atas">Tur Adminku Dispers Puslat Kodiklatau</div>
     <div class="bagian-tengah">Andi Darmawan, S.E</div>
-    <div class="bagian-bawah">Penata Tk.I IIId Nip. 197905032009121009</div>
-  </button>
-
-  <button class="tombol" onclick="window.location.href='it-support.html'">
-    <div class="bagian-atas">IT Support</div>
-    <div class="bagian-tengah">Rizky Ananda</div>
-    <div class="bagian-bawah">Junior</div>
+    <div class="bagian-bawah">Penata Tk.I IIId NIP 197905032009121009</div>
   </button>
 </div>
 
