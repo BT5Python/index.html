@@ -50,6 +50,14 @@ input {
 
 .info-text { font-size: 14px; text-align: center; margin-top: 10px; }
 
+#member-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 10px;
+}
+
 .output-panel {
     flex: 1;
     padding: 20px;
@@ -77,22 +85,26 @@ input {
     border: 2px solid #00FF00;
     border-radius: 8px;
     display: none;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
 }
 
 .not-found { color: #FF0000; font-weight: bold; }
 
-.agent-profile button {
+.agent-profile button,
+#member-buttons button {
     background: transparent;
     border: 1px solid #00FF00;
     color: #00FF00;
     padding: 8px 12px;
-    margin-top: 10px;
     cursor: pointer;
     border-radius: 4px;
     font-family: 'Courier New', monospace;
+    transition: background 0.3s, color 0.3s;
 }
 
-.agent-profile button:hover {
+.agent-profile button:hover,
+#member-buttons button:hover {
     background-color: #00FF00;
     color: black;
 }
@@ -141,11 +153,20 @@ input {
 
 <script>
 const personnelDB = [
-    { code_name: "Andi Darmawan, S.E", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", doc: "1979-05-03", nationality: "Indonesia", birth_place: "Subang", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-3", unit: "DISPERS", specialization: "Cyber Reconnaissance / Counterintelligence", alias: "Ghostline, Echo Node", ops_completed: 43, success_rate: 96, photo: "https://i.pravatar.cc/150?img=12" },
-    { code_name: "Bima Pratama", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", doc: "1980-06-15", nationality: "Indonesia", birth_place: "Jakarta", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-2", unit: "DISPERS", specialization: "Field Ops", alias: "Shadow Hawk", ops_completed: 39, success_rate: 92, photo: "https://i.pravatar.cc/150?img=14" },
-    { code_name: "Citra Sari", real_name: "Penata Tk.I IIId", gender: "Perempuan", doc: "1985-03-22", nationality: "Indonesia", birth_place: "Bandung", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-1", unit: "DISPERS", specialization: "Signal Intelligence", alias: "Night Owl", ops_completed: 41, success_rate: 95, photo: "https://i.pravatar.cc/150?img=15" },
-    { code_name: "Dedi Hartono", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", doc: "1982-11-30", nationality: "Indonesia", birth_place: "Surabaya", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-4", unit: "DISPERS", specialization: "Recon Ops", alias: "Silver Fox", ops_completed: 37, success_rate: 90, photo: "https://i.pravatar.cc/150?img=16" },
-    { code_name: "VIXEN-21", real_name: "Nadia Putri", gender: "Perempuan", dob: "1993-09-21", nationality: "Indonesia", birth_place: "Bandung", status: "ACTIVE", clearance: "ALPHA-2", unit: "STEALTH", specialization: "Undercover Operations / Infiltration", alias: "Black Orchid", ops_completed: 58, success_rate: 89, photo: "https://i.pravatar.cc/150?img=12" }
+    // ==== 10 anggota DISPERS ====
+    { code_name: "Andi Darmawan, S.E", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", dob: "1979-05-03", nationality: "Indonesia", birth_place: "Subang", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-3", unit: "DISPERS", specialization: "Cyber Recon / Counterintelligence", alias: "Ghostline", ops_completed: 43, success_rate: 96, photo: "https://i.pravatar.cc/150?img=12" },
+    { code_name: "Bima Pratama", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", dob: "1980-06-15", nationality: "Indonesia", birth_place: "Jakarta", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-2", unit: "DISPERS", specialization: "Field Ops", alias: "Shadow Hawk", ops_completed: 39, success_rate: 92, photo: "https://i.pravatar.cc/150?img=14" },
+    { code_name: "Citra Sari", real_name: "Penata Tk.I IIId", gender: "Perempuan", dob: "1985-03-22", nationality: "Indonesia", birth_place: "Bandung", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-1", unit: "DISPERS", specialization: "Signal Intelligence", alias: "Night Owl", ops_completed: 41, success_rate: 95, photo: "https://i.pravatar.cc/150?img=15" },
+    { code_name: "Dedi Hartono", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", dob: "1982-11-30", nationality: "Indonesia", birth_place: "Surabaya", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-4", unit: "DISPERS", specialization: "Recon Ops", alias: "Silver Fox", ops_completed: 37, success_rate: 90, photo: "https://i.pravatar.cc/150?img=16" },
+    { code_name: "Erika Nurhaliza", real_name: "Penata Tk.I IIId", gender: "Perempuan", dob: "1987-07-09", nationality: "Indonesia", birth_place: "Medan", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-5", unit: "DISPERS", specialization: "Data Analyst", alias: "Crystal Byte", ops_completed: 45, success_rate: 93, photo: "https://i.pravatar.cc/150?img=17" },
+    { code_name: "Fauzan Ridho", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", dob: "1983-04-11", nationality: "Indonesia", birth_place: "Bogor", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-3", unit: "DISPERS", specialization: "Logistics", alias: "Iron Mule", ops_completed: 33, success_rate: 91, photo: "https://i.pravatar.cc/150?img=18" },
+    { code_name: "Gilang Setiawan", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", dob: "1981-01-19", nationality: "Indonesia", birth_place: "Cilacap", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-2", unit: "DISPERS", specialization: "Signal Jamming", alias: "Radio Ghost", ops_completed: 29, success_rate: 88, photo: "https://i.pravatar.cc/150?img=19" },
+    { code_name: "Hana Yuliana", real_name: "Penata Tk.I IIId", gender: "Perempuan", dob: "1988-10-24", nationality: "Indonesia", birth_place: "Solo", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-2", unit: "DISPERS", specialization: "Tactical Planning", alias: "Steel Rose", ops_completed: 40, success_rate: 94, photo: "https://i.pravatar.cc/150?img=20" },
+    { code_name: "Imam Rosyid", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", dob: "1984-02-08", nationality: "Indonesia", birth_place: "Padang", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-3", unit: "DISPERS", specialization: "Weapon Specialist", alias: "Gunmetal", ops_completed: 38, success_rate: 90, photo: "https://i.pravatar.cc/150?img=21" },
+    { code_name: "Joko Santoso", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", dob: "1986-09-14", nationality: "Indonesia", birth_place: "Semarang", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-1", unit: "DISPERS", specialization: "Encryption / Decryption", alias: "Cipher", ops_completed: 46, success_rate: 95, photo: "https://i.pravatar.cc/150?img=22" },
+
+    // Tambahan unit lain
+    { code_name: "VIXEN-21", real_name: "Nadia Putri", gender: "Perempuan", dob: "1993-09-21", nationality: "Indonesia", birth_place: "Bandung", status: "ACTIVE", clearance: "ALPHA-2", unit: "STEALTH", specialization: "Undercover Ops / Infiltration", alias: "Black Orchid", ops_completed: 58, success_rate: 89, photo: "https://i.pravatar.cc/150?img=23" }
 ];
 
 const searchInput = document.getElementById("search");
@@ -153,15 +174,26 @@ const dossierEl = document.getElementById("agent-dossier");
 const photoEl = document.getElementById("agent-photo");
 const memberBtnContainer = document.getElementById("member-buttons");
 const agentContainer = document.getElementById("agent-container");
+const outputPanel = document.getElementById("output");
 
-function typeWriter(element, text, callback, speed=5){
+function typeWriter(element, text, agent, callback, speed=2){
     element.textContent = "";
     let i = 0;
-    photoEl.style.display = "block"; 
+    let nameShown = false;
+
     function typing() {
         if(i < text.length){
             element.textContent += text.charAt(i);
+            if(!nameShown && element.textContent.includes("NAMA LENGKAP")){
+                nameShown = true;
+                setTimeout(()=>{
+                    photoEl.src = agent.photo;
+                    photoEl.style.display = "block";
+                    setTimeout(()=> photoEl.style.opacity = 1, 100);
+                }, 200);
+            }
             i++;
+            outputPanel.scrollTop = outputPanel.scrollHeight;
             setTimeout(typing, speed);
         } else if(callback) callback();
     }
@@ -181,6 +213,7 @@ function simulateAccessSequence(element, callback){
     function nextStep(){
         if(i<steps.length){
             element.textContent += steps[i] + "\n";
+            outputPanel.scrollTop = outputPanel.scrollHeight;
             i++;
             setTimeout(nextStep, 600);
         } else {
@@ -210,17 +243,14 @@ function showMemberButtons(keyword){
 }
 
 function displayAgent(agent){
-    // Hilangkan biodata/foto/tombol sebelumnya
     dossierEl.textContent = "";
     photoEl.style.display = "none";
-    const oldBtn = agentContainer.querySelector("button");
+    photoEl.style.opacity = 0;
+    photoEl.src = "";
+    const oldBtn = agentContainer.querySelector(".reset-btn");
     if(oldBtn) oldBtn.remove();
 
-    // Set foto baru
-    photoEl.src = agent.photo;
-    photoEl.alt = `Photo of ${agent.code_name}`;
-
-    simulateAccessSequence(dossierEl, ()=>{
+    simulateAccessSequence(dossierEl, ()=> {
         const dossier = `
 ========================================
 |   FILE: PERSONNEL PUSLAT KODILATAU   |
@@ -232,7 +262,7 @@ function displayAgent(agent){
 NAMA LENGKAP   : ${agent.code_name}
 PANGKAT        : ${agent.real_name}
 JENIS KELAMIN  : ${agent.gender}
-TANGGAL LAHIR  : ${agent.doc || agent.dob}
+TANGGAL LAHIR  : ${agent.dob}
 KEBANGSAAN     : ${agent.nationality}
 TEMPAT LAHIR   : ${agent.birth_place}
 JABATAN        : ${agent.status}
@@ -255,13 +285,15 @@ Unauthorized access or duplication is punishable under Directive 47-A.
 ========================================
 Retrieved on: ${new Date().toLocaleString()}
         `;
-        typeWriter(dossierEl, dossier, ()=>{
-            // Tombol hanya muncul untuk biodata ini
+        typeWriter(dossierEl, dossier, agent, ()=> {
             const backBtn = document.createElement("button");
+            backBtn.className = "reset-btn";
             backBtn.textContent = "Document";
             backBtn.onclick = () => {
-                dossierEl.textContent="Biodata will appear after clicking the member button";
-                photoEl.style.display="none";
+                dossierEl.textContent = "Biodata will appear after clicking the member button";
+                photoEl.style.display = "none";
+                photoEl.src = "";
+                photoEl.style.opacity = 0;
                 backBtn.remove();
             };
             agentContainer.appendChild(backBtn);
@@ -269,16 +301,16 @@ Retrieved on: ${new Date().toLocaleString()}
     });
 }
 
-// Reset saat input baru
 searchInput.addEventListener("input", ()=>{
     dossierEl.textContent="Biodata will appear after clicking the member button";
     photoEl.style.display="none";
-    const btn = agentContainer.querySelector("button");
+    photoEl.src = "";
+    photoEl.style.opacity = 0;
+    const btn = agentContainer.querySelector(".reset-btn");
     if(btn) btn.remove();
     memberBtnContainer.innerHTML="";
 });
 
-// Enter untuk menampilkan tombol anggota
 searchInput.addEventListener("keydown", e=>{
     if(e.key==="Enter"){
         const query = searchInput.value.trim();
