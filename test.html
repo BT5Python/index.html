@@ -72,8 +72,8 @@ input {
 }
 .not-found { color: #FF0000; font-weight: bold; }
 button {
-    margin-top: 15px;
-    padding: 10px 15px;
+    margin-top: 10px;
+    padding: 8px 12px;
     font-size: 16px;
     border: 1px solid #00FF00;
     background: transparent;
@@ -109,16 +109,16 @@ button:hover {
 <div class="main-container">
     <div class="search-panel">
         <h2>🔍 Data Lookup</h2>
-        <label for="search">Masukkan Code Name / Nama Lengkap / Keyword Unit:</label>
-        <input type="text" id="search" placeholder="Contoh: VIXEN-21 atau dispers">
+        <label for="search">Masukkan keyword unit:</label>
+        <input type="text" id="search" placeholder="Contoh: dispers">
         <div id="member-buttons"></div>
-        <p class="info-text">⚠️ Ketik nama/kode persis atau keyword unit, lalu tekan ENTER.</p>
+        <p class="info-text">⚠️ Ketik keyword unit, lalu tekan ENTER untuk menampilkan anggota.</p>
     </div>
 
     <div class="output-panel" id="output">
         <div class="agent-profile">
             <pre id="agent-dossier">
-⚠️ Tidak ada data yang ditampilkan. Ketik di panel kiri untuk mengakses file personel.
+⚠️ Biodata akan muncul setelah klik tombol anggota.
             </pre>
             <img id="agent-photo" src="" alt="Agent Photo" style="display:none;">
         </div>
@@ -137,16 +137,17 @@ const dossierEl = document.getElementById("agent-dossier");
 const photoEl = document.getElementById("agent-photo");
 const memberBtnContainer = document.getElementById("member-buttons");
 
-function typeWriter(element, text, speed = 10, callback){
-    element.textContent = "";
+// typeWriter sekarang menerima callback setelah selesai
+function typeWriter(element, text, speed=5, callback=null){
+    element.textContent="";
     let i=0;
     function typing(){
         if(i<text.length){
             element.textContent += text.charAt(i);
             i++;
             setTimeout(typing, speed);
-        } else if(callback){
-            callback();
+        } else {
+            if(callback) callback();
         }
     }
     typing();
@@ -166,7 +167,7 @@ function simulateAccessSequence(element, callback){
         if(i<steps.length){
             element.textContent += steps[i] + "\n";
             i++;
-            setTimeout(nextStep, 800);
+            setTimeout(nextStep,800);
         } else {
             setTimeout(callback,800);
         }
@@ -175,10 +176,9 @@ function simulateAccessSequence(element, callback){
 }
 
 function showDossier(agent){
-    simulateAccessSequence(dossierEl, () => {
+    simulateAccessSequence(dossierEl, ()=>{
         photoEl.src = agent.photo;
-        photoEl.style.display = "block";
-
+        photoEl.style.display="block";
         const dossier = `
 ========================================
 |   FILE: PERSONNEL PUSLAT KODIKLATAU   |
@@ -208,14 +208,15 @@ KNOWN ALIASES  : ${agent.alias}
 ========================================
 Retrieved on: ${new Date().toLocaleString()}
         `;
-        typeWriter(dossierEl, dossier, 5, () => {
+        // Tombol muncul hanya setelah biodata selesai mengetik
+        typeWriter(dossierEl, dossier, 5, ()=>{
             let addBtn = document.getElementById("additional-btn");
             if(addBtn) addBtn.remove();
             addBtn = document.createElement("button");
             addBtn.id="additional-btn";
             addBtn.textContent="🔙 Kembali ke daftar anggota";
-            addBtn.onclick = () => {
-                dossierEl.textContent = "⚠️ Klik tombol di panel kiri untuk mengakses file personel.";
+            addBtn.onclick = ()=>{
+                dossierEl.textContent = "⚠️ Biodata akan muncul setelah klik tombol anggota.";
                 photoEl.style.display="none";
             };
             dossierEl.parentElement.appendChild(addBtn);
@@ -233,33 +234,24 @@ function showMemberButtons(keyword){
         memberBtnContainer.appendChild(btn);
     });
     if(filtered.length===0){
-        memberBtnContainer.innerHTML='<p style="color:red;">Tidak ada anggota ditemukan.</p>';
+        memberBtnContainer.innerHTML='<span class="not-found">❌ Tidak ada anggota ditemukan untuk keyword ini.</span>';
     }
 }
 
-searchInput.addEventListener("keydown", function(e){
+// Hilangkan biodata lama saat mengetik baru keyword
+searchInput.addEventListener("input", ()=>{
+    dossierEl.textContent = "⚠️ Biodata akan muncul setelah klik tombol anggota.";
+    photoEl.style.display="none";
+    const addBtn = document.getElementById("additional-btn");
+    if(addBtn) addBtn.remove();
+    memberBtnContainer.innerHTML="";
+});
+
+// Enter untuk menampilkan tombol anggota
+searchInput.addEventListener("keydown", e=>{
     if(e.key==="Enter"){
-        const query=this.value.trim().toLowerCase();
-        if(!query){
-            photoEl.style.display="none";
-            dossierEl.textContent="⚠️ Tidak ada data yang ditampilkan. Ketik di panel kiri untuk mengakses file personel.";
-            memberBtnContainer.innerHTML="";
-            return;
-        }
-        // cek kalau keyword unit
-        const unitAgents = personnelDB.filter(p => p.unit.toLowerCase().includes(query));
-        if(unitAgents.length>0){
-            showMemberButtons(query);
-        } else {
-            memberBtnContainer.innerHTML="";
-            const agent = personnelDB.find(p=>p.code_name.toLowerCase()===query || p.real_name.toLowerCase()===query);
-            if(agent){
-                showDossier(agent);
-            } else {
-                photoEl.style.display="none";
-                dossierEl.innerHTML=`<span class="not-found">❌ ACCESS DENIED: No personnel record found for "${this.value}".</span>`;
-            }
-        }
+        const query = searchInput.value.trim();
+        if(query) showMemberButtons(query);
     }
 });
 </script>
