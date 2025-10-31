@@ -153,20 +153,16 @@ input {
 
 <script>
 const personnelDB = [
+    // ==== 4 anggota DISOPS ====
+    { nama_lengkap: "Endriady, S.H", pangkat: "Letkokl Adm", nrp/nip: "522726", jabatan: "kadispers", tanggal_lahir: "1971-06-14", tempat_lahir: "Subang", jenis_kelamis: "Laki-Laki", agama: "Islam", unit: "DISOPS", jab._sebelumnya: "Komandan", jab._saat ini: "Komandan Puslat Kodiklatau", tmt_jabatan: 2025-10-15, lamanya_dinas: 10, photo: "danpus pdh.jpg" },
+   
     // ==== 10 anggota DISPERS ====
-    { nama_lengkap: "Endriady, S.H", pangkat: "Penata Tk.I IIId", jenis_kelamin: "Laki-Laki", tanggal_lahir: "1979-05-03", kewarganegaraan: "Indonesia", tempat_lahir: "Subang", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-3", unit: "DISLOG", specialization: "Cyber Recon / Counterintelligence", alias: "Ghostline", ops_completed: 43, success_rate: 96, photo: "danpus pdh.jpg" },
-    { nama_lengkap: "Bima Pratama", pangkat: "Penata Tk.I IIId", jenis_kelamin: "Laki-Laki", tanggal_lahir: "1980-06-15", kewarganegaraan: "Indonesia", tempat_lahir: "Jakarta", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-2", unit: "DISPERS", specialization: "Field Ops", alias: "Shadow Hawk", ops_completed: 39, success_rate: 92, photo: "https://i.pravatar.cc/150?img=14" },
-    { nama_lengkap: "Citra Sari", pangkat: "Penata Tk.I IIId", jenis_kelamin: "Perempuan", tanggal_lahir: "1985-03-22", kewarganegaraan: "Indonesia", tempat_lahir: "Bandung", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-1", unit: "DISPERS", specialization: "Signal Intelligence", alias: "Night Owl", ops_completed: 41, success_rate: 95, photo: "https://i.pravatar.cc/150?img=15" },
-    { nama_lengkap: "Dedi Hartono", pangkat: "Penata Tk.I IIId", jenis_kelamin: "Laki-Laki", tanggal_lahir: "1982-11-30", kewarganegaraan: "Indonesia", tempat_lahir: "Surabaya", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-4", unit: "DISPERS", specialization: "Recon Ops", alias: "Silver Fox", ops_completed: 37, success_rate: 90, photo: "https://i.pravatar.cc/150?img=16" },
-    { nama_lengkap: "Erika Nurhaliza", pangkat: "Penata Tk.I IIId", jenis_kelamin: "Perempuan", tanggal_lahir: "1987-07-09", kewarganegaraan: "Indonesia", tempat_lahir: "Medan", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-5", unit: "DISPERS", specialization: "Data Analyst", alias: "Crystal Byte", ops_completed: 45, success_rate: 93, photo: "https://i.pravatar.cc/150?img=17" },
-    { nama_lengkap: "Fauzan Ridho", pangkat: "Penata Tk.I IIId", jenis_kelamin: "Laki-Laki", tanggal_lahir: "1983-04-11", kewarganegaraan: "Indonesia", tempat_lahir: "Bogor", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-3", unit: "DISPERS", specialization: "Logistics", alias: "Iron Mule", ops_completed: 33, success_rate: 91, photo: "https://i.pravatar.cc/150?img=18" },
-    { nama_lengkap: "Gilang Setiawan", pangkat: "Penata Tk.I IIId", jenis_kelamin: "Laki-Laki", tanggal_lahir: "1981-01-19", kewarganegaraan: "Indonesia", tempat_lahir: "Cilacap", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-2", unit: "DISPERS", specialization: "Signal Jamming", alias: "Radio Ghost", ops_completed: 29, success_rate: 88, photo: "https://i.pravatar.cc/150?img=19" },
-    { nama_lengkap: "Hana Yuliana", pangkat: "Penata Tk.I IIId", jenis_kelamin: "Perempuan", tanggal_lahir: "1988-10-24", kewarganegaraan: "Indonesia", tempat_lahir: "Solo", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-2", unit: "DISPERS", specialization: "Tactical Planning", alias: "Steel Rose", ops_completed: 40, success_rate: 94, photo: "https://i.pravatar.cc/150?img=20" },
-    { nama_lengkap: "Imam Rosyid", pangkat: "Penata Tk.I IIId", jenis_kelamin: "Laki-Laki", tanggal_lahir: "1984-02-08", kewarganegaraan: "Indonesia", tempat_lahir: "Padang", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-3", unit: "DISPERS", specialization: "Weapon Specialist", alias: "Gunmetal", ops_completed: 38, success_rate: 90, photo: "https://i.pravatar.cc/150?img=21" },
-    { nama_lengkap: "Joko Santoso", pangkat: "Penata Tk.I IIId", jenis_kelamin: "Laki-Laki", tanggal_lahir: "1986-09-14", kewarganegaraan: "Indonesia", tempat_lahir: "Semarang", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-1", unit: "DISPERS", specialization: "Encryption / Decryption", alias: "Cipher", ops_completed: 46, success_rate: 95, photo: "https://i.pravatar.cc/150?img=22" },
-
-    // Tambahan unit lain
-    { nama_lengkap: "VIXEN-21", pangkat: "Nadia Putri", jenis_kelamin: "Perempuan", tanggal_lahir: "1993-09-21", kewarganegaraan: "Indonesia", tempat_lahir: "Bandung", status: "ACTIVE", clearance: "ALPHA-2", unit: "STEALTH", specialization: "Undercover Ops / Infiltration", alias: "Black Orchid", ops_completed: 58, success_rate: 89, photo: "https://i.pravatar.cc/150?img=23" }
+    { nama_lengkap: "Endriady, S.H", pangkat: "Letkokl Adm", nrp/nip: "522726", jabatan: "kadispers", tanggal_lahir: "1971-06-14", tempat_lahir: "Subang", jenis_kelamis: "Laki-Laki", agama: "Islam", unit: "DISPERS", jab._sebelumnya: "Komandan", jab._saat ini: "Komandan Puslat Kodiklatau", tmt_jabatan: 2025-10-15, lamanya_dinas: 10, photo: "danpus pdh.jpg" },
+    
+    // ==== 10 anggota DISLOG ====
+    { nama_lengkap: "Endriady, S.H", pangkat: "Letkokl Adm", nrp/nip: "522726", jabatan: "kadispers", tanggal_lahir: "1971-06-14", tempat_lahir: "Subang", jenis_kelamis: "Laki-Laki", agama: "Islam", unit: "DISLOG", jab._sebelumnya: "Komandan", jab._saat ini: "Komandan Puslat Kodiklatau", tmt_jabatan: 2025-10-15, lamanya_dinas: 10, photo: "danpus pdh.jpg" },
+    
+    
 ];
 
 const searchInput = document.getElementById("search");
@@ -253,28 +249,28 @@ function displayAgent(agent){
     simulateAccessSequence(dossierEl, ()=> {
         const dossier = `
 ========================================
-|   FILE: PERSONNEL PUSLAT KODILATAU   |
+|   FILE: PERSONNEL PUSLAT KODIKLATAU   |
 |   CLASSIFICATION: RAHASIA            |
 ========================================
 
 [IDENTITY DATA]
 --------------------------------------------------
-NAMA LENGKAP   : ${agent.nama_lengkap}
-PANGKAT        : ${agent.pangkat}
-JENIS KELAMIN  : ${agent.jenis_kelamin}
-TANGGAL LAHIR  : ${agent.tanggal_lahir}
-KEWARGANEGARAAN: ${agent.kewarganegaraan}
-TEMPAT LAHIR   : ${agent.tempat_lahir}
-JABATAN        : ${agent.jabatan}
-CLEARANCE LVL  : ${agent.clearance}
+NAMA LENGKAP    : ${agent.nama_lengkap}
+PANGKAT         : ${agent.pangkat}
+NRP/NIP         : ${agent.nrp/nip}
+JABATAN         : ${agent.jabatan}
+TANGGAL LAHIR   : ${agent.tanggal_lahir}
+TEMPAT LAHIR    : ${agent.tempat_lahir}
+JENIS KELAMIN   : ${agent.jenis kelamin}
+AGAMA           : ${agent.agama}
 
 [OPERATIONAL RECORD]
 --------------------------------------------------
-ASSIGNED UNIT  : ${agent.unit}
-SPECIALIZATION : ${agent.specialization}
-COMPLETED OPS  : ${agent.ops_completed}
-SUCCESS RATE   : ${agent.success_rate}%
-KNOWN ALIASES  : ${agent.alias}
+ASSIGNED UNIT   : ${agent.unit}
+JAB. SEBELUMNYA : ${agent.jab._sebelumnya}
+JAB. SAAT INI   : ${agent.jab._saat_ini}
+TMT JABATAN     : ${agent.tmt_jabatan}
+LAMANYA DINAS   : ${agent.lamanya_dinas}Bln
 
 [SECURITY FOOTNOTE]
 --------------------------------------------------
