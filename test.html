@@ -17,13 +17,19 @@ body {
 header {
     background-color: black;
     color: #00FF00;
+    padding: 20px 0;
     text-align: center;
     line-height: 1.1;
-    padding: 10px 0;
 }
-.text { font-size: 75px; margin-bottom: 0; }
-.text1 { font-size: 30px; margin-top: 0; animation: blinkText 1s infinite; }
-
+.text {
+    font-size: 75px;
+    margin-bottom: 0;
+}
+.text1 {
+    font-size: 30px;
+    margin-top: 0;
+    animation: blinkText 1s infinite;
+}
 .main-container {
     display: flex;
     flex: 1;
@@ -37,7 +43,6 @@ header {
     border-right: 2px solid #00FF00;
 }
 .search-panel h2 { text-align: center; margin-bottom: 20px; }
-
 input {
     background: transparent;
     border: 1px solid #00FF00;
@@ -48,57 +53,50 @@ input {
     border-radius: 4px;
     outline: none;
 }
-
 .info-text { font-size: 14px; text-align: center; margin-top: 10px; }
-
 #member-buttons {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     gap: 10px;
     margin-top: 10px;
 }
-
 .output-panel {
     flex: 1;
     padding: 20px;
     overflow-y: auto;
     border-left: 2px solid #00FF00;
 }
-
 .agent-profile {
     display: flex;
-    flex-direction: row; /* horizontal layout */
     gap: 20px;
     align-items: flex-start;
     flex-wrap: wrap;
 }
-
 .agent-profile pre {
     flex: 1;
     white-space: pre-wrap;
     line-height: 1.4;
 }
-
 .agent-profile img {
     width: 135px;
     height: 185px;
     object-fit: cover;
     border: 2px solid #00FF00;
     border-radius: 8px;
-    display: block;
+    display: none;
     opacity: 0;
     transition: opacity 0.6s ease-in-out;
 }
-
 .doc-buttons {
     display: flex;
     gap: 10px;
     margin-top: 15px;
-    flex-wrap: wrap;
 }
-
+.not-found { color: #FF0000; font-weight: bold; }
 .agent-profile button,
-#member-buttons button {
+#member-buttons button,
+.doc-buttons button {
     background: transparent;
     border: 1px solid #00FF00;
     color: #00FF00;
@@ -109,24 +107,23 @@ input {
     transition: background 0.3s, color 0.3s;
 }
 .agent-profile button:hover,
-#member-buttons button:hover { background-color: #00FF00; color: black; }
-
-.not-found { color: #FF0000; font-weight: bold; }
-
+#member-buttons button:hover,
+.doc-buttons button:hover {
+    background-color: #00FF00;
+    color: black;
+}
 @media (max-width: 768px) {
     .main-container { flex-direction: column; }
     .search-panel, .output-panel { width: 100%; border: none; border-bottom: 1px solid #00FF00; }
     .agent-profile { flex-direction: column; align-items: center; }
 }
-
 .agent-profile pre::after {
     content: "_";
     animation: blink 1s infinite;
 }
-
 @keyframes blinkText {
-    0%,50%,100% { opacity:1; }
-    25%,75% { opacity:0; }
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
 }
 </style>
 </head>
@@ -163,7 +160,6 @@ const personnelDB = [
     { nama_lengkap: "Muhammad Muslih", pangkat: "Penata Tk.I IIId", nrp_nip: "154267", jabatan: "Analis Data", korp_fung_spes: "Adm", tanggal_lahir: "24/10/1988", tempat_lahir: "Solo", agama: "Islam", satker: "DISPERS", specialization: "Tactical Planning", ops_completed: "24/06/2025", photo: "LETKOL mUSLIH.jpg" }
 ];
 
-// === Utility: Hitung selisih bulan ===
 function getMonthsDiff(startDateStr) {
     if (!startDateStr) return "-";
     const [day, month, year] = startDateStr.split("/").map(Number);
@@ -253,8 +249,9 @@ function displayAgent(agent){
     photoEl.style.opacity = 0;
     photoEl.src = "";
 
-    const oldBtn = agentContainer.querySelector(".reset-btn");
-    if(oldBtn) oldBtn.remove();
+    // Hapus tombol dokumen lama jika ada
+    const oldDocs = agentContainer.querySelector(".doc-buttons");
+    if(oldDocs) oldDocs.remove();
 
     simulateAccessSequence(dossierEl, ()=> {
         const monthsSince = getMonthsDiff(agent.ops_completed);
@@ -292,6 +289,7 @@ Unauthorized access or duplication is punishable under applicable law.
 Retrieved on: ${new Date().toLocaleString()}
         `;
         typeWriter(dossierEl, dossier, agent, ()=> {
+            // Tambah tombol dokumen
             const docContainer = document.createElement("div");
             docContainer.className = "doc-buttons";
             const docs = [
@@ -312,8 +310,8 @@ Retrieved on: ${new Date().toLocaleString()}
 
 searchInput.addEventListener("input", ()=>{
     dossierEl.textContent="Biodata will appear after clicking the member button";
-    const resetBtn = agentContainer.querySelector(".reset-btn");
-    if(resetBtn) resetBtn.remove();
+    const oldDocs = agentContainer.querySelector(".doc-buttons");
+    if(oldDocs) oldDocs.remove();
     memberBtnContainer.innerHTML="";
 });
 
