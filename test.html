@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tombol 3 Bagian (Jarak Rata & Dinamis)</title>
+<title>Tombol 3 Bagian (Lebar Dinamis)</title>
 <style>
   body {
     display: flex;
@@ -14,15 +14,15 @@
     font-family: "Times New Roman", sans-serif;
   }
 
-  /* Setiap baris tombol */
-  .baris-tombol {
-    display: flex;
+  /* Grid: dua tombol per baris */
+  .grid-tombol {
+    display: grid;
+    grid-template-columns: repeat(2, auto); /* otomatis menyesuaikan isi */
+    gap: 20px;
     justify-content: center;
-    gap: 20px; /* jarak antar tombol */
-    margin-bottom: 20px; /* jarak antar baris */
-    flex-wrap: wrap; /* biar responsif di layar kecil */
   }
 
+  /* Tombol utama */
   .tombol {
     border: 2px solid #00ff00;
     cursor: pointer;
@@ -48,7 +48,7 @@
     text-align: center;
     padding: 6px 20px;
     position: relative;
-    white-space: nowrap;
+    white-space: nowrap; /* cegah teks turun ke baris baru */
   }
 
   .bagian-atas {
@@ -65,6 +65,7 @@
     font-size: 12px;
   }
 
+  /* Garis pemisah */
   .bagian-atas::after,
   .bagian-tengah::after {
     content: "";
@@ -76,6 +77,7 @@
     background-color: currentColor;
   }
 
+  /* Efek klik */
   .tombol:active {
     transform: scale(0.97);
   }
@@ -83,8 +85,8 @@
 </head>
 <body>
 
-<!-- 🔹 Baris pertama -->
-<div class="baris-tombol">
+<div class="grid-tombol">
+  <!-- 🔹 Baris pertama -->
   <button class="tombol" onclick="window.location.href='manager.html'">
     <div class="bagian-atas">Komandan Puslat Kodiklatau</div>
     <div class="bagian-tengah">Fata Patria</div>
@@ -96,10 +98,8 @@
     <div class="bagian-tengah">Yekti</div>
     <div class="bagian-bawah">Kolonel Tek NRP</div>
   </button>
-</div>
 
-<!-- 🔹 Baris kedua -->
-<div class="baris-tombol">
+  <!-- 🔹 Baris kedua -->
   <button class="tombol" onclick="window.location.href='staff.html'">
     <div class="bagian-atas">Kadispers</div>
     <div class="bagian-tengah">Endriady, S.H</div>
