@@ -1,187 +1,224 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PUSLAT KODIKLATAU - Intelligence Database</title>
-<style>
-body {
-    font-family: 'Courier New', monospace;
-    background-color: black;
-    color: #00FF00;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-header {
-    background-color: black;
-    color: #00FF00;
-    padding: 20px;
-    text-align: center;
-}
-.text { font-size: 75px; }
-.text1 { font-size: 30px; }
-.main-container {
-    display: flex;
-    flex: 1;
-    border-top: 1px solid #00FF00;
-}
-.search-panel {
-    width: 35%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    border-right: 2px solid #00FF00;
-}
-.search-panel h2 { text-align: center; margin-bottom: 20px; }
-input {
-    background: transparent;
-    border: 1px solid #00FF00;
-    color: #00FF00;
-    padding: 10px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    border-radius: 4px;
-    outline: none;
-}
-.info-text { font-size: 14px; text-align: center; margin-top: 10px; }
-.output-panel {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    border-left: 2px solid #00FF00;
-}
-.agent-profile {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    flex-wrap: wrap;
-}
-.agent-profile pre {
-    flex: 1;
-    white-space: pre-wrap;
-    line-height: 1.4;
-}
-.agent-profile img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border: 2px solid #00FF00;
-    border-radius: 8px;
-}
-.not-found { color: #FF0000; font-weight: bold; }
-button {
-    margin-top: 10px;
-    padding: 8px 12px;
-    font-size: 16px;
-    border: 1px solid #00FF00;
-    background: transparent;
-    color: #00FF00;
-    cursor: pointer;
-    border-radius: 4px;
-}
-button:hover {
-    background-color: #00FF00;
-    color: black;
-}
-.agent-profile pre::after {
-    content: "_";
-    animation: blink 1s infinite;
-}
-@keyframes blink {
-    0%,50%,100% { opacity:1; }
-    25%,75% { opacity:0; }
-}
-@media (max-width:768px){
-    .main-container { flex-direction: column; }
-    .search-panel, .output-panel { width:100%; border:none; border-bottom:1px solid #00FF00; }
-    .agent-profile { flex-direction: column; align-items: center; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUSLAT KODIKLATAU - Intelligence Database</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: black;
+            color: #00FF00;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: black;
+            color: #00FF00;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .text { font-size: 75px; }
+        .text1 { font-size: 30px; }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            border-top: 1px solid #00FF00;
+        }
+
+        .search-panel {
+            width: 35%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #00FF00;
+        }
+
+        .search-panel h2 { text-align: center; margin-bottom: 20px; }
+
+        input {
+            background: transparent;
+            border: 1px solid #00FF00;
+            color: #00FF00;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .info-text { font-size: 14px; text-align: center; margin-top: 10px; }
+
+        .output-panel {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            border-left: 2px solid #00FF00;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .agent-profile {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .agent-profile pre {
+            flex: 1;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .agent-profile img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 2px solid #00FF00;
+            border-radius: 8px;
+        }
+
+        .not-found { color: #FF0000; font-weight: bold; }
+
+        #member-buttons button, #additional-btn {
+            background: transparent;
+            border: 1px solid #00FF00;
+            color: #00FF00;
+            padding: 8px 12px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        #member-buttons button:hover, #additional-btn:hover {
+            background-color: #00FF00;
+            color: black;
+        }
+
+        @media (max-width: 768px) {
+            .main-container { flex-direction: column; }
+            .search-panel, .output-panel { width: 100%; border: none; border-bottom: 1px solid #00FF00; }
+            .agent-profile { flex-direction: column; align-items: center; }
+        }
+
+        /* cursor blink */
+        .agent-profile pre::after {
+            content: "_";
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0; }
+        }
+    </style>
 </head>
 <body>
-<header>
-    <h1 class="text">PUSLAT KODIKLATAU</h1>
-    <h1 class="text1">INTELLIGENCE DATABASE TERMINAL</h1>
-</header>
+    <header>
+        <h1 class="text">PUSLAT KODIKLATAU</h1>
+        <h1 class="text1">INTELLIGENCE DATABASE TERMINAL</h1>
+    </header>
 
-<div class="main-container">
-    <div class="search-panel">
-        <h2>🔍 Data Lookup</h2>
-        <label for="search">Masukkan keyword unit:</label>
-        <input type="text" id="search" placeholder="Contoh: dispers">
-        <div id="member-buttons"></div>
-        <p class="info-text">⚠️ Ketik keyword unit, lalu tekan ENTER untuk menampilkan anggota.</p>
-    </div>
+    <div class="main-container">
+        <div class="search-panel">
+            <h2>🔍 Data Lookup</h2>
+            <label for="search">Masukkan Keyword Unit / Nama Lengkap:</label>
+            <input type="text" id="search" placeholder="Contoh: dispers atau Nadia Putri">
+            <p class="info-text">⚠️ Ketik keyword lalu tekan ENTER untuk menampilkan daftar anggota.</p>
+            <div id="member-buttons"></div>
+        </div>
 
-    <div class="output-panel" id="output">
-        <div class="agent-profile">
-            <pre id="agent-dossier">
+        <div class="output-panel" id="output">
+            <div class="agent-profile">
+                <pre id="agent-dossier">
 ⚠️ Biodata akan muncul setelah klik tombol anggota.
-            </pre>
-            <img id="agent-photo" src="" alt="Agent Photo" style="display:none;">
+                </pre>
+                <img id="agent-photo" src="" alt="Agent Photo" style="display:none;">
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-const personnelDB = [
-    { code_name: "Andi Darmawan, S.E", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", dob: "1979-05-03", nationality: "Indonesia", birth_place: "Subang", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-3", unit: "DISPERS", specialization: "Cyber Reconnaissance / Counterintelligence", alias: "Ghostline, Echo Node", ops_completed: 43, success_rate: 96, photo: "https://i.pravatar.cc/150?img=12" },
-    { code_name: "VIXEN-21", real_name: "Nadia Putri", gender: "Female", dob: "1993-09-21", nationality: "Indonesia", birth_place: "Bandung", status: "ACTIVE", clearance: "ALPHA-2", unit: "STEALTH INTEL UNIT", specialization: "Undercover Operations / Infiltration", alias: "Black Orchid", ops_completed: 58, success_rate: 89, photo: "https://i.pravatar.cc/150?img=12" },
-    { code_name: "FALCON-03", real_name: "Arif Nugraha", gender: "Male", dob: "1988-07-02", nationality: "Indonesia", birth_place: "Surabaya", status: "INACTIVE", clearance: "BETA-1", unit: "TACTICAL RESPONSE TEAM", specialization: "Field Strategy / Weapons Expert", alias: "Falcon", ops_completed: 71, success_rate: 93, photo: "https://i.pravatar.cc/150?img=14" }
-];
+    <script>
+        const personnelDB = [
+            { code_name: "Andi Darmawan, S.E", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", doc: "1979-05-03", nationality: "Indonesia", birth_place: "Subang", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-3", unit: "DISPERS", specialization: "Cyber Reconnaissance / Counterintelligence", alias: "Ghostline, Echo Node", ops_completed: 43, success_rate: 96, photo: "https://i.pravatar.cc/150?img=12" },
+            { code_name: "Bima Pratama", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", doc: "1980-06-15", nationality: "Indonesia", birth_place: "Jakarta", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-2", unit: "DISPERS", specialization: "Field Ops", alias: "Shadow Hawk", ops_completed: 39, success_rate: 92, photo: "https://i.pravatar.cc/150?img=14" },
+            { code_name: "Citra Sari", real_name: "Penata Tk.I IIId", gender: "Perempuan", doc: "1985-03-22", nationality: "Indonesia", birth_place: "Bandung", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-1", unit: "DISPERS", specialization: "Signal Intelligence", alias: "Night Owl", ops_completed: 41, success_rate: 95, photo: "https://i.pravatar.cc/150?img=15" },
+            { code_name: "Dedi Hartono", real_name: "Penata Tk.I IIId", gender: "Laki-Laki", doc: "1982-11-30", nationality: "Indonesia", birth_place: "Surabaya", status: "Tur Adminper Dispers Puslat Kodiklatau", clearance: "OMEGA-4", unit: "DISPERS", specialization: "Recon Ops", alias: "Silver Fox", ops_completed: 37, success_rate: 90, photo: "https://i.pravatar.cc/150?img=16" },
+            { code_name: "VIXEN-21", real_name: "Nadia Putri", gender: "Female", dob: "1993-09-21", nationality: "Indonesia", birth_place: "Bandung", status: "ACTIVE", clearance: "ALPHA-2", unit: "STEALTH", specialization: "Undercover Operations / Infiltration", alias: "Black Orchid", ops_completed: 58, success_rate: 89, photo: "https://i.pravatar.cc/150?img=12" }
+        ];
 
-const searchInput = document.getElementById("search");
-const dossierEl = document.getElementById("agent-dossier");
-const photoEl = document.getElementById("agent-photo");
-const memberBtnContainer = document.getElementById("member-buttons");
+        const searchInput = document.getElementById("search");
+        const dossierEl = document.getElementById("agent-dossier");
+        const photoEl = document.getElementById("agent-photo");
+        const memberBtnContainer = document.getElementById("member-buttons");
+        const outputPanel = document.getElementById("output");
 
-// typeWriter sekarang menerima callback setelah selesai
-function typeWriter(element, text, speed=5, callback=null){
-    element.textContent="";
-    let i=0;
-    function typing(){
-        if(i<text.length){
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(typing, speed);
-        } else {
-            if(callback) callback();
+        function typeWriter(element, text, callback, speed=5) {
+            element.textContent = "";
+            let i = 0;
+            function typing() {
+                if(i < text.length){
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typing, speed);
+                } else if(callback) callback();
+            }
+            typing();
         }
-    }
-    typing();
-}
 
-function simulateAccessSequence(element, callback){
-    const steps = [
-        ">>> initializing connection...",
-        ">>> ACCESSING DATABASE NODE...",
-        ">>> VERIFYING SECURITY CLEARANCE...",
-        ">>> CLEARANCE LEVEL VERIFIED ✔",
-        ">>> RETRIEVING PERSONNEL DATA..."
-    ];
-    let i=0;
-    element.textContent="";
-    function nextStep(){
-        if(i<steps.length){
-            element.textContent += steps[i] + "\n";
-            i++;
-            setTimeout(nextStep,800);
-        } else {
-            setTimeout(callback,800);
+        function simulateAccessSequence(element, callback){
+            const steps = [
+                ">>> initializing connection...",
+                ">>> ACCESSING DATABASE NODE...",
+                ">>> VERIFYING SECURITY CLEARANCE...",
+                ">>> CLEARANCE LEVEL VERIFIED ✔",
+                ">>> RETRIEVING PERSONNEL DATA..."
+            ];
+            let i=0;
+            element.textContent="";
+            function nextStep(){
+                if(i<steps.length){
+                    element.textContent += steps[i] + "\n";
+                    i++;
+                    setTimeout(nextStep, 600);
+                } else {
+                    setTimeout(callback, 600);
+                }
+            }
+            nextStep();
         }
-    }
-    nextStep();
-}
 
-function showDossier(agent){
-    simulateAccessSequence(dossierEl, ()=>{
-        photoEl.src = agent.photo;
-        photoEl.style.display="block";
-        const dossier = `
+        function showMemberButtons(keyword){
+            memberBtnContainer.innerHTML = "";
+            const filtered = personnelDB.filter(p => p.unit.toLowerCase().includes(keyword.toLowerCase()));
+            if(filtered.length===0){
+                memberBtnContainer.innerHTML='<span class="not-found">❌ Tidak ada anggota ditemukan untuk keyword ini.</span>';
+            } else {
+                filtered.forEach(agent=>{
+                    const btn = document.createElement("button");
+                    btn.textContent = agent.code_name;
+                    btn.onclick = ()=> displayAgent(agent);
+                    memberBtnContainer.appendChild(btn);
+                });
+            }
+        }
+
+        function displayAgent(agent){
+            photoEl.src = agent.photo;
+            photoEl.style.display="block";
+
+            simulateAccessSequence(dossierEl, ()=>{
+                const dossier = `
 ========================================
-|   FILE: PERSONNEL PUSLAT KODIKLATAU   |
+|   FILE: PERSONNEL PUSLAT KODILATAU   |
 |   CLASSIFICATION: RAHASIA            |
 ========================================
 
@@ -190,7 +227,7 @@ function showDossier(agent){
 NAMA LENGKAP   : ${agent.code_name}
 PANGKAT        : ${agent.real_name}
 JENIS KELAMIN  : ${agent.gender}
-TANGGAL LAHIR  : ${agent.dob}
+TANGGAL LAHIR  : ${agent.doc || agent.dob}
 KEBANGSAAN     : ${agent.nationality}
 TEMPAT LAHIR   : ${agent.birth_place}
 JABATAN        : ${agent.status}
@@ -204,56 +241,46 @@ COMPLETED OPS  : ${agent.ops_completed}
 SUCCESS RATE   : ${agent.success_rate}%
 KNOWN ALIASES  : ${agent.alias}
 
+[SECURITY FOOTNOTE]
+--------------------------------------------------
+This dossier is property of the Directorate of Covert Operations.
+Unauthorized access or duplication is punishable under Directive 47-A.
+
 <END OF FILE>
 ========================================
 Retrieved on: ${new Date().toLocaleString()}
-        `;
-        // Tombol muncul hanya setelah biodata selesai mengetik
-        typeWriter(dossierEl, dossier, 5, ()=>{
-            let addBtn = document.getElementById("additional-btn");
+                `;
+                typeWriter(dossierEl, dossier, ()=>{
+                    // Tombol tambahan muncul setelah biodata selesai mengetik
+                    const addBtn = document.createElement("button");
+                    addBtn.id="additional-btn";
+                    addBtn.textContent = "Kembali ke daftar anggota";
+                    addBtn.onclick = ()=> {
+                        dossierEl.textContent="⚠️ Biodata akan muncul setelah klik tombol anggota.";
+                        photoEl.style.display="none";
+                        addBtn.remove();
+                    };
+                    outputPanel.appendChild(addBtn);
+                });
+            });
+        }
+
+        // Saat mengetik keyword baru, hapus biodata lama dan tombol
+        searchInput.addEventListener("input", ()=>{
+            dossierEl.textContent="⚠️ Biodata akan muncul setelah klik tombol anggota.";
+            photoEl.style.display="none";
+            const addBtn = document.getElementById("additional-btn");
             if(addBtn) addBtn.remove();
-            addBtn = document.createElement("button");
-            addBtn.id="additional-btn";
-            addBtn.textContent="🔙 Kembali ke daftar anggota";
-            addBtn.onclick = ()=>{
-                dossierEl.textContent = "⚠️ Biodata akan muncul setelah klik tombol anggota.";
-                photoEl.style.display="none";
-            };
-            dossierEl.parentElement.appendChild(addBtn);
+            memberBtnContainer.innerHTML="";
         });
-    });
-}
 
-function showMemberButtons(keyword){
-    memberBtnContainer.innerHTML="";
-    const filtered = personnelDB.filter(p => p.unit.toLowerCase().includes(keyword.toLowerCase()));
-    filtered.forEach(agent=>{
-        const btn = document.createElement("button");
-        btn.textContent=agent.code_name;
-        btn.onclick=()=> showDossier(agent);
-        memberBtnContainer.appendChild(btn);
-    });
-    if(filtered.length===0){
-        memberBtnContainer.innerHTML='<span class="not-found">❌ Tidak ada anggota ditemukan untuk keyword ini.</span>';
-    }
-}
-
-// Hilangkan biodata lama saat mengetik baru keyword
-searchInput.addEventListener("input", ()=>{
-    dossierEl.textContent = "⚠️ Biodata akan muncul setelah klik tombol anggota.";
-    photoEl.style.display="none";
-    const addBtn = document.getElementById("additional-btn");
-    if(addBtn) addBtn.remove();
-    memberBtnContainer.innerHTML="";
-});
-
-// Enter untuk menampilkan tombol anggota
-searchInput.addEventListener("keydown", e=>{
-    if(e.key==="Enter"){
-        const query = searchInput.value.trim();
-        if(query) showMemberButtons(query);
-    }
-});
-</script>
+        // Enter untuk menampilkan tombol anggota
+        searchInput.addEventListener("keydown", e=>{
+            if(e.key==="Enter"){
+                const query = searchInput.value.trim();
+                if(query) showMemberButtons(query);
+            }
+        });
+    </script>
 </body>
 </html>
