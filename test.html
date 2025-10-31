@@ -303,7 +303,6 @@ Retrieved on: ${new Date().toLocaleString()}
 
 searchInput.addEventListener("input", ()=>{
     dossierEl.textContent="Biodata will appear after clicking the member button";
-    const btn = agentContainer.querySelector(".reset-btn");
     if(btn) btn.remove();
     memberBtnContainer.innerHTML="";
 });
