@@ -270,11 +270,11 @@ CLEARANCE LVL  : ${agent.clearance}
 
 [OPERATIONAL RECORD]
 --------------------------------------------------
-ASSIGNED UNIT  : ${agent.unit}
-SPECIALIZATION : ${agent.specialization}
-COMPLETED OPS  : ${agent.ops_completed}
-SUCCESS RATE   : ${agent.success_rate}%
-KNOWN ALIASES  : ${agent.alias}
+SATKER         : ${agent.unit}
+JAB LAMA       : ${agent.specialization}
+TMT JABATAN    : ${agent.ops_completed}
+LAMA DINAS     : ${agent.success_rate}%
+KOPR/SPES/FUNG : ${agent.alias}
 
 [SECURITY FOOTNOTE]
 --------------------------------------------------
@@ -290,8 +290,7 @@ Retrieved on: ${new Date().toLocaleString()}
             backBtn.className = "reset-btn";
             backBtn.textContent = "Document";
             backBtn.onclick = () => {
-                window.location.href = "https://drive.google.com/file/d/1NocuG9rBdBaAGtIMUGWv4YfOMdvaHhEy/view?usp=drive_link";
-                window.location.href = "https://drive.google.com/file/d/1_8j-ZAwPz3lBd9wvWO8AsBfW_3wZsUCc/view?usp=drive_link";   
+                window.location.href = "https://drive.google.com/file/d/1NocuG9rBdBaAGtIMUGWv4YfOMdvaHhEy/view?usp=drive_link";                 
                 photoEl.style.display = "none";
                 photoEl.src = "";
                 photoEl.style.opacity = 0;
