@@ -79,6 +79,7 @@ input {
     object-fit: cover;
     border: 2px solid #00FF00;
     border-radius: 8px;
+    display: none;
 }
 
 .not-found { color: #FF0000; font-weight: bold; }
@@ -136,7 +137,7 @@ input {
             <pre id="agent-dossier">
 ⚠️ Biodata akan muncul setelah klik tombol anggota.
             </pre>
-            <img id="agent-photo" src="" alt="Agent Photo" style="display:none;">
+            <img id="agent-photo" src="" alt="Agent Photo">
         </div>
     </div>
 </div>
@@ -156,9 +157,10 @@ const photoEl = document.getElementById("agent-photo");
 const memberBtnContainer = document.getElementById("member-buttons");
 const outputPanel = document.getElementById("output");
 
-function typeWriter(element, text, callback, speed=5) {
+function typeWriter(element, text, callback, speed=5){
     element.textContent = "";
     let i = 0;
+    photoEl.style.display = "block"; // Foto muncul saat mengetik
     function typing() {
         if(i < text.length){
             element.textContent += text.charAt(i);
@@ -208,7 +210,6 @@ function showMemberButtons(keyword){
 
 function displayAgent(agent){
     photoEl.src = agent.photo;
-    photoEl.style.display="block";
 
     simulateAccessSequence(dossierEl, ()=>{
         const dossier = `
