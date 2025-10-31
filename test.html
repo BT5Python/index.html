@@ -136,7 +136,7 @@ input {
     <div class="search-panel">
         <h2>🔍 Data Lookup</h2>
         <label for="search">Masukkan Keyword Unit / Nama Lengkap:</label>
-        <input type="text" id="search" placeholder="Contoh: ">
+        <input type="text" id="search" placeholder="Contoh: DISPERS / Andi">
         <p class="info-text">⚠️ Ketik keyword lalu tekan ENTER untuk menampilkan daftar anggota.</p>
         <div id="member-buttons"></div>
     </div>
@@ -146,28 +146,30 @@ input {
             <pre id="agent-dossier">
 ⚠️ Biodata akan muncul setelah klik tombol anggota.
             </pre>
-            <img id="agent-photo" src="" alt="Agent Photo">
+            <img id="agent-photo" src="" alt="Foto Personel">
         </div>
     </div>
 </div>
 
 <script>
 const personnelDB = [
-    // ==== 10 anggota DISPERS ====
-    { nama_lengkap: "Endriady, S.H", pangkat: "Letkol Adm", nrp_nip: "522726", jabatan: "kadispers", korp_fung_spes: "Indonesia", tanggal_lahir: "Subang", tempat_lahir: "Tur Adminper Dispers Puslat Kodiklatau", agama: "OMEGA-3", satker: "DISLOG", specialization: "Cyber Recon / Counterintelligence", ops_completed: 43, success_rate: 96, photo: "danpus pdh.jpg" },
-    { nama_lengkap: "Bima Pratama", pangkat: "Penata Tk.I IIId", nrp_nip: "543628", jabatan: "1980-06-15", korp_fung_spes: "Indonesia", tanggal_lahir: "Jakarta", tempat_lahir: "Tur Adminper Dispers Puslat Kodiklatau", agama: "OMEGA-2", satker: "DISPERS", specialization: "Field Ops", ops_completed: 39, success_rate: 92, photo: "kabid kl new.jpg" },
-    { nama_lengkap: "Andi Darmawan, S.E", pangkat: "Penata Tk.I IIId", nrp_nip: "197905032009121002", jabatan: "Tur Adminpers Dispers", korp_fung_spes: "Adm", tanggal_lahir: "03/05/1979", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "21/03/2025", success_rate: 7, photo: "https://i.pravatar.cc/150?img=15" },
-    { nama_lengkap: "Dedi Hartono", pangkat: "Penata Tk.I IIId", nrp_nip: "4215896", jabatan: "1982-11-30", korp_fung_spes: "Indonesia", tanggal_lahir: "Surabaya", tempat_lahir: "Tur Adminper Dispers Puslat Kodiklatau", agama: "OMEGA-4", satker: "DISPERS", specialization: "Recon Ops", ops_completed: 37, success_rate: 90, photo: "https://i.pravatar.cc/150?img=16" },
-    { nama_lengkap: "Erika Nurhaliza", pangkat: "Penata Tk.I IIId", nrp_nip: "124536", jabatan: "1987-07-09", korp_fung_spes: "Indonesia", tanggal_lahir: "Medan", tempat_lahir: "Tur Adminper Dispers Puslat Kodiklatau", agama: "OMEGA-5", satker: "DISPERS", specialization: "Data Analyst", ops_completed: 45, success_rate: 93, photo: "https://i.pravatar.cc/150?img=17" },
-    { nama_lengkap: "Fauzan Ridho", pangkat: "Penata Tk.I IIId", nrp_nip: "125687", jabatan: "1983-04-11", korp_fung_spes: "Indonesia", tanggal_lahir: "Bogor", tempat_lahir: "Tur Adminper Dispers Puslat Kodiklatau", agama: "OMEGA-3", satker: "DISPERS", specialization: "Logistics", ops_completed: 33, success_rate: 91, photo: "https://i.pravatar.cc/150?img=18" },
-    { nama_lengkap: "Gilang Setiawan", pangkat: "Penata Tk.I IIId", nrp_nip: "145268", jabatan: "1981-01-19", korp_fung_spes: "Indonesia", tanggal_lahir: "Cilacap", tempat_lahir: "Tur Adminper Dispers Puslat Kodiklatau", agama: "OMEGA-2", satker: "DISPERS", specialization: "Signal Jamming", success_rate: 88, photo: "https://i.pravatar.cc/150?img=19" },
-    { nama_lengkap: "Hana Yuliana", pangkat: "Penata Tk.I IIId", nrp_nip: "154267", jabatan: "1988-10-24", korp_fung_spes: "Indonesia", tanggal_lahir: "Solo", tempat_lahir: "Tur Adminper Dispers Puslat Kodiklatau", agama: "OMEGA-2", satker: "DISPERS", specialization: "Tactical Planning", ops_completed: 40, success_rate: 94, photo: "https://i.pravatar.cc/150?img=20" },
-    { nama_lengkap: "Imam Rosyid", pangkat: "Penata Tk.I IIId", nrp_nip: "152346", jabatan: "1984-02-08", korp_fung_spes: "Indonesia", tanggal_lahir: "Padang", tempat_lahir: "Tur Adminper Dispers Puslat Kodiklatau", agama: "OMEGA-3", satker: "DISPERS", specialization: "Weapon Specialist", ops_completed: 38, success_rate: 90, photo: "https://i.pravatar.cc/150?img=21" },
-    { nama_lengkap: "Joko Santoso", pangkat: "Penata Tk.I IIId", nrp_nip: "114455", jabatan: "1986-09-14", korp_fung_spes: "Indonesia", tanggal_lahir: "Semarang", tempat_lahir: "Tur Adminper Dispers Puslat Kodiklatau", agama: "OMEGA-1", satker: "DISPERS", specialization: "Encryption / Decryption", ops_completed: 46, success_rate: 95, photo: "https://i.pravatar.cc/150?img=22" },
-
-    // Tambahan unit lain
-    { nama_lengkap: "VIXEN-21", pangkat: "Nadia Putri", nrp_nip: "Perempuan", jabatan: "1993-09-21", korp_fung_spes: "Indonesia", tanggal_lahir: "Bandung", tempat_lahir: "ACTIVE", agama: "ALPHA-2", satker: "DISOPS", specialization: "Undercover Ops / Infiltration", ops_completed: 58, success_rate: 89, photo: "https://i.pravatar.cc/150?img=23" }
+    { nama_lengkap: "Endriady, S.H", pangkat: "Letkol Adm", nrp_nip: "522726", jabatan: "Kadispers", korp_fung_spes: "Adm", tanggal_lahir: "1980-03-10", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "21/03/2025", photo: "https://i.pravatar.cc/150?img=11" },
+    { nama_lengkap: "Andi Darmawan, S.E", pangkat: "Penata Tk.I IIId", nrp_nip: "197905032009121002", jabatan: "Tur Adminpers Dispers", korp_fung_spes: "Adm", tanggal_lahir: "03/05/1979", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "21/03/2025", photo: "https://i.pravatar.cc/150?img=15" },
+    { nama_lengkap: "Dedi Hartono", pangkat: "Penata Tk.I IIId", nrp_nip: "4215896", jabatan: "Staf Personel", korp_fung_spes: "Adm", tanggal_lahir: "30/11/1982", tempat_lahir: "Surabaya", agama: "Islam", satker: "DISPERS", specialization: "Recon Ops", ops_completed: "10/06/2024", photo: "https://i.pravatar.cc/150?img=16" },
+    { nama_lengkap: "Hana Yuliana", pangkat: "Penata Tk.I IIId", nrp_nip: "154267", jabatan: "Analis Data", korp_fung_spes: "Adm", tanggal_lahir: "24/10/1988", tempat_lahir: "Solo", agama: "Islam", satker: "DISPERS", specialization: "Tactical Planning", ops_completed: "05/02/2023", photo: "https://i.pravatar.cc/150?img=20" }
 ];
+
+// === Utility: Hitung selisih bulan ===
+function getMonthsDiff(startDateStr) {
+    if (!startDateStr) return "-";
+    const [day, month, year] = startDateStr.split("/").map(Number);
+    if (!day || !month || !year) return "-";
+    const startDate = new Date(year, month - 1, day);
+    const now = new Date();
+    let months = (now.getFullYear() - startDate.getFullYear()) * 12 + (now.getMonth() - startDate.getMonth());
+    if (now.getDate() < startDate.getDate()) months -= 1;
+    return months >= 0 ? months : 0;
+}
 
 const searchInput = document.getElementById("search");
 const dossierEl = document.getElementById("agent-dossier");
@@ -227,8 +229,7 @@ function showMemberButtons(keyword){
     memberBtnContainer.innerHTML = "";
     const filtered = personnelDB.filter(p => 
         p.satker.toLowerCase().includes(keyword.toLowerCase()) ||
-        p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase()) ||
-        (p.real_name && p.real_name.toLowerCase().includes(keyword.toLowerCase()))
+        p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase())
     );
     if(filtered.length===0){
         memberBtnContainer.innerHTML='<span class="not-found">❌ Tidak ada anggota ditemukan untuk keyword ini.</span>';
@@ -247,13 +248,15 @@ function displayAgent(agent){
     photoEl.style.display = "none";
     photoEl.style.opacity = 0;
     photoEl.src = "";
+
     const oldBtn = agentContainer.querySelector(".reset-btn");
     if(oldBtn) oldBtn.remove();
 
     simulateAccessSequence(dossierEl, ()=> {
+        const monthsSince = getMonthsDiff(agent.ops_completed);
         const dossier = `
 ========================================
-|   FILE: PERSONEL PUSLAT KODILATAU   |
+|   FILE: PERSONEL PUSLAT KODIKLATAU   |
 |   CLASSIFICATION: RAHASIA            |
 ========================================
 
@@ -273,11 +276,11 @@ AGAMA           : ${agent.agama}
 SATKER          : ${agent.satker}
 NOMOR SKEP      : ${agent.specialization}
 TMT JABATAN     : ${agent.ops_completed}
-s.d SAAT INI    : ${agent.success_rate}Bln
+s.d SAAT INI    : ${monthsSince} bulan
 
 [SECURITY FOOTNOTE]
 --------------------------------------------------
-This dossier is property of puslat kodiklatau.
+This dossier is property of PUSLAT KODIKLATAU.
 Unauthorized access or duplication is punishable under applicable law.
 
 <END OF FILE>
@@ -301,9 +304,9 @@ Retrieved on: ${new Date().toLocaleString()}
 }
 
 searchInput.addEventListener("input", ()=>{
-    dossierEl.textContent="Biodata will appear after clicking the member button";
-    
-    if(btn) btn.remove();
+    dossierEl.textContent="⚠️ Biodata akan muncul setelah klik tombol anggota.";
+    const resetBtn = agentContainer.querySelector(".reset-btn");
+    if(resetBtn) resetBtn.remove();
     memberBtnContainer.innerHTML="";
 });
 
