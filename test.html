@@ -226,7 +226,7 @@ function simulateAccessSequence(element, callback){
 function showMemberButtons(keyword){
     memberBtnContainer.innerHTML = "";
     const filtered = personnelDB.filter(p => 
-        p.unit.toLowerCase().includes(keyword.toLowerCase()) ||
+        p.satker.toLowerCase().includes(keyword.toLowerCase()) ||
         p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase()) ||
         (p.real_name && p.real_name.toLowerCase().includes(keyword.toLowerCase()))
     );
