@@ -32,6 +32,7 @@ header {
     animation: blinkText 1s infinite;
 }
 
+/* 🔹 Tombol di bawah judul */
 .header-buttons {
     display: flex;
     justify-content: center;
@@ -155,6 +156,7 @@ input {
     <h1 class="text">PUSLAT KODIKLATAU</h1>
     <h1 class="text1">DATABASE TERMINAL</h1>
 
+    <!-- 🔹 Tombol navigasi diarahkan ke URL (tanpa buka tab baru) -->
     <div class="header-buttons">
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">STRUKTUR ORGANISASI</button>
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">RADIOGRAM</button>
@@ -184,87 +186,20 @@ Biodata will appear after clicking the member button
 </div>
 
 <script>
-function goTo(url) { window.location.href = url; }
+// ========== FUNGSI TOMBOL HEADER ==========
+function goTo(url) {
+    window.location.href = url; // 🔸 buka di tab yang sama
+}
 
+// ========== DATABASE ========== 
 const personnelDB = [
-    { 
-        nama_lengkap: "Endriady, S.H", 
-        pangkat: "Letkol Adm", 
-        nrp_nip: "522726", 
-        jabatan: "Kadispers", 
-        korp_fung_spes: "Adm Personel", 
-        tanggal_lahir: "1980-03-10", 
-        tempat_lahir: "Subang", 
-        agama: "Islam", 
-        satker: "DISPERS", 
-        specialization: "9-S/VIIIA/III/2025", 
-        ops_completed: "18/07/2025", 
-        photo: "kadispers new.jpg",
-        documents: [
-            { label: "Pemuktahiran Data", url: "https://example.com/endriady-data-update" },
-            { label: "Riwayat Hidup", url: "https://example.com/endriady-riwayat" },
-            { label: "KU-1", url: "https://example.com/endriady-ku1" }
-        ]
-    },
-    { 
-        nama_lengkap: "Andi Darmawan, S.E", 
-        pangkat: "Penata Tk.I IIId", 
-        nrp_nip: "197905032009121002", 
-        jabatan: "Tur Adminpers Dispers", 
-        korp_fung_spes: "Adm Keuangan", 
-        tanggal_lahir: "03/05/1979", 
-        tempat_lahir: "Subang", 
-        agama: "Islam", 
-        satker: "DISPERS", 
-        specialization: "9-S/VIIIA/III/2025", 
-        ops_completed: "21/03/2025", 
-        photo: "https://i.pravatar.cc/150?img=15",
-        documents: [
-            { label: "Pemuktahiran Data", url: "https://example.com/andi-data-update" },
-            { label: "Riwayat Hidup", url: "https://example.com/andi-riwayat" },
-            { label: "KU-1", url: "https://example.com/andi-ku1" }
-        ]
-    },
-    { 
-        nama_lengkap: "Fata Patria", 
-        pangkat: "Marsekal Pertama TNI", 
-        nrp_nip: "4215896", 
-        jabatan: "Danpuslat Kodiklatau", 
-        korp_fung_spes: "PNB", 
-        tanggal_lahir: "30/11/1982", 
-        tempat_lahir: "Banjarmasin", 
-        agama: "Islam", 
-        satker: "DISPERS", 
-        specialization: "Recon Ops", 
-        ops_completed: "15/08/2025", 
-        photo: "danpus pdh.jpg",
-        documents: [
-            { label: "Pemuktahiran Data", url: "https://example.com/fata-data-update" },
-            { label: "Riwayat Hidup", url: "https://example.com/fata-riwayat" },
-            { label: "KU-1", url: "https://example.com/fata-ku1" }
-        ]
-    },
-    { 
-        nama_lengkap: "Muhammad Muslih", 
-        pangkat: "Penata Tk.I IIId", 
-        nrp_nip: "154267", 
-        jabatan: "Analis Data", 
-        korp_fung_spes: "Adm", 
-        tanggal_lahir: "24/10/1988", 
-        tempat_lahir: "Solo", 
-        agama: "Islam", 
-        satker: "DISPERS", 
-        specialization: "Tactical Planning", 
-        ops_completed: "24/06/2025", 
-        photo: "LETKOL mUSLIH.jpg",
-        documents: [
-            { label: "Pemuktahiran Data", url: "https://example.com/muslih-data-update" },
-            { label: "Riwayat Hidup", url: "https://example.com/muslih-riwayat" },
-            { label: "KU-1", url: "https://example.com/muslih-ku1" }
-        ]
-    }
+    { nama_lengkap: "Endriady, S.H", pangkat: "Letkol Adm", nrp_nip: "522726", jabatan: "Kadispers", korp_fung_spes: "Adm Personel", tanggal_lahir: "1980-03-10", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "18/07/2025", photo: "kadispers new.jpg" },
+    { nama_lengkap: "Andi Darmawan, S.E", pangkat: "Penata Tk.I IIId", nrp_nip: "197905032009121002", jabatan: "Tur Adminpers Dispers", korp_fung_spes: "Adm Keuangan", tanggal_lahir: "03/05/1979", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "21/03/2025", photo: "https://i.pravatar.cc/150?img=15" },
+    { nama_lengkap: "Fata Patria", pangkat: "Marsekal Pertama TNI", nrp_nip: "4215896", jabatan: "Danpuslat Kodiklatau", korp_fung_spes: "PNB", tanggal_lahir: "30/11/1982", tempat_lahir: "Banjarmasin", agama: "Islam", satker: "DISPERS", specialization: "Recon Ops", ops_completed: "15/08/2025", photo: "danpus pdh.jpg" },
+    { nama_lengkap: "Muhammad Muslih", pangkat: "Penata Tk.I IIId", nrp_nip: "154267", jabatan: "Analis Data", korp_fung_spes: "Adm", tanggal_lahir: "24/10/1988", tempat_lahir: "Solo", agama: "Islam", satker: "DISPERS", specialization: "Tactical Planning", ops_completed: "24/06/2025", photo: "LETKOL mUSLIH.jpg" }
 ];
 
+// ========== ELEMENTS ==========
 const searchInput = document.getElementById("search");
 const dossierEl = document.getElementById("agent-dossier");
 const photoEl = document.getElementById("agent-photo");
@@ -272,6 +207,7 @@ const memberBtnContainer = document.getElementById("member-buttons");
 const agentContainer = document.getElementById("agent-container");
 const outputPanel = document.getElementById("output");
 
+// ========== HELPER FUNCTIONS ==========
 function getMonthsDiff(startDateStr) {
     if (!startDateStr) return "-";
     const [day, month, year] = startDateStr.split("/").map(Number);
@@ -279,69 +215,147 @@ function getMonthsDiff(startDateStr) {
     const startDate = new Date(year, month - 1, day);
     const now = new Date();
     let months = (now.getFullYear() - startDate.getFullYear()) * 12 + (now.getMonth() - startDate.getMonth());
-    if (now.getDate() < startDate.getDate()) months--;
-    return months;
+    if (now.getDate() < startDate.getDate()) months -= 1;
+    return months >= 0 ? months : 0;
 }
 
-function displayAgent(agent) {
-    dossierEl.textContent = `Nama Lengkap  : ${agent.nama_lengkap}
-Pangkat       : ${agent.pangkat}
-NRP / NIP     : ${agent.nrp_nip}
-Jabatan       : ${agent.jabatan}
-Korp/Fung/Spes: ${agent.korp_fung_spes}
-Tempat/Tgl Lahir : ${agent.tempat_lahir}, ${agent.tanggal_lahir}
-Agama         : ${agent.agama}
-Satker        : ${agent.satker}
-Specialization: ${agent.specialization || "-"}
-Ops Completed : ${agent.ops_completed || "-"}
-Ops Duration (months) : ${getMonthsDiff(agent.ops_completed)}`;
-
-    if(agent.photo){
-        photoEl.src = agent.photo;
-        photoEl.style.display = "block";
-        setTimeout(() => { photoEl.style.opacity = 1; }, 50);
-    } else {
-        photoEl.style.display = "none";
+function typeWriter(element, text, agent, callback, speed=2){
+    element.textContent = "";
+    let i = 0;
+    let nameShown = false;
+    function typing() {
+        if(i < text.length){
+            element.textContent += text.charAt(i);
+            if(!nameShown && element.textContent.includes("NAMA LENGKAP")){
+                nameShown = true;
+                setTimeout(()=>{
+                    photoEl.src = agent.photo;
+                    photoEl.style.display = "block";
+                    setTimeout(()=> photoEl.style.opacity = 1, 100);
+                }, 200);
+            }
+            i++;
+            outputPanel.scrollTop = outputPanel.scrollHeight;
+            setTimeout(typing, speed);
+        } else if(callback) callback();
     }
-
-    // Hapus tombol sebelumnya
-    let existingDocBtns = agentContainer.querySelector(".doc-buttons");
-    if(existingDocBtns) existingDocBtns.remove();
-
-    if(agent.documents && agent.documents.length){
-        const docContainer = document.createElement("div");
-        docContainer.className = "doc-buttons";
-        agent.documents.forEach(d => {
-            const btn = document.createElement("button");
-            btn.textContent = d.label;
-            btn.onclick = ()=> window.open(d.url, "_blank");
-            docContainer.appendChild(btn);
-        });
-        agentContainer.appendChild(docContainer);
-    }
+    typing();
 }
 
-function searchPersonnel(keyword){
+function simulateAccessSequence(element, callback){
+    const steps = [
+        ">>> initializing connection...",
+        ">>> accessing database node...",
+        ">>> verifying security clearance...",
+        ">>> clearance level verified ✔",
+        ">>> retrieving personnel data..."
+    ];
+    let i=0;
+    element.textContent="";
+    function nextStep(){
+        if(i<steps.length){
+            element.textContent += steps[i] + "\n";
+            outputPanel.scrollTop = outputPanel.scrollHeight;
+            i++;
+            setTimeout(nextStep, 600);
+        } else {
+            setTimeout(callback, 600);
+        }
+    }
+    nextStep();
+}
+
+function showMemberButtons(keyword){
     memberBtnContainer.innerHTML = "";
-    const results = personnelDB.filter(agent => 
-        agent.nama_lengkap.toLowerCase().includes(keyword.toLowerCase()) ||
-        agent.satker.toLowerCase().includes(keyword.toLowerCase())
+    const filtered = personnelDB.filter(p => 
+        p.satker.toLowerCase().includes(keyword.toLowerCase()) ||
+        p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase())
     );
-    if(results.length === 0){
-        memberBtnContainer.innerHTML = "<p class='not-found'>No members found</p>";
-        return;
+    if(filtered.length===0){
+        memberBtnContainer.innerHTML='<span class="not-found">❌ No members found for this keyword</span>';
+    } else {
+        filtered.forEach(agent=>{
+            const btn = document.createElement("button");
+            btn.textContent = agent.nama_lengkap;
+            btn.onclick = ()=> displayAgent(agent);
+            memberBtnContainer.appendChild(btn);
+        });
     }
-    results.forEach(agent => {
-        const btn = document.createElement("button");
-        btn.textContent = agent.nama_lengkap;
-        btn.onclick = () => displayAgent(agent);
-        memberBtnContainer.appendChild(btn);
+}
+
+function displayAgent(agent){
+    dossierEl.textContent = "";
+    photoEl.style.display = "none";
+    photoEl.style.opacity = 0;
+    photoEl.src = "";
+    const oldDocs = agentContainer.querySelector(".doc-buttons");
+    if(oldDocs) oldDocs.remove();
+
+    simulateAccessSequence(dossierEl, ()=> {
+        const monthsSince = getMonthsDiff(agent.ops_completed);
+        const dossier = `
+========================================
+|   FILE: PERSONEL PUSLAT KODIKLATAU   |
+|   CLASSIFICATION: RAHASIA            |
+========================================
+
+[DATA IDENTITAS]
+--------------------------------------------------
+NAMA LENGKAP    : ${agent.nama_lengkap}
+PANGKAT         : ${agent.pangkat}
+NRP/NIP         : ${agent.nrp_nip}
+JABATAN         : ${agent.jabatan}
+KORP/FUNG/SPES  : ${agent.korp_fung_spes}
+TANGGAL LAHIR   : ${agent.tanggal_lahir}
+TEMPAT LAHIR    : ${agent.tempat_lahir}
+AGAMA           : ${agent.agama}
+
+[OPERATIONAL RECORD]
+--------------------------------------------------
+SATKER          : ${agent.satker}
+NOMOR SKEP      : ${agent.specialization}
+TMT JABATAN     : ${agent.ops_completed}
+s.d SAAT INI    : ${monthsSince} bulan
+
+[SECURITY FOOTNOTE]
+--------------------------------------------------
+This dossier is property of PUSLAT KODIKLATAU.
+Unauthorized access or duplication is punishable under applicable law.
+
+<END OF FILE>
+========================================
+Retrieved on: ${new Date().toLocaleString()}
+        `;
+        typeWriter(dossierEl, dossier, agent, ()=> {
+            const docContainer = document.createElement("div");
+            docContainer.className = "doc-buttons";
+            const docs = [
+                {label:"Pemuktahiran Data", url:"https://example.com/data-update"},
+                {label:"Riwayat Hidup", url:"https://example.com/riwayat-hidup"},
+                {label:"KU-1", url:"https://example.com/ku-1"}
+            ];
+            docs.forEach(d=>{
+                const btn = document.createElement("button");
+                btn.textContent = d.label;
+                btn.onclick = ()=> window.open(d.url, "_blank");
+                docContainer.appendChild(btn);
+            });
+            agentContainer.appendChild(docContainer);
+        });
     });
 }
 
-searchInput.addEventListener("keydown", e => {
-    if(e.key === "Enter"){
-        searchPersonnel(searchInput.value.trim());
+// ========== EVENT SEARCH ==========
+searchInput.addEventListener("input", ()=>{
+    dossierEl.textContent="Biodata will appear after clicking the member button";
+    const oldDocs = agentContainer.querySelector(".doc-buttons");
+    if(oldDocs) oldDocs.remove();
+    memberBtnContainer.innerHTML="";
+});
+searchInput.addEventListener("keydown", e=>{
+    if(e.key==="Enter"){
+        const query = searchInput.value.trim();
+        if(query) showMemberButtons(query);
     }
 });
 </script>
