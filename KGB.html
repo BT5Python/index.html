@@ -31,8 +31,6 @@ header {
     margin-top: 0;
     animation: blinkText 1s infinite;
 }
-
-/* 🔹 Tombol di bawah judul */
 .header-buttons {
     display: flex;
     justify-content: center;
@@ -53,7 +51,6 @@ header {
     background-color: #00FF00;
     color: black;
 }
-
 .main-container {
     display: flex;
     flex: 1;
@@ -110,7 +107,7 @@ input {
     border-radius: 8px;
     display: none;
     opacity: 0;
-    transition: opacity 0.6s ease-in-out;
+    transition: opacity 1.2s ease-in-out;
 }
 .doc-buttons {
     display: flex;
@@ -155,8 +152,6 @@ input {
 <header>
     <h1 class="text">KENAIKAN GAJI BERKALA</h1>
     <h1 class="text1">MONITORING TERMINAL</h1>
-
-    <!-- 🔹 Tombol navigasi diarahkan ke URL (tanpa buka tab baru) -->
     <div class="header-buttons">
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">PERWIRA</button>
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">BINTARA</button>
@@ -186,20 +181,17 @@ Biodata will appear after clicking the member button
 </div>
 
 <script>
-// ========== FUNGSI TOMBOL HEADER ==========
-function goTo(url) {
-    window.location.href = url; // 🔸 buka di tab yang sama
-}
+function goTo(url) { window.location.href = url; }
 
-// ========== DATABASE ========== 
+// ======== DATABASE PERSONEL ========
 const personnelDB = [
-    { nama_lengkap: "Endriady, S.H", pangkat: "Letkol Adm", nrp_nip: "522726", jabatan: "Kadispers", korp_fung_spes: "Adm Personel", tanggal_lahir: "03-10-1970", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "18/07/2025", photo: "kadispers new.jpg" },
-    { nama_lengkap: "Andi Darmawan, S.E", pangkat: "Penata Tk.I IIId", nrp_nip: "197905032009121002", jabatan: "Tur Adminpers Dispers", korp_fung_spes: "Adm Keuangan", tanggal_lahir: "03-05-1979", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "21/03/2025", photo: "https://i.pravatar.cc/150?img=15" },
-    { nama_lengkap: "Fata Patria", pangkat: "Marsekal Pertama TNI", nrp_nip: "4215896", jabatan: "Danpuslat Kodiklatau", korp_fung_spes: "PNB", tanggal_lahir: "30-11-1982", tempat_lahir: "Banjarmasin", agama: "Islam", satker: "DISPERS", specialization: "Recon Ops", ops_completed: "15/08/2025", photo: "danpus pdh.jpg" },
-    { nama_lengkap: "Muhammad Muslih", pangkat: "Penata Tk.I IIId", nrp_nip: "154267", jabatan: "Analis Data", korp_fung_spes: "Adm", tanggal_lahir: "24-10-1988", tempat_lahir: "Solo", agama: "Islam", satker: "DISPERS", specialization: "Tactical Planning", ops_completed: "24/06/2025", photo: "LETKOL mUSLIH.jpg" }
+    { nama_lengkap: "Endriady, S.H", pangkat: "Letkol Adm", nrp_nip: "522726", jabatan: "Kadispers", korp_fung_spes: "Adm Personel", tanggal_lahir: "03-10-1970", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", kgb_terakhir: "15/03/2023", tmt_kgb: "15/03/2023", akan_datang: "15/03/2025", ops_completed: "18/07/2025", specialization: "9-S/VIIIA/III/2025", photo: "kadispers new.jpg" },
+    { nama_lengkap: "Andi Darmawan, S.E", pangkat: "Penata Tk.I IIId", nrp_nip: "197905032009121002", jabatan: "Tur Adminpers Dispers", korp_fung_spes: "Adm Keuangan", tanggal_lahir: "03-05-1979", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", kgb_terakhir: "15/03/2023", tmt_kgb: "15/03/2023", akan_datang: "15/03/2025", ops_completed: "21/03/2025", specialization: "9-S/VIIIA/III/2025", photo: "https://i.pravatar.cc/150?img=15" },
+    { nama_lengkap: "Fata Patria", pangkat: "Marsekal Pertama TNI", nrp_nip: "4215896", jabatan: "Danpuslat Kodiklatau", korp_fung_spes: "PNB", tanggal_lahir: "30-11-1982", tempat_lahir: "Banjarmasin", agama: "Islam", satker: "DISPERS", kgb_terakhir: "15/03/2023", tmt_kgb: "15/03/2023", akan_datang: "15/03/2025", ops_completed: "15/08/2025", specialization: "Recon Ops", photo: "danpus pdh.jpg" },
+    { nama_lengkap: "Muhammad Muslih", pangkat: "Penata Tk.I IIId", nrp_nip: "154267", jabatan: "Analis Data", korp_fung_spes: "Adm", tanggal_lahir: "24-10-1988", tempat_lahir: "Solo", agama: "Islam", satker: "DISPERS", kgb_terakhir: "15/03/2023", tmt_kgb: "15/03/2023", akan_datang: "15/03/2025", ops_completed: "24/06/2025", specialization: "Tactical Planning", photo: "LETKOL mUSLIH.jpg" }
 ];
 
-// ========== ELEMENTS ==========
+// ======== ELEMENTS ========
 const searchInput = document.getElementById("search");
 const dossierEl = document.getElementById("agent-dossier");
 const photoEl = document.getElementById("agent-photo");
@@ -207,19 +199,45 @@ const memberBtnContainer = document.getElementById("member-buttons");
 const agentContainer = document.getElementById("agent-container");
 const outputPanel = document.getElementById("output");
 
-// ========== HELPER FUNCTIONS ==========
-function getMonthsDiff(startDateStr) {
+// ======== FUNCTION PERHITUNGAN DETAIL ========
+function getDetailedDiff(startDateStr) {
     if (!startDateStr) return "-";
     const [day, month, year] = startDateStr.split("/").map(Number);
     if (!day || !month || !year) return "-";
+
     const startDate = new Date(year, month - 1, day);
-    const now = new Date();
-    let months = (now.getFullYear() - startDate.getFullYear()) * 12 + (now.getMonth() - startDate.getMonth());
-    if (now.getDate() < startDate.getDate()) months -= 1;
-    return months >= 0 ? months : 0;
+    const today = new Date();
+
+    let years = today.getFullYear() - startDate.getFullYear();
+    let months = today.getMonth() - startDate.getMonth();
+    let days = today.getDate() - startDate.getDate();
+
+    if (days < 0) {
+        months--;
+        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += prevMonth.getDate();
+    }
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+    return `${years} Tahun ${months} Bulan ${days} Hari`;
 }
 
-function typeWriter(element, text, agent, callback, speed=2){
+function calculateAge(birthDateStr) {
+    if (!birthDateStr) return "-";
+    const [day, month, year] = birthDateStr.split("-").map(Number);
+    if (!day || !month || !year) return "-";
+    const today = new Date();
+    let age = today.getFullYear() - year;
+    if (today.getMonth() + 1 < month || (today.getMonth() + 1 === month && today.getDate() < day)) {
+        age--;
+    }
+    return age;
+}
+
+// ======== TAMPILAN ANIMASI DAN DOKUMEN ========
+function typeWriter(element, text, agent, callback, speed=10){
     element.textContent = "";
     let i = 0;
     let nameShown = false;
@@ -265,18 +283,6 @@ function simulateAccessSequence(element, callback){
     nextStep();
 }
 
-function calculateAge(birthDateStr) {
-    if (!birthDateStr) return "-";
-    const [day, month, year] = birthDateStr.split("-").map(Number);
-    if (!day || !month || !year) return "-";
-    const today = new Date();
-    let age = today.getFullYear() - year;
-    if (today.getMonth() + 1 < month || (today.getMonth() + 1 === month && today.getDate() < day)) {
-        age--; // belum ulang tahun di tahun ini
-    }
-    return age;
-}
- 
 function showMemberButtons(keyword){
     memberBtnContainer.innerHTML = "";
     const filtered = personnelDB.filter(p => 
@@ -304,7 +310,10 @@ function displayAgent(agent){
     if(oldDocs) oldDocs.remove();
 
     simulateAccessSequence(dossierEl, ()=> {
-        const monthsSince = getMonthsDiff(agent.ops_completed);
+        const masaKerja = getDetailedDiff(agent.ops_completed);
+        const masaKGB = getDetailedDiff(agent.kgb_terakhir);
+        const usia = calculateAge(agent.tanggal_lahir);
+
         const dossier = `
 ========================================
 |   FILE: PERSONEL PUSLAT KODIKLATAU   |
@@ -313,22 +322,27 @@ function displayAgent(agent){
 
 [DATA IDENTITAS]
 --------------------------------------------------
-NAMA LENGKAP    : ${agent.nama_lengkap}
-PANGKAT         : ${agent.pangkat}
-NRP/NIP         : ${agent.nrp_nip}
-JABATAN         : ${agent.jabatan}
-KORP/FUNG/SPES  : ${agent.korp_fung_spes}
-TANGGAL LAHIR   : ${agent.tanggal_lahir}
-TEMPAT LAHIR    : ${agent.tempat_lahir}
-AGAMA           : ${agent.agama}
-USIA		: ${calculateAge(agent.tanggal_lahir)} Tahun  
+NAMA LENGKAP       : ${agent.nama_lengkap}
+PANGKAT            : ${agent.pangkat}
+NRP/NIP            : ${agent.nrp_nip}
+JABATAN            : ${agent.jabatan}
+SATKER             : ${agent.satker}
+KORPS/SPESIALISASI : ${agent.korp_fung_spes}
+TEMPAT/TGL LAHIR   : ${agent.tempat_lahir}, ${agent.tanggal_lahir}
+AGAMA              : ${agent.agama}
+USIA               : ${usia} Tahun
 
-[OPERATIONAL RECORD]
+[DATA KGB]
 --------------------------------------------------
-SATKER          : ${agent.satker}
-NOMOR SKEP      : ${agent.specialization}
-TMT JABATAN     : ${agent.ops_completed}
-s.d SAAT INI    : ${monthsSince} Bulan
+KGB TERAKHIR       : ${agent.kgb_terakhir} (${masaKGB} lalu)
+TMT KGB            : ${agent.tmt_kgb}
+KGB AKAN DATANG    : ${agent.akan_datang}
+
+[DATA JABATAN]
+--------------------------------------------------
+NOMOR SKEP         : ${agent.specialization}
+TMT JABATAN        : ${agent.ops_completed}
+MASA JABATAN       : ${masaKerja}
 
 [SECURITY FOOTNOTE]
 --------------------------------------------------
@@ -358,7 +372,7 @@ Retrieved on: ${new Date().toLocaleString()}
     });
 }
 
-// ========== EVENT SEARCH ==========
+// ======== EVENT SEARCH ========
 searchInput.addEventListener("input", ()=>{
     dossierEl.textContent="Biodata will appear after clicking the member button";
     const oldDocs = agentContainer.querySelector(".doc-buttons");
