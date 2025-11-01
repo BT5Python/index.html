@@ -42,7 +42,10 @@ header {
     flex-direction: column;
     border-right: 2px solid #00FF00;
 }
-.search-panel h2 { text-align: center; margin-bottom: 20px; }
+.search-panel h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 input {
     background: transparent;
     border: 1px solid #00FF00;
@@ -53,7 +56,11 @@ input {
     border-radius: 4px;
     outline: none;
 }
-.info-text { font-size: 14px; text-align: center; margin-top: 10px; }
+.info-text {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}
 #member-buttons {
     display: flex;
     flex-direction: column;
@@ -93,10 +100,11 @@ input {
     gap: 10px;
     margin-top: 15px;
 }
-.not-found { color: #FF0000; font-weight: bold; }
-.agent-profile button,
-#member-buttons button,
-.doc-buttons button {
+.not-found {
+    color: #FF0000;
+    font-weight: bold;
+}
+.agent-profile button, #member-buttons button, .doc-buttons button {
     background: transparent;
     border: 1px solid #00FF00;
     color: #00FF00;
@@ -106,16 +114,46 @@ input {
     font-family: 'Courier New', monospace;
     transition: background 0.3s, color 0.3s;
 }
-.agent-profile button:hover,
-#member-buttons button:hover,
-.doc-buttons button:hover {
+.agent-profile button:hover, #member-buttons button:hover, .doc-buttons button:hover {
     background-color: #00FF00;
     color: black;
 }
+
+/* Tombol bawah database */
+.bottom-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    border-top: 1px solid #00FF00;
+    background-color: black;
+}
+.bottom-buttons button {
+    background: transparent;
+    border: 1px solid #00FF00;
+    color: #00FF00;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    transition: background 0.3s, color 0.3s;
+}
+.bottom-buttons button:hover {
+    background-color: #00FF00;
+    color: black;
+}
+
 @media (max-width: 768px) {
     .main-container { flex-direction: column; }
-    .search-panel, .output-panel { width: 100%; border: none; border-bottom: 1px solid #00FF00; }
-    .agent-profile { flex-direction: column; align-items: center; }
+    .search-panel, .output-panel {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #00FF00;
+    }
+    .agent-profile {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 .agent-profile pre::after {
     content: "_";
@@ -144,10 +182,18 @@ input {
 
     <div class="output-panel" id="output">
         <div class="agent-profile" id="agent-container">
-            <pre id="agent-dossier">
-Biodata will appear after clicking the member button
+            <pre id="agent-dossier"> Biodata will appear after clicking the member button
             </pre>
             <img id="agent-photo" src="" alt="Foto Personel">
+        </div>
+
+        <!-- ✅ Tombol navigasi di bawah database -->
+        <div class="bottom-buttons">
+            <button onclick="window.location.href='index.html'">🏠 Menu Utama</button>
+            <button onclick="window.location.href='laporan.html'">📄 Laporan</button>
+            <button onclick="window.location.href='statistik.html'">📊 Statistik</button>
+            <button onclick="window.location.href='pengaturan.html'">⚙ Pengaturan</button>
+            <button onclick="window.location.href='logout.html'">🚪 Keluar</button>
         </div>
     </div>
 </div>
@@ -182,7 +228,6 @@ function typeWriter(element, text, agent, callback, speed=2){
     element.textContent = "";
     let i = 0;
     let nameShown = false;
-
     function typing() {
         if(i < text.length){
             element.textContent += text.charAt(i);
@@ -227,7 +272,7 @@ function simulateAccessSequence(element, callback){
 
 function showMemberButtons(keyword){
     memberBtnContainer.innerHTML = "";
-    const filtered = personnelDB.filter(p => 
+    const filtered = personnelDB.filter(p =>
         p.satker.toLowerCase().includes(keyword.toLowerCase()) ||
         p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase())
     );
@@ -249,53 +294,51 @@ function displayAgent(agent){
     photoEl.style.opacity = 0;
     photoEl.src = "";
 
-    // Hapus tombol dokumen lama jika ada
     const oldDocs = agentContainer.querySelector(".doc-buttons");
     if(oldDocs) oldDocs.remove();
 
     simulateAccessSequence(dossierEl, ()=> {
         const monthsSince = getMonthsDiff(agent.ops_completed);
         const dossier = `
-========================================
-|   FILE: PERSONEL PUSLAT KODIKLATAU   |
-|   CLASSIFICATION: RAHASIA            |
-========================================
+ ========================================
+ |   FILE: PERSONEL PUSLAT KODIKLATAU   |
+ |   CLASSIFICATION: RAHASIA            |
+ ========================================
 
-[DATA IDENTITAS]
---------------------------------------------------
-NAMA LENGKAP    : ${agent.nama_lengkap}
-PANGKAT         : ${agent.pangkat}
-NRP/NIP         : ${agent.nrp_nip}
-JABATAN         : ${agent.jabatan}
-KORP/FUNG/SPES  : ${agent.korp_fung_spes}
-TANGGAL LAHIR   : ${agent.tanggal_lahir}
-TEMPAT LAHIR    : ${agent.tempat_lahir}
-AGAMA           : ${agent.agama}
+ [DATA IDENTITAS]
+ --------------------------------------------------
+ NAMA LENGKAP    : ${agent.nama_lengkap}
+ PANGKAT         : ${agent.pangkat}
+ NRP/NIP         : ${agent.nrp_nip}
+ JABATAN         : ${agent.jabatan}
+ KORP/FUNG/SPES  : ${agent.korp_fung_spes}
+ TANGGAL LAHIR   : ${agent.tanggal_lahir}
+ TEMPAT LAHIR    : ${agent.tempat_lahir}
+ AGAMA           : ${agent.agama}
 
-[OPERATIONAL RECORD]
---------------------------------------------------
-SATKER          : ${agent.satker}
-NOMOR SKEP      : ${agent.specialization}
-TMT JABATAN     : ${agent.ops_completed}
-s.d SAAT INI    : ${monthsSince} bulan
+ [OPERATIONAL RECORD]
+ --------------------------------------------------
+ SATKER          : ${agent.satker}
+ NOMOR SKEP      : ${agent.specialization}
+ TMT JABATAN     : ${agent.ops_completed}
+ s.d SAAT INI    : ${monthsSince} bulan
 
-[SECURITY FOOTNOTE]
---------------------------------------------------
-This dossier is property of PUSLAT KODIKLATAU.
-Unauthorized access or duplication is punishable under applicable law.
+ [SECURITY FOOTNOTE]
+ --------------------------------------------------
+ This dossier is property of PUSLAT KODIKLATAU.
+ Unauthorized access or duplication is punishable under applicable law.
 
-<END OF FILE>
-========================================
-Retrieved on: ${new Date().toLocaleString()}
+ <END OF FILE>
+ ========================================
+ Retrieved on: ${new Date().toLocaleString()}
         `;
         typeWriter(dossierEl, dossier, agent, ()=> {
-            // Tambah tombol dokumen
             const docContainer = document.createElement("div");
             docContainer.className = "doc-buttons";
             const docs = [
-                {label:"Pemuktahiran Data", url:"https://example.com/data-update"},
-                {label:"Riwayat Hidup", url:"https://example.com/riwayat-hidup"},
-                {label:"KU-1", url:"https://example.com/ku-1"}
+                {label:"Pemuktahiran Data", url:"data-update.html"},
+                {label:"Riwayat Hidup", url:"riwayat-hidup.html"},
+                {label:"KU-1", url:"ku1.html"}
             ];
             docs.forEach(d=>{
                 const btn = document.createElement("button");
