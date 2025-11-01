@@ -193,10 +193,10 @@ function goTo(url) {
 
 // ========== DATABASE ========== 
 const personnelDB = [
-    { nama_lengkap: "Endriady, S.H", pangkat: "Letkol Adm", nrp_nip: "522726", jabatan: "Kadispers", korp_fung_spes: "Adm Personel", tanggal_lahir: "1980-03-10", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "18/07/2025", photo: "kadispers new.jpg" },
-    { nama_lengkap: "Andi Darmawan, S.E", pangkat: "Penata Tk.I IIId", nrp_nip: "197905032009121002", jabatan: "Tur Adminpers Dispers", korp_fung_spes: "Adm Keuangan", tanggal_lahir: "03/05/1979", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "21/03/2025", photo: "https://i.pravatar.cc/150?img=15" },
-    { nama_lengkap: "Fata Patria", pangkat: "Marsekal Pertama TNI", nrp_nip: "4215896", jabatan: "Danpuslat Kodiklatau", korp_fung_spes: "PNB", tanggal_lahir: "30/11/1982", tempat_lahir: "Banjarmasin", agama: "Islam", satker: "DISPERS", specialization: "Recon Ops", ops_completed: "15/08/2025", photo: "danpus pdh.jpg" },
-    { nama_lengkap: "Muhammad Muslih", pangkat: "Penata Tk.I IIId", nrp_nip: "154267", jabatan: "Analis Data", korp_fung_spes: "Adm", tanggal_lahir: "24/10/1988", tempat_lahir: "Solo", agama: "Islam", satker: "DISPERS", specialization: "Tactical Planning", ops_completed: "24/06/2025", photo: "LETKOL mUSLIH.jpg" }
+    { nama_lengkap: "Endriady, S.H", pangkat: "Letkol Adm", nrp_nip: "522726", jabatan: "Kadispers", korp_fung_spes: "Adm Personel", tanggal_lahir: "1980-03-10", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", nomor_skep: "9-S/VIIIA/III/2025", ops_completed: "18/07/2025", photo: "kadispers new.jpg" },
+    { nama_lengkap: "Andi Darmawan, S.E", pangkat: "Penata Tk.I IIId", nrp_nip: "197905032009121002", jabatan: "Tur Adminpers Dispers", korp_fung_spes: "Adm Keuangan", tanggal_lahir: "03/05/1979", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", nomor_skep: "9-S/VIIIA/III/2025", ops_completed: "21/03/2025", photo: "https://i.pravatar.cc/150?img=15" },
+    { nama_lengkap: "Fata Patria", pangkat: "Marsekal Pertama TNI", nrp_nip: "4215896", jabatan: "Danpuslat Kodiklatau", korp_fung_spes: "PNB", tanggal_lahir: "30/11/1982", tempat_lahir: "Banjarmasin", agama: "Islam", satker: "DISPERS", nomor_skep: "Recon Ops", ops_completed: "15/08/2025", photo: "danpus pdh.jpg" },
+    { nama_lengkap: "Muhammad Muslih", pangkat: "Penata Tk.I IIId", nrp_nip: "154267", jabatan: "Analis Data", korp_fung_spes: "Adm", tanggal_lahir: "24/10/1988", tempat_lahir: "Solo", agama: "Islam", satker: "DISPERS", nomor_skep: "Tactical Planning", ops_completed: "24/06/2025", photo: "LETKOL mUSLIH.jpg" }
 ];
 
 // ========== ELEMENTS ==========
@@ -313,7 +313,7 @@ AGAMA           : ${agent.agama}
 [OPERATIONAL RECORD]
 --------------------------------------------------
 SATKER          : ${agent.satker}
-NOMOR SKEP      : ${agent.specialization}
+NOMOR SKEP      : ${agent.nomor_skep}
 TMT JABATAN     : ${agent.ops_completed}
 s.d SAAT INI    : ${monthsSince} bulan
 
