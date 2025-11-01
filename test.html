@@ -156,13 +156,13 @@ input {
     <h1 class="text">PUSLAT KODIKLATAU</h1>
     <h1 class="text1">DATABASE TERMINAL</h1>
 
-    <!-- 🔹 Tambahan 5 tombol -->
+    <!-- 🔹 Tombol navigasi diarahkan ke URL -->
     <div class="header-buttons">
-        <button onclick="showHome()">STRUKTUR ORGANISASI</button>
-        <button onclick="openDocs()">📁 RADIOGRAM</button>
-        <button onclick="openOps()">JAB KOSONG</button>
-        <button onclick="openUnits()">JUKNIS</button>
-        <button onclick="aboutSystem()">ORGAS PUSLAT</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">STRUKTUR ORGANISASI</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">RADIOGRAM</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">JAB KOSONG</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/juknis')">JUKNIS</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/orgas-puslat')">ORGAS PUSLAT</button>
     </div>
 </header>
 
@@ -186,7 +186,12 @@ Biodata will appear after clicking the member button
 </div>
 
 <script>
-// ========== DATABASE ==========
+// ========== FUNGSI TOMBOL HEADER ==========
+function goTo(url) {
+    window.open(url, "_blank"); // buka di tab baru
+}
+
+// ========== DATABASE ========== 
 const personnelDB = [
     { nama_lengkap: "Endriady, S.H", pangkat: "Letkol Adm", nrp_nip: "522726", jabatan: "Kadispers", korp_fung_spes: "Adm Personel", tanggal_lahir: "1980-03-10", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "18/07/2025", photo: "kadispers new.jpg" },
     { nama_lengkap: "Andi Darmawan, S.E", pangkat: "Penata Tk.I IIId", nrp_nip: "197905032009121002", jabatan: "Tur Adminpers Dispers", korp_fung_spes: "Adm Keuangan", tanggal_lahir: "03/05/1979", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "21/03/2025", photo: "https://i.pravatar.cc/150?img=15" },
@@ -194,7 +199,7 @@ const personnelDB = [
     { nama_lengkap: "Muhammad Muslih", pangkat: "Penata Tk.I IIId", nrp_nip: "154267", jabatan: "Analis Data", korp_fung_spes: "Adm", tanggal_lahir: "24/10/1988", tempat_lahir: "Solo", agama: "Islam", satker: "DISPERS", specialization: "Tactical Planning", ops_completed: "24/06/2025", photo: "LETKOL mUSLIH.jpg" }
 ];
 
-// ========== ELEMENTS ==========
+// ========== ELEMENTS ========== 
 const searchInput = document.getElementById("search");
 const dossierEl = document.getElementById("agent-dossier");
 const photoEl = document.getElementById("agent-photo");
@@ -202,7 +207,7 @@ const memberBtnContainer = document.getElementById("member-buttons");
 const agentContainer = document.getElementById("agent-container");
 const outputPanel = document.getElementById("output");
 
-// ========== HELPER FUNCTIONS ==========
+// ========== HELPER FUNCTIONS ========== 
 function getMonthsDiff(startDateStr) {
     if (!startDateStr) return "-";
     const [day, month, year] = startDateStr.split("/").map(Number);
@@ -353,42 +358,6 @@ searchInput.addEventListener("keydown", e=>{
         if(query) showMemberButtons(query);
     }
 });
-
-// ========== MENU BUTTONS ==========
-function showHome(){
-    dossierEl.textContent = `>>> Welcome to PUSLAT KODIKLATAU Intelligence Database
->>> Use the left panel to search personnel data.
->>> System Status: ONLINE [${new Date().toLocaleString()}]
-------------------------------------------------------`;
-}
-function openDocs(){
-    dossierEl.textContent = `>>> Document Center Access
->>> Available Files:
-1. Pemuktahiran Data
-2. Riwayat Hidup
-3. KU-1
->>> Please select personnel to view details.`;
-}
-function openOps(){
-    dossierEl.textContent = `>>> Current Operations Database
->>> Access restricted to authorized clearance levels.
->>> Use personnel search to check operation participation.`;
-}
-function openUnits(){
-    dossierEl.textContent = `>>> Unit Overview
-- DISPERS
-- PUSBANGDIK
-- SEKDAN
-- PUSLAT
->>> Type the unit name in the search bar to display members.`;
-}
-function aboutSystem(){
-    dossierEl.textContent = `PUSLAT KODIKLATAU DATABASE TERMINAL v1.0
---------------------------------------------------
-Developed for training simulation purposes.
-Unauthorized use prohibited.
-All rights reserved © 2025 KODIKLATAU.`;
-}
 </script>
 </body>
 </html>
