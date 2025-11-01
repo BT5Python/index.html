@@ -17,9 +17,10 @@ body {
 header {
     background-color: black;
     color: #00FF00;
-    padding: 20px 0;
+    padding: 20px 0 10px 0;
     text-align: center;
     line-height: 1.1;
+    border-bottom: 1px solid #00FF00;
 }
 .text {
     font-size: 75px;
@@ -30,6 +31,29 @@ header {
     margin-top: 0;
     animation: blinkText 1s infinite;
 }
+
+/* 🔹 Tombol di bawah judul */
+.header-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+.header-buttons button {
+    background: transparent;
+    border: 1px solid #00FF00;
+    color: #00FF00;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    transition: background 0.3s, color 0.3s;
+}
+.header-buttons button:hover {
+    background-color: #00FF00;
+    color: black;
+}
+
 .main-container {
     display: flex;
     flex: 1;
@@ -42,10 +66,7 @@ header {
     flex-direction: column;
     border-right: 2px solid #00FF00;
 }
-.search-panel h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
+.search-panel h2 { text-align: center; margin-bottom: 20px; }
 input {
     background: transparent;
     border: 1px solid #00FF00;
@@ -56,11 +77,7 @@ input {
     border-radius: 4px;
     outline: none;
 }
-.info-text {
-    font-size: 14px;
-    text-align: center;
-    margin-top: 10px;
-}
+.info-text { font-size: 14px; text-align: center; margin-top: 10px; }
 #member-buttons {
     display: flex;
     flex-direction: column;
@@ -100,11 +117,10 @@ input {
     gap: 10px;
     margin-top: 15px;
 }
-.not-found {
-    color: #FF0000;
-    font-weight: bold;
-}
-.agent-profile button, #member-buttons button, .doc-buttons button {
+.not-found { color: #FF0000; font-weight: bold; }
+.agent-profile button,
+#member-buttons button,
+.doc-buttons button {
     background: transparent;
     border: 1px solid #00FF00;
     color: #00FF00;
@@ -114,46 +130,16 @@ input {
     font-family: 'Courier New', monospace;
     transition: background 0.3s, color 0.3s;
 }
-.agent-profile button:hover, #member-buttons button:hover, .doc-buttons button:hover {
+.agent-profile button:hover,
+#member-buttons button:hover,
+.doc-buttons button:hover {
     background-color: #00FF00;
     color: black;
 }
-
-/* Tombol bawah database */
-.bottom-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 15px;
-    border-top: 1px solid #00FF00;
-    background-color: black;
-}
-.bottom-buttons button {
-    background: transparent;
-    border: 1px solid #00FF00;
-    color: #00FF00;
-    padding: 10px 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    transition: background 0.3s, color 0.3s;
-}
-.bottom-buttons button:hover {
-    background-color: #00FF00;
-    color: black;
-}
-
 @media (max-width: 768px) {
     .main-container { flex-direction: column; }
-    .search-panel, .output-panel {
-        width: 100%;
-        border: none;
-        border-bottom: 1px solid #00FF00;
-    }
-    .agent-profile {
-        flex-direction: column;
-        align-items: center;
-    }
+    .search-panel, .output-panel { width: 100%; border: none; border-bottom: 1px solid #00FF00; }
+    .agent-profile { flex-direction: column; align-items: center; }
 }
 .agent-profile pre::after {
     content: "_";
@@ -169,6 +155,15 @@ input {
 <header>
     <h1 class="text">PUSLAT KODIKLATAU</h1>
     <h1 class="text1">DATABASE TERMINAL</h1>
+
+    <!-- 🔹 Tambahan 5 tombol -->
+    <div class="header-buttons">
+        <button onclick="showHome()">🏠 HOME</button>
+        <button onclick="openDocs()">📁 DOCUMENTS</button>
+        <button onclick="openOps()">🛰️ OPERATIONS</button>
+        <button onclick="openUnits()">🏢 UNITS</button>
+        <button onclick="aboutSystem()">ℹ️ ABOUT</button>
+    </div>
 </header>
 
 <div class="main-container">
@@ -182,23 +177,16 @@ input {
 
     <div class="output-panel" id="output">
         <div class="agent-profile" id="agent-container">
-            <pre id="agent-dossier"> Biodata will appear after clicking the member button
+            <pre id="agent-dossier">
+Biodata will appear after clicking the member button
             </pre>
             <img id="agent-photo" src="" alt="Foto Personel">
-        </div>
-
-        <!-- ✅ Tombol navigasi di bawah database -->
-        <div class="bottom-buttons">
-            <button onclick="window.location.href='index.html'">🏠 Menu Utama</button>
-            <button onclick="window.location.href='laporan.html'">📄 Laporan</button>
-            <button onclick="window.location.href='statistik.html'">📊 Statistik</button>
-            <button onclick="window.location.href='pengaturan.html'">⚙ Pengaturan</button>
-            <button onclick="window.location.href='logout.html'">🚪 Keluar</button>
         </div>
     </div>
 </div>
 
 <script>
+// ========== DATABASE ==========
 const personnelDB = [
     { nama_lengkap: "Endriady, S.H", pangkat: "Letkol Adm", nrp_nip: "522726", jabatan: "Kadispers", korp_fung_spes: "Adm Personel", tanggal_lahir: "1980-03-10", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "18/07/2025", photo: "kadispers new.jpg" },
     { nama_lengkap: "Andi Darmawan, S.E", pangkat: "Penata Tk.I IIId", nrp_nip: "197905032009121002", jabatan: "Tur Adminpers Dispers", korp_fung_spes: "Adm Keuangan", tanggal_lahir: "03/05/1979", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "21/03/2025", photo: "https://i.pravatar.cc/150?img=15" },
@@ -206,6 +194,15 @@ const personnelDB = [
     { nama_lengkap: "Muhammad Muslih", pangkat: "Penata Tk.I IIId", nrp_nip: "154267", jabatan: "Analis Data", korp_fung_spes: "Adm", tanggal_lahir: "24/10/1988", tempat_lahir: "Solo", agama: "Islam", satker: "DISPERS", specialization: "Tactical Planning", ops_completed: "24/06/2025", photo: "LETKOL mUSLIH.jpg" }
 ];
 
+// ========== ELEMENTS ==========
+const searchInput = document.getElementById("search");
+const dossierEl = document.getElementById("agent-dossier");
+const photoEl = document.getElementById("agent-photo");
+const memberBtnContainer = document.getElementById("member-buttons");
+const agentContainer = document.getElementById("agent-container");
+const outputPanel = document.getElementById("output");
+
+// ========== HELPER FUNCTIONS ==========
 function getMonthsDiff(startDateStr) {
     if (!startDateStr) return "-";
     const [day, month, year] = startDateStr.split("/").map(Number);
@@ -216,13 +213,6 @@ function getMonthsDiff(startDateStr) {
     if (now.getDate() < startDate.getDate()) months -= 1;
     return months >= 0 ? months : 0;
 }
-
-const searchInput = document.getElementById("search");
-const dossierEl = document.getElementById("agent-dossier");
-const photoEl = document.getElementById("agent-photo");
-const memberBtnContainer = document.getElementById("member-buttons");
-const agentContainer = document.getElementById("agent-container");
-const outputPanel = document.getElementById("output");
 
 function typeWriter(element, text, agent, callback, speed=2){
     element.textContent = "";
@@ -272,7 +262,7 @@ function simulateAccessSequence(element, callback){
 
 function showMemberButtons(keyword){
     memberBtnContainer.innerHTML = "";
-    const filtered = personnelDB.filter(p =>
+    const filtered = personnelDB.filter(p => 
         p.satker.toLowerCase().includes(keyword.toLowerCase()) ||
         p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase())
     );
@@ -293,52 +283,51 @@ function displayAgent(agent){
     photoEl.style.display = "none";
     photoEl.style.opacity = 0;
     photoEl.src = "";
-
     const oldDocs = agentContainer.querySelector(".doc-buttons");
     if(oldDocs) oldDocs.remove();
 
     simulateAccessSequence(dossierEl, ()=> {
         const monthsSince = getMonthsDiff(agent.ops_completed);
         const dossier = `
- ========================================
- |   FILE: PERSONEL PUSLAT KODIKLATAU   |
- |   CLASSIFICATION: RAHASIA            |
- ========================================
+========================================
+|   FILE: PERSONEL PUSLAT KODIKLATAU   |
+|   CLASSIFICATION: RAHASIA            |
+========================================
 
- [DATA IDENTITAS]
- --------------------------------------------------
- NAMA LENGKAP    : ${agent.nama_lengkap}
- PANGKAT         : ${agent.pangkat}
- NRP/NIP         : ${agent.nrp_nip}
- JABATAN         : ${agent.jabatan}
- KORP/FUNG/SPES  : ${agent.korp_fung_spes}
- TANGGAL LAHIR   : ${agent.tanggal_lahir}
- TEMPAT LAHIR    : ${agent.tempat_lahir}
- AGAMA           : ${agent.agama}
+[DATA IDENTITAS]
+--------------------------------------------------
+NAMA LENGKAP    : ${agent.nama_lengkap}
+PANGKAT         : ${agent.pangkat}
+NRP/NIP         : ${agent.nrp_nip}
+JABATAN         : ${agent.jabatan}
+KORP/FUNG/SPES  : ${agent.korp_fung_spes}
+TANGGAL LAHIR   : ${agent.tanggal_lahir}
+TEMPAT LAHIR    : ${agent.tempat_lahir}
+AGAMA           : ${agent.agama}
 
- [OPERATIONAL RECORD]
- --------------------------------------------------
- SATKER          : ${agent.satker}
- NOMOR SKEP      : ${agent.specialization}
- TMT JABATAN     : ${agent.ops_completed}
- s.d SAAT INI    : ${monthsSince} bulan
+[OPERATIONAL RECORD]
+--------------------------------------------------
+SATKER          : ${agent.satker}
+NOMOR SKEP      : ${agent.specialization}
+TMT JABATAN     : ${agent.ops_completed}
+s.d SAAT INI    : ${monthsSince} bulan
 
- [SECURITY FOOTNOTE]
- --------------------------------------------------
- This dossier is property of PUSLAT KODIKLATAU.
- Unauthorized access or duplication is punishable under applicable law.
+[SECURITY FOOTNOTE]
+--------------------------------------------------
+This dossier is property of PUSLAT KODIKLATAU.
+Unauthorized access or duplication is punishable under applicable law.
 
- <END OF FILE>
- ========================================
- Retrieved on: ${new Date().toLocaleString()}
+<END OF FILE>
+========================================
+Retrieved on: ${new Date().toLocaleString()}
         `;
         typeWriter(dossierEl, dossier, agent, ()=> {
             const docContainer = document.createElement("div");
             docContainer.className = "doc-buttons";
             const docs = [
-                {label:"Pemuktahiran Data", url:"data-update.html"},
-                {label:"Riwayat Hidup", url:"riwayat-hidup.html"},
-                {label:"KU-1", url:"ku1.html"}
+                {label:"Pemuktahiran Data", url:"https://example.com/data-update"},
+                {label:"Riwayat Hidup", url:"https://example.com/riwayat-hidup"},
+                {label:"KU-1", url:"https://example.com/ku-1"}
             ];
             docs.forEach(d=>{
                 const btn = document.createElement("button");
@@ -351,19 +340,55 @@ function displayAgent(agent){
     });
 }
 
+// ========== EVENT SEARCH ==========
 searchInput.addEventListener("input", ()=>{
     dossierEl.textContent="Biodata will appear after clicking the member button";
     const oldDocs = agentContainer.querySelector(".doc-buttons");
     if(oldDocs) oldDocs.remove();
     memberBtnContainer.innerHTML="";
 });
-
 searchInput.addEventListener("keydown", e=>{
     if(e.key==="Enter"){
         const query = searchInput.value.trim();
         if(query) showMemberButtons(query);
     }
 });
+
+// ========== MENU BUTTONS ==========
+function showHome(){
+    dossierEl.textContent = `>>> Welcome to PUSLAT KODIKLATAU Intelligence Database
+>>> Use the left panel to search personnel data.
+>>> System Status: ONLINE [${new Date().toLocaleString()}]
+------------------------------------------------------`;
+}
+function openDocs(){
+    dossierEl.textContent = `>>> Document Center Access
+>>> Available Files:
+1. Pemuktahiran Data
+2. Riwayat Hidup
+3. KU-1
+>>> Please select personnel to view details.`;
+}
+function openOps(){
+    dossierEl.textContent = `>>> Current Operations Database
+>>> Access restricted to authorized clearance levels.
+>>> Use personnel search to check operation participation.`;
+}
+function openUnits(){
+    dossierEl.textContent = `>>> Unit Overview
+- DISPERS
+- PUSBANGDIK
+- SEKDAN
+- PUSLAT
+>>> Type the unit name in the search bar to display members.`;
+}
+function aboutSystem(){
+    dossierEl.textContent = `PUSLAT KODIKLATAU DATABASE TERMINAL v1.0
+--------------------------------------------------
+Developed for training simulation purposes.
+Unauthorized use prohibited.
+All rights reserved © 2025 KODIKLATAU.`;
+}
 </script>
 </body>
 </html>
