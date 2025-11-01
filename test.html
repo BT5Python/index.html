@@ -156,12 +156,12 @@ input {
     <h1 class="text">PUSLAT KODIKLATAU</h1>
     <h1 class="text1">DATABASE TERMINAL</h1>
 
-    <!-- 🔹 Tombol navigasi diarahkan ke URL -->
+    <!-- 🔹 Tombol navigasi diarahkan ke URL (tanpa buka tab baru) -->
     <div class="header-buttons">
-        <button onclick="goTo('STRUKTUR ORGANISASI DISPERS new')">STRUKTUR ORGANISASI</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">STRUKTUR ORGANISASI</button>
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">RADIOGRAM</button>
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">JAB KOSONG</button>
-        <button onclick="goTo('https://drive.google.com/file/d/1C7erm4ejf1wSswkIwij__XOMmontsBb1/view?usp=drive_link')">JUKNIS</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/juknis')">JUKNIS</button>
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/orgas-puslat')">ORGAS PUSLAT</button>
     </div>
 </header>
@@ -188,7 +188,7 @@ Biodata will appear after clicking the member button
 <script>
 // ========== FUNGSI TOMBOL HEADER ==========
 function goTo(url) {
-    window.open(url, "_blank"); // buka di tab baru
+    window.location.href = url; // 🔸 buka di tab yang sama
 }
 
 // ========== DATABASE ========== 
@@ -199,7 +199,7 @@ const personnelDB = [
     { nama_lengkap: "Muhammad Muslih", pangkat: "Penata Tk.I IIId", nrp_nip: "154267", jabatan: "Analis Data", korp_fung_spes: "Adm", tanggal_lahir: "24/10/1988", tempat_lahir: "Solo", agama: "Islam", satker: "DISPERS", specialization: "Tactical Planning", ops_completed: "24/06/2025", photo: "LETKOL mUSLIH.jpg" }
 ];
 
-// ========== ELEMENTS ========== 
+// ========== ELEMENTS ==========
 const searchInput = document.getElementById("search");
 const dossierEl = document.getElementById("agent-dossier");
 const photoEl = document.getElementById("agent-photo");
@@ -207,7 +207,7 @@ const memberBtnContainer = document.getElementById("member-buttons");
 const agentContainer = document.getElementById("agent-container");
 const outputPanel = document.getElementById("output");
 
-// ========== HELPER FUNCTIONS ========== 
+// ========== HELPER FUNCTIONS ==========
 function getMonthsDiff(startDateStr) {
     if (!startDateStr) return "-";
     const [day, month, year] = startDateStr.split("/").map(Number);
