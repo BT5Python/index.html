@@ -144,13 +144,10 @@ function calculateAge(birthDateStr){
     return age;
 }
 
-// ==== Fetch from Google Apps Script Web App ====
+// ==== Fetch from Google Sheets ====
 function showMemberButtons(keyword){
     memberBtnContainer.innerHTML='<span>Loading...</span>';
-
-    fetch(`https://script.google.com/macros/s/AKfycbw9umh7Al0Zp5jCHaLF7w7de5Tj0EjwhHjAQ9tZf_2ofczxDc3ZufIpL1hB5ijffpPc/exec?keyword=${encodeURIComponent(keyword)}`)
-    .then(response => response.json())
-    .then(filtered => {
+    google.script.run.withSuccessHandler((filtered)=>{
         memberBtnContainer.innerHTML="";
         if(filtered.length===0){
             memberBtnContainer.innerHTML='<span class="not-found">❌ No members found for this keyword</span>';
@@ -162,11 +159,7 @@ function showMemberButtons(keyword){
                 memberBtnContainer.appendChild(btn);
             });
         }
-    })
-    .catch(err => {
-        console.error(err);
-        memberBtnContainer.innerHTML='<span class="not-found">❌ Failed to fetch data</span>';
-    });
+    }).getPersonnel(keyword);
 }
 
 function displayAgent(agent){
@@ -174,6 +167,9 @@ function displayAgent(agent){
     photoEl.style.display="none";
     simulateAccessSequence(dossierEl, ()=>{
         const dossierText = `
+---------------------------------------------------
+DATA IDENTITAS
+---------------------------------------------------
 NAMA LENGKAP : ${agent.nama_lengkap || "-"}
 PANGKAT       : ${agent.pangkat || "-"}
 NIP           : ${agent.nip || "-"}
@@ -182,8 +178,10 @@ UNIT          : ${agent.unit || "-"}
 TMT           : ${agent.tmt || "-"}
 Masa Kerja    : ${getMonthsDiff(agent.tmt)} bulan
 Tanggal Lahir : ${agent.tanggal_lahir || "-"} (Umur ${calculateAge(agent.tanggal_lahir)} th)
+---------------------------------------------------
         `;
         typeWriter(dossierEl,dossierText,agent,()=>{
+            // Dokumen buttons jika ada link
             const docContainer = document.createElement("div");
             docContainer.className="doc-buttons";
             if(agent.doc1) { const b=document.createElement("button"); b.textContent="Doc1"; b.onclick=()=> window.open(agent.doc1,"_blank"); docContainer.appendChild(b); }
