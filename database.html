@@ -72,7 +72,8 @@ button:hover { background-color: #00FF00; color: black; }
 // ====================== KONFIGURASI GOOGLE SHEET ======================
 const SHEET_ID = "1BPBcC-p-bd291jVOfhsjtz46K2P36wVWOYQpdHCjyeM";
 const SHEET_NAME = "database"; // ganti sesuai nama tab sheet
-const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&t=${Date.now()}`;
+
 
 // ====================== ELEMENTS ======================
 const searchInput = document.getElementById("search");
@@ -166,4 +167,3 @@ loadData();
 </script>
 </body>
 </html>
-
