@@ -71,9 +71,8 @@ button:hover { background-color: #00FF00; color: black; }
 <script>
 // ====================== KONFIGURASI GOOGLE SHEET ======================
 const SHEET_ID = "1BPBcC-p-bd291jVOfhsjtz46K2P36wVWOYQpdHCjyeM";
-const SHEET_NAME = "database"; // ganti sesuai nama tab sheet
+const SHEET_NAME = "database";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&t=${Date.now()}`;
-
 
 // ====================== ELEMENTS ======================
 const searchInput = document.getElementById("search");
@@ -87,9 +86,10 @@ async function loadData() {
   try {
     const res = await fetch(SHEET_URL);
     const text = await res.text();
-    const json = JSON.parse(text.substr(47).slice(0, -2)); // parsing format Google
+    const json = JSON.parse(text.substr(47).slice(0, -2));
+
     personnelDB = json.table.rows.map(r => {
-      const c = r.c.map(x => x ? x.v : "");
+      const c = r.c.map(x => (x ? x.v : ""));
       return {
         nama_lengkap: c[0],
         pangkat: c[1],
@@ -105,23 +105,31 @@ async function loadData() {
         akan_datang: c[11],
         ops_completed: c[12],
         specialization: c[13],
-        photo: c[14]
+        photo: c[14],
+        nomer_skep: c[15] || "-",
+        tmt_jabatan: c[16] || "-",
+        masa_jabatan: c[17] || "-"
       };
-
+    });
+    console.log("Data loaded:", personnelDB);
+  } catch (err) {
+    console.error("❌ Gagal memuat data:", err);
   }
 }
 
 // ====================== FUNGSI ======================
-function showMemberButtons(keyword){
+function showMemberButtons(keyword) {
   memberContainer.innerHTML = "";
   const filtered = personnelDB.filter(p =>
     p.satker.toLowerCase().includes(keyword.toLowerCase()) ||
     p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase())
   );
-  if(filtered.length === 0){
+
+  if (filtered.length === 0) {
     memberContainer.innerHTML = '<span class="not-found">❌ Tidak ditemukan</span>';
     return;
   }
+
   filtered.forEach(agent => {
     const btn = document.createElement("button");
     btn.textContent = agent.nama_lengkap;
@@ -130,7 +138,7 @@ function showMemberButtons(keyword){
   });
 }
 
-function showAgent(agent){
+function showAgent(agent) {
   dossierEl.textContent = `
 ========================================
 | FILE: PERSONEL ${agent.satker} |
@@ -141,10 +149,11 @@ NRP/NIP      : ${agent.nrp_nip}
 JABATAN      : ${agent.jabatan}
 SATKER       : ${agent.satker}
 SPESIALISASI : ${agent.korp_fung_spes}
-TTL          : ${agent.ttl}
+TTL          : ${agent.tempat_lahir}, ${agent.tanggal_lahir}
 AGAMA        : ${agent.agama}
 ----------------------------------------
 KGB TERAKHIR : ${agent.kgb_terakhir}
+TMT KGB      : ${agent.tmt_kgb}
 KGB AKAN DATANG : ${agent.akan_datang}
 ----------------------------------------
 NOMOR SKEP   : ${agent.nomer_skep}
@@ -154,10 +163,10 @@ MASA JABATAN : ${agent.masa_jabatan}
 Retrieved on: ${new Date().toLocaleString()}
 `;
 
-  if(agent.photo){
+  if (agent.photo) {
     photoEl.src = agent.photo;
     photoEl.style.display = "block";
-    setTimeout(() => photoEl.style.opacity = 1, 200);
+    setTimeout(() => (photoEl.style.opacity = 1), 200);
   } else {
     photoEl.style.display = "none";
   }
@@ -165,9 +174,9 @@ Retrieved on: ${new Date().toLocaleString()}
 
 // ====================== EVENT ======================
 searchInput.addEventListener("keydown", e => {
-  if(e.key === "Enter"){
+  if (e.key === "Enter") {
     const q = searchInput.value.trim();
-    if(q) showMemberButtons(q);
+    if (q) showMemberButtons(q);
   }
 });
 
