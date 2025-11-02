@@ -16,14 +16,20 @@ body {
 }
 header {
     background-color: black;
-    color: #FF0000;
+    color: #00ffef;
     padding: 20px 0 10px 0;
     text-align: center;
     line-height: 1.1;
     border-bottom: 1px solid #00FF00;
 }
 .text { font-size: 75px; margin-bottom: 0; }
-.text1 { font-size: 30px; margin-top: 0; animation: blinkText 1s infinite; }
+.text1 {
+    font-size: 30px;
+    margin-top: 0;
+    animation: blinkText 1s infinite;
+    color: #FF0000; /* 🔴 Merah */
+}
+
 
 .header-buttons {
     display: flex; justify-content: center; gap: 15px; margin-top: 15px;
@@ -331,4 +337,5 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
