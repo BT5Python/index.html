@@ -291,21 +291,26 @@ function simulateAccessSequence(element, callback){
 }
 
 function showMemberButtons(keyword){
-    memberBtnContainer.innerHTML = "";
-    const filtered = personnelDB.filter(p => 
-        p.satker.toLowerCase().includes(keyword.toLowerCase()) ||
-        p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase())
-    );
-    if(filtered.length===0){
-        memberBtnContainer.innerHTML='<span class="not-found">❌ No members found for this keyword</span>';
-    } else {
-        filtered.forEach(agent=>{
-            const btn = document.createElement("button");
-            btn.textContent = agent.nama_lengkap;
-            btn.onclick = ()=> displayAgent(agent);
-            memberBtnContainer.appendChild(btn);
-        });
-    }
+  memberBtnContainer.innerHTML = "";
+  const selectedCategory = document.getElementById("category-filter").value;
+
+  const filtered = personnelDB.filter(p => {
+    const matchKeyword = p.satker.toLowerCase().includes(keyword.toLowerCase()) ||
+                         p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase());
+    const matchCategory = !selectedCategory || p.kategori === selectedCategory;
+    return matchKeyword && matchCategory;
+  });
+
+  if(filtered.length===0){
+    memberBtnContainer.innerHTML='<span class="not-found">❌ No members found for this filter</span>';
+  } else {
+    filtered.forEach(agent=>{
+      const btn = document.createElement("button");
+      btn.textContent = agent.nama_lengkap;
+      btn.onclick = ()=> displayAgent(agent);
+      memberBtnContainer.appendChild(btn);
+    });
+  }
 }
 
 function displayAgent(agent){
