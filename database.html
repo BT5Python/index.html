@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PUSLAT KODIKLATAU - Online KGB Monitoring</title>
+<title>PUSLAT KODIKLATAU - Intelligence Database</title>
 <style>
 body {
     font-family: 'Courier New', monospace;
@@ -15,57 +15,169 @@ body {
     height: 100vh;
 }
 header {
-    text-align: center;
-    border-bottom: 1px solid #00FF00;
+    background-color: black;
+    color: #00FF00;
     padding: 20px 0 10px 0;
+    text-align: center;
+    line-height: 1.1;
+    border-bottom: 1px solid #00FF00;
 }
-.text { font-size: 75px; margin-bottom: 0; }
-.text1 { font-size: 30px; margin-top: 0; animation: blinkText 1s infinite; }
-.main-container { display: flex; flex: 1; border-top: 1px solid #00FF00; }
-.search-panel { width: 35%; padding: 20px; border-right: 2px solid #00FF00; display: flex; flex-direction: column; }
-.output-panel { flex: 1; padding: 20px; overflow-y: auto; border-left: 2px solid #00FF00; }
+.text {
+    font-size: 75px;
+    margin-bottom: 0;
+}
+.text1 {
+    font-size: 30px;
+    margin-top: 0;
+    animation: blinkText 1s infinite;
+}
+.header-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+.header-buttons button {
+    background: transparent;
+    border: 1px solid #00FF00;
+    color: #00FF00;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    transition: background 0.3s, color 0.3s;
+}
+.header-buttons button:hover {
+    background-color: #00FF00;
+    color: black;
+}
+.main-container {
+    display: flex;
+    flex: 1;
+    border-top: 1px solid #00FF00;
+}
+.search-panel {
+    width: 35%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid #00FF00;
+}
+.search-panel h2 { text-align: center; margin-bottom: 20px; }
 input {
-    background: transparent; border: 1px solid #00FF00;
-    color: #00FF00; padding: 10px; margin-bottom: 15px;
-    font-size: 16px; border-radius: 4px;
+    background: transparent;
+    border: 1px solid #00FF00;
+    color: #00FF00;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    outline: none;
 }
-.agent-profile { display: flex; gap: 20px; flex-wrap: wrap; }
-.agent-profile pre { flex: 1; white-space: pre-wrap; line-height: 1.4; }
+.info-text { font-size: 14px; text-align: center; margin-top: 10px; }
+#member-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 10px;
+}
+.output-panel {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    border-left: 2px solid #00FF00;
+}
+.agent-profile {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.agent-profile pre {
+    flex: 1;
+    white-space: pre-wrap;
+    line-height: 1.4;
+}
 .agent-profile img {
-    width: 135px; height: 185px; object-fit: cover;
-    border: 2px solid #00FF00; border-radius: 8px;
-    display: none; opacity: 0; transition: opacity 1.2s ease-in-out;
+    width: 135px;
+    height: 185px;
+    object-fit: cover;
+    border: 2px solid #00FF00;
+    border-radius: 8px;
+    display: none;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
 }
-button {
-    background: transparent; border: 1px solid #00FF00;
-    color: #00FF00; padding: 8px 15px; border-radius: 4px;
-    cursor: pointer; font-family: 'Courier New', monospace;
+.doc-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
 }
-button:hover { background-color: #00FF00; color: black; }
 .not-found { color: #FF0000; font-weight: bold; }
-@keyframes blinkText { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
+.agent-profile button,
+#member-buttons button,
+.doc-buttons button {
+    background: transparent;
+    border: 1px solid #00FF00;
+    color: #00FF00;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    transition: background 0.3s, color 0.3s;
+}
+.agent-profile button:hover,
+#member-buttons button:hover,
+.doc-buttons button:hover {
+    background-color: #00FF00;
+    color: black;
+}
+@media (max-width: 768px) {
+    .main-container { flex-direction: column; }
+    .search-panel, .output-panel { width: 100%; border: none; border-bottom: 1px solid #00FF00; }
+    .agent-profile { flex-direction: column; align-items: center; }
+}
+.agent-profile pre::after {
+    content: "_";
+    animation: blink 1s infinite;
+}
+@keyframes blinkText {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
 </style>
 </head>
 <body>
 <header>
-  <h1 class="text">KENAIKAN GAJI BERKALA</h1>
-  <h1 class="text1">ONLINE MONITORING TERMINAL</h1>
+    <h1 class="text">KENAIKAN GAJI BERKALA</h1>
+    <h1 class="text1">MONITORING TERMINAL</h1>
+    <div class="header-buttons">
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">PERWIRA</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">BINTARA</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">TAMTAMA</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/juknis')">PNS</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/orgas-puslat')">ORGAS PUSLAT</button>
+    </div>
 </header>
 
 <div class="main-container">
-  <div class="search-panel">
-    <h2>🔍 Data Lookup</h2>
-    <label for="search">Masukkan Keyword Unit / Nama Lengkap:</label>
-    <input type="text" id="search" placeholder="Contoh: DISPERS / Endriady">
-    <div id="member-buttons"></div>
-  </div>
-
-  <div class="output-panel" id="output">
-    <div class="agent-profile" id="agent-container">
-      <pre id="agent-dossier">Biodata akan muncul di sini...</pre>
-      <img id="agent-photo" src="">
+    <div class="search-panel">
+        <h2>🔍 Data Lookup</h2>
+        <label for="search">Masukkan Keyword Unit / Nama Lengkap:</label>
+        <input type="text" id="search" placeholder="">
+        <p class="info-text">Type the keyword then press ENTER to display the member list</p>
+        <div id="member-buttons"></div>
     </div>
-  </div>
+
+    <div class="output-panel" id="output">
+        <div class="agent-profile" id="agent-container">
+            <pre id="agent-dossier">
+Biodata will appear after clicking the member button
+            </pre>
+            <img id="agent-photo" src="" alt="Foto Personel">
+        </div>
+    </div>
 </div>
 
 <script>
@@ -73,13 +185,15 @@ button:hover { background-color: #00FF00; color: black; }
 const SHEET_ID = "1BPBcC-p-bd291jVOfhsjtz46K2P36wVWOYQpdHCjyeM";
 const SHEET_NAME = "database";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&t=${Date.now()}`;
+];
 
-// ====================== ELEMENTS ======================
+// ======== ELEMENTS ========
 const searchInput = document.getElementById("search");
-const memberContainer = document.getElementById("member-buttons");
 const dossierEl = document.getElementById("agent-dossier");
 const photoEl = document.getElementById("agent-photo");
-let personnelDB = [];
+const memberBtnContainer = document.getElementById("member-buttons");
+const agentContainer = document.getElementById("agent-container");
+const outputPanel = document.getElementById("output");
 
 // ====================== LOAD DATA DARI GOOGLE SHEET ======================
 async function loadData() {
@@ -117,29 +231,122 @@ async function loadData() {
   }
 }
 
-// ====================== FUNGSI ======================
-function showMemberButtons(keyword) {
-  memberContainer.innerHTML = "";
-  const filtered = personnelDB.filter(p =>
-    p.satker.toLowerCase().includes(keyword.toLowerCase()) ||
-    p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase())
-  );
+// ======== FUNCTION PERHITUNGAN DETAIL ========
+function getDetailedDiff(startDateStr) {
+    if (!startDateStr) return "-";
+    const [day, month, year] = startDateStr.split("/").map(Number);
+    if (!day || !month || !year) return "-";
 
-  if (filtered.length === 0) {
-    memberContainer.innerHTML = '<span class="not-found">❌ Tidak ditemukan</span>';
-    return;
-  }
+    const startDate = new Date(year, month - 1, day);
+    const today = new Date();
 
-  filtered.forEach(agent => {
-    const btn = document.createElement("button");
-    btn.textContent = agent.nama_lengkap;
-    btn.onclick = () => showAgent(agent);
-    memberContainer.appendChild(btn);
-  });
+    let years = today.getFullYear() - startDate.getFullYear();
+    let months = today.getMonth() - startDate.getMonth();
+    let days = today.getDate() - startDate.getDate();
+
+    if (days < 0) {
+        months--;
+        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += prevMonth.getDate();
+    }
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+    return `${years} Tahun ${months} Bulan ${days} Hari`;
 }
 
-function showAgent(agent) {
-  dossierEl.textContent = `
+function calculateAge(birthDateStr) {
+    if (!birthDateStr) return "-";
+    const [day, month, year] = birthDateStr.split("-").map(Number);
+    if (!day || !month || !year) return "-";
+    const today = new Date();
+    let age = today.getFullYear() - year;
+    if (today.getMonth() + 1 < month || (today.getMonth() + 1 === month && today.getDate() < day)) {
+        age--;
+    }
+    return age;
+}
+
+// ======== TAMPILAN ANIMASI DAN DOKUMEN ========
+function typeWriter(element, text, agent, callback, speed=10){
+    element.textContent = "";
+    let i = 0;
+    let nameShown = false;
+    function typing() {
+        if(i < text.length){
+            element.textContent += text.charAt(i);
+            if(!nameShown && element.textContent.includes("NAMA LENGKAP")){
+                nameShown = true;
+                setTimeout(()=>{
+                    photoEl.src = agent.photo;
+                    photoEl.style.display = "block";
+                    setTimeout(()=> photoEl.style.opacity = 1, 100);
+                }, 200);
+            }
+            i++;
+            outputPanel.scrollTop = outputPanel.scrollHeight;
+            setTimeout(typing, speed);
+        } else if(callback) callback();
+    }
+    typing();
+}
+
+function simulateAccessSequence(element, callback){
+    const steps = [
+        ">>> initializing connection...",
+        ">>> accessing database node...",
+        ">>> verifying security clearance...",
+        ">>> clearance level verified ✔",
+        ">>> retrieving personnel data..."
+    ];
+    let i=0;
+    element.textContent="";
+    function nextStep(){
+        if(i<steps.length){
+            element.textContent += steps[i] + "\n";
+            outputPanel.scrollTop = outputPanel.scrollHeight;
+            i++;
+            setTimeout(nextStep, 600);
+        } else {
+            setTimeout(callback, 600);
+        }
+    }
+    nextStep();
+}
+
+function showMemberButtons(keyword){
+    memberBtnContainer.innerHTML = "";
+    const filtered = personnelDB.filter(p => 
+        p.satker.toLowerCase().includes(keyword.toLowerCase()) ||
+        p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase())
+    );
+    if(filtered.length===0){
+        memberBtnContainer.innerHTML='<span class="not-found">❌ No members found for this keyword</span>';
+    } else {
+        filtered.forEach(agent=>{
+            const btn = document.createElement("button");
+            btn.textContent = agent.nama_lengkap;
+            btn.onclick = ()=> displayAgent(agent);
+            memberBtnContainer.appendChild(btn);
+        });
+    }
+}
+
+function displayAgent(agent){
+    dossierEl.textContent = "";
+    photoEl.style.display = "none";
+    photoEl.style.opacity = 0;
+    photoEl.src = "";
+    const oldDocs = agentContainer.querySelector(".doc-buttons");
+    if(oldDocs) oldDocs.remove();
+
+    simulateAccessSequence(dossierEl, ()=> {
+        const masaKerja = getDetailedDiff(agent.ops_completed);
+        const masaKGB = getDetailedDiff(agent.kgb_terakhir);
+        const usia = calculateAge(agent.tanggal_lahir);
+
+        dossierEl.textContent = `
 ========================================
 | FILE: PERSONEL ${agent.satker} |
 ========================================
@@ -162,26 +369,38 @@ MASA JABATAN : ${agent.masa_jabatan}
 ========================================
 Retrieved on: ${new Date().toLocaleString()}
 `;
-
-  if (agent.photo) {
-    photoEl.src = agent.photo;
-    photoEl.style.display = "block";
-    setTimeout(() => (photoEl.style.opacity = 1), 200);
-  } else {
-    photoEl.style.display = "none";
-  }
+        typeWriter(dossierEl, dossier, agent, ()=> {
+            const docContainer = document.createElement("div");
+            docContainer.className = "doc-buttons";
+            const docs = [
+                {label:"Pemuktahiran Data", url:"https://example.com/data-update"},
+                {label:"Riwayat Hidup", url:"https://example.com/riwayat-hidup"},
+                {label:"KU-1", url:"https://example.com/ku-1"}
+            ];
+            docs.forEach(d=>{
+                const btn = document.createElement("button");
+                btn.textContent = d.label;
+                btn.onclick = ()=> window.open(d.url, "_blank");
+                docContainer.appendChild(btn);
+            });
+            agentContainer.appendChild(docContainer);
+        });
+    });
 }
 
-// ====================== EVENT ======================
-searchInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    const q = searchInput.value.trim();
-    if (q) showMemberButtons(q);
-  }
+// ======== EVENT SEARCH ========
+searchInput.addEventListener("input", ()=>{
+    dossierEl.textContent="Biodata will appear after clicking the member button";
+    const oldDocs = agentContainer.querySelector(".doc-buttons");
+    if(oldDocs) oldDocs.remove();
+    memberBtnContainer.innerHTML="";
 });
-
-// ====================== INIT ======================
-loadData();
+searchInput.addEventListener("keydown", e=>{
+    if(e.key==="Enter"){
+        const query = searchInput.value.trim();
+        if(query) showMemberButtons(query);
+    }
+});
 </script>
 </body>
 </html>
