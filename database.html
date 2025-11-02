@@ -71,7 +71,7 @@ button:hover { background-color: #00FF00; color: black; }
 <script>
 // ====================== KONFIGURASI GOOGLE SHEET ======================
 const SHEET_ID = "1BPBcC-p-bd291jVOfhsjtz46K2P36wVWOYQpdHCjyeM";
-const SHEET_NAME = "databasepuslat"; // ganti sesuai nama tab sheet
+const SHEET_NAME = "database"; // ganti sesuai nama tab sheet
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&t=${Date.now()}`;
 
 
@@ -91,16 +91,23 @@ async function loadData() {
     personnelDB = json.table.rows.map(r => {
       const c = r.c.map(x => x ? x.v : "");
       return {
-        nama_lengkap: c[0], pangkat: c[1], nrp_nip: c[2], jabatan: c[3],
-        korp_fung_spes: c[4], tanggal_lahir: c[5], tempat_lahir: c[6],
-        agama: c[7], satker: c[8], kgb_terakhir: c[9], tmt_kgb: c[10],
-        akan_datang: c[11], ops_completed: c[12], specialization: c[13], photo: c[14]
+        nama_lengkap: c[0],
+        pangkat: c[1],
+        nrp_nip: c[2],
+        jabatan: c[3],
+        korp_fung_spes: c[4],
+        tanggal_lahir: c[5],
+        tempat_lahir: c[6],
+        agama: c[7],
+        satker: c[8],
+        kgb_terakhir: c[9],
+        tmt_kgb: c[10],
+        akan_datang: c[11],
+        ops_completed: c[12],
+        specialization: c[13],
+        photo: c[14]
       };
-    });
-    console.log("Data berhasil dimuat:", personnelDB.length, "personel");
-  } catch (err) {
-    console.error("Gagal memuat data:", err);
-    dossierEl.textContent = "❌ Gagal memuat data dari Google Sheets.";
+
   }
 }
 
@@ -134,17 +141,19 @@ NRP/NIP      : ${agent.nrp_nip}
 JABATAN      : ${agent.jabatan}
 SATKER       : ${agent.satker}
 SPESIALISASI : ${agent.korp_fung_spes}
-TTL          : ${agent.tempat_lahir}, ${agent.tanggal_lahir}
+TTL          : ${agent.ttl}
 AGAMA        : ${agent.agama}
 ----------------------------------------
 KGB TERAKHIR : ${agent.kgb_terakhir}
 KGB AKAN DATANG : ${agent.akan_datang}
 ----------------------------------------
-SK JABATAN   : ${agent.specialization}
-TMT JABATAN  : ${agent.ops_completed}
+NOMOR SKEP   : ${agent.nomer_skep}
+TMT JABATAN  : ${agent.tmt_jabatan}
+MASA JABATAN : ${agent.masa_jabatan}
 ========================================
 Retrieved on: ${new Date().toLocaleString()}
 `;
+
   if(agent.photo){
     photoEl.src = agent.photo;
     photoEl.style.display = "block";
@@ -167,4 +176,3 @@ loadData();
 </script>
 </body>
 </html>
-
