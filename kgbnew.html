@@ -22,130 +22,60 @@ header {
     line-height: 1.1;
     border-bottom: 1px solid #00FF00;
 }
-.text {
-    font-size: 75px;
-    margin-bottom: 0;
-}
-.text1 {
-    font-size: 30px;
-    margin-top: 0;
-    animation: blinkText 1s infinite;
-}
+.text { font-size: 75px; margin-bottom: 0; }
+.text1 { font-size: 30px; margin-top: 0; animation: blinkText 1s infinite; }
+
 .header-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 15px;
+    display: flex; justify-content: center; gap: 15px; margin-top: 15px;
 }
 .header-buttons button {
-    background: transparent;
-    border: 1px solid #00FF00;
-    color: #00FF00;
-    padding: 8px 15px;
-    cursor: pointer;
-    border-radius: 4px;
+    background: transparent; border: 1px solid #00FF00; color: #00FF00;
+    padding: 8px 15px; cursor: pointer; border-radius: 4px;
     font-family: 'Courier New', monospace;
     transition: background 0.3s, color 0.3s;
 }
-.header-buttons button:hover {
-    background-color: #00FF00;
-    color: black;
-}
-.main-container {
-    display: flex;
-    flex: 1;
-    border-top: 1px solid #00FF00;
-}
+.header-buttons button:hover { background-color: #00FF00; color: black; }
+
+.main-container { display: flex; flex: 1; border-top: 1px solid #00FF00; }
 .search-panel {
-    width: 35%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
+    width: 35%; padding: 20px; display: flex; flex-direction: column;
     border-right: 2px solid #00FF00;
 }
 .search-panel h2 { text-align: center; margin-bottom: 20px; }
-input {
-    background: transparent;
-    border: 1px solid #00FF00;
-    color: #00FF00;
-    padding: 10px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    border-radius: 4px;
-    outline: none;
+input, select {
+    background: transparent; border: 1px solid #00FF00; color: #00FF00;
+    padding: 10px; margin-bottom: 15px; font-size: 16px; border-radius: 4px; outline: none;
 }
 .info-text { font-size: 14px; text-align: center; margin-top: 10px; }
-#member-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    margin-top: 10px;
-}
-.output-panel {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    border-left: 2px solid #00FF00;
-}
-.agent-profile {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    flex-wrap: wrap;
-}
-.agent-profile pre {
-    flex: 1;
-    white-space: pre-wrap;
-    line-height: 1.4;
-}
+#member-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+
+.output-panel { flex: 1; padding: 20px; overflow-y: auto; border-left: 2px solid #00FF00; }
+
+.agent-profile { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+.agent-profile pre { flex: 1; white-space: pre-wrap; line-height: 1.4; }
 .agent-profile img {
-    width: 135px;
-    height: 185px;
-    object-fit: cover;
-    border: 2px solid #00FF00;
-    border-radius: 8px;
-    display: none;
-    opacity: 0;
-    transition: opacity 1.2s ease-in-out;
+    width: 135px; height: 185px; object-fit: cover;
+    border: 2px solid #00FF00; border-radius: 8px;
+    display: none; opacity: 0; transition: opacity 1.2s ease-in-out;
 }
-.doc-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
+
+.doc-buttons { display: flex; gap: 10px; margin-top: 15px; }
 .not-found { color: #FF0000; font-weight: bold; }
-.agent-profile button,
-#member-buttons button,
-.doc-buttons button {
-    background: transparent;
-    border: 1px solid #00FF00;
-    color: #00FF00;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    transition: background 0.3s, color 0.3s;
+
+button {
+    background: transparent; border: 1px solid #00FF00; color: #00FF00;
+    padding: 8px 12px; cursor: pointer; border-radius: 4px;
+    font-family: 'Courier New', monospace; transition: background 0.3s, color 0.3s;
 }
-.agent-profile button:hover,
-#member-buttons button:hover,
-.doc-buttons button:hover {
-    background-color: #00FF00;
-    color: black;
-}
+button:hover { background-color: #00FF00; color: black; }
+
 @media (max-width: 768px) {
     .main-container { flex-direction: column; }
     .search-panel, .output-panel { width: 100%; border: none; border-bottom: 1px solid #00FF00; }
     .agent-profile { flex-direction: column; align-items: center; }
 }
-.agent-profile pre::after {
-    content: "_";
-    animation: blink 1s infinite;
-}
-@keyframes blinkText {
-    0%, 50%, 100% { opacity: 1; }
-    25%, 75% { opacity: 0; }
-}
+.agent-profile pre::after { content: "_"; animation: blink 1s infinite; }
+@keyframes blinkText { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
 </style>
 </head>
 <body>
@@ -164,9 +94,14 @@ input {
 <div class="main-container">
     <div class="search-panel">
         <h2>🔍 Data Lookup</h2>
+        <label for="category-filter">Filter Berdasarkan Kategori:</label>
+        <select id="category-filter">
+          <option value="">-- Semua Kategori --</option>
+        </select>
+
         <label for="search">Masukkan Keyword Unit / Nama Lengkap:</label>
         <input type="text" id="search" placeholder="">
-        <p class="info-text">Type the keyword then press ENTER to display the member list</p>
+        <p class="info-text">Pilih kategori dan ketik keyword, lalu tekan ENTER untuk menampilkan daftar anggota</p>
         <div id="member-buttons"></div>
     </div>
 
@@ -183,11 +118,10 @@ Biodata will appear after clicking the member button
 <script>
 function goTo(url) { window.location.href = url; }
 
-// ======== DATABASE PERSONEL ========
 // ======== LOAD DATABASE DARI GOOGLE SHEET ========
 let personnelDB = [];
 
-fetch("https://script.google.com/macros/s/AKfycbx2wfJs_qCIZt78WcXT-kPOthIq97rg1qo3NKMIjNvgec-rBlebcjN3J4CMDdvYoZE7/exec") // Ganti dgn URL WebApp kamu
+fetch("https://script.google.com/macros/s/AKfycbx2wfJs_qCIZt78WcXT-kPOthIq97rg1qo3NKMIjNvgec-rBlebcjN3J4CMDdvYoZE7/exec")
   .then(res => res.json())
   .then(data => {
     personnelDB = data;
@@ -208,11 +142,6 @@ function populateCategoryDropdown() {
   });
 }
 
-<select id="category-filter">
-  <option value="">-- Pilih Kategori --</option>
-</select>
-
-
 // ======== ELEMENTS ========
 const searchInput = document.getElementById("search");
 const dossierEl = document.getElementById("agent-dossier");
@@ -226,23 +155,13 @@ function getDetailedDiff(startDateStr) {
     if (!startDateStr) return "-";
     const [day, month, year] = startDateStr.split("/").map(Number);
     if (!day || !month || !year) return "-";
-
     const startDate = new Date(year, month - 1, day);
     const today = new Date();
-
     let years = today.getFullYear() - startDate.getFullYear();
     let months = today.getMonth() - startDate.getMonth();
     let days = today.getDate() - startDate.getDate();
-
-    if (days < 0) {
-        months--;
-        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-        days += prevMonth.getDate();
-    }
-    if (months < 0) {
-        years--;
-        months += 12;
-    }
+    if (days < 0) { months--; const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0); days += prevMonth.getDate(); }
+    if (months < 0) { years--; months += 12; }
     return `${years} Tahun ${months} Bulan ${days} Hari`;
 }
 
@@ -252,27 +171,20 @@ function calculateAge(birthDateStr) {
     if (!day || !month || !year) return "-";
     const today = new Date();
     let age = today.getFullYear() - year;
-    if (today.getMonth() + 1 < month || (today.getMonth() + 1 === month && today.getDate() < day)) {
-        age--;
-    }
+    if (today.getMonth() + 1 < month || (today.getMonth() + 1 === month && today.getDate() < day)) age--;
     return age;
 }
 
-// ======== TAMPILAN ANIMASI DAN DOKUMEN ========
+// ======== ANIMASI DAN TAMPILAN ========
 function typeWriter(element, text, agent, callback, speed=10){
     element.textContent = "";
-    let i = 0;
-    let nameShown = false;
+    let i = 0, nameShown = false;
     function typing() {
         if(i < text.length){
             element.textContent += text.charAt(i);
             if(!nameShown && element.textContent.includes("NAMA LENGKAP")){
                 nameShown = true;
-                setTimeout(()=>{
-                    photoEl.src = agent.photo;
-                    photoEl.style.display = "block";
-                    setTimeout(()=> photoEl.style.opacity = 1, 100);
-                }, 200);
+                setTimeout(()=>{ photoEl.src = agent.photo; photoEl.style.display = "block"; setTimeout(()=> photoEl.style.opacity = 1, 100); }, 200);
             }
             i++;
             outputPanel.scrollTop = outputPanel.scrollHeight;
@@ -298,9 +210,7 @@ function simulateAccessSequence(element, callback){
             outputPanel.scrollTop = outputPanel.scrollHeight;
             i++;
             setTimeout(nextStep, 600);
-        } else {
-            setTimeout(callback, 600);
-        }
+        } else { setTimeout(callback, 600); }
     }
     nextStep();
 }
@@ -327,7 +237,6 @@ function showMemberButtons(keyword){
     });
   }
 }
-
 
 function displayAgent(agent){
     dossierEl.textContent = "";
