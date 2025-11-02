@@ -217,26 +217,32 @@ function simulateAccessSequence(element, callback){
 
 function showMemberButtons(keyword){
   memberBtnContainer.innerHTML = "";
-  const selectedCategory = document.getElementById("category-filter").value;
+  const selectedCategory = document.getElementById("category-filter") 
+      ? document.getElementById("category-filter").value 
+      : "";
 
   const filtered = personnelDB.filter(p => {
-    const matchKeyword = p.satker.toLowerCase().includes(keyword.toLowerCase()) ||
-                         p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase());
+    const kw = keyword.toLowerCase();
+    const matchKeyword = 
+      p.satker.toLowerCase().includes(kw) ||
+      p.nama_lengkap.toLowerCase().includes(kw) ||
+      p.kategori.toLowerCase().includes(kw); // 🟢 tambahkan ini
     const matchCategory = !selectedCategory || p.kategori === selectedCategory;
     return matchKeyword && matchCategory;
   });
 
-  if(filtered.length===0){
-    memberBtnContainer.innerHTML='<span class="not-found">❌ No members found for this filter</span>';
+  if(filtered.length === 0){
+    memberBtnContainer.innerHTML = '<span class="not-found">❌ No members found for this filter</span>';
   } else {
-    filtered.forEach(agent=>{
+    filtered.forEach(agent => {
       const btn = document.createElement("button");
       btn.textContent = agent.nama_lengkap;
-      btn.onclick = ()=> displayAgent(agent);
+      btn.onclick = () => displayAgent(agent);
       memberBtnContainer.appendChild(btn);
     });
   }
 }
+
 
 function displayAgent(agent){
     dossierEl.textContent = "";
