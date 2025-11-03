@@ -150,21 +150,55 @@ const memberBtnContainer = document.getElementById("member-buttons");
 const agentContainer = document.getElementById("agent-container");
 const outputPanel = document.getElementById("output");
 
-// ======== FUNCTION PERHITUNGAN DETAIL ========
+
+// ======== FUNGSI FORMAT TANGGAL ========
+function formatTanggalIndonesia(dateStr) {
+    if (!dateStr) return "-";
+    let date;
+    try {
+        date = new Date(dateStr);
+        if (isNaN(date)) {
+            const parts = dateStr.includes("/") ? dateStr.split("/") : dateStr.split("-");
+            if (parts.length === 3) {
+                const [d, m, y] = parts.map(Number);
+                date = new Date(y, m - 1, d);
+            } else return dateStr;
+        }
+    } catch {
+        return dateStr;
+    }
+    const d = String(date.getDate()).padStart(2, "0");
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const y = date.getFullYear();
+    return `${d}/${m}/${y}`;
+}
+
+
+// ======== PERHITUNGAN SELISIH WAKTU ========
 function getDetailedDiff(startDateStr) {
     if (!startDateStr) return "-";
-    const date = new Date(startDateStr);
-    if (isNaN(date)) return "-";
-    const startDate = new Date(year, month - 1, day);
+    const startDate = new Date(startDateStr);
+    if (isNaN(startDate)) return "-";
+
     const today = new Date();
     let years = today.getFullYear() - startDate.getFullYear();
     let months = today.getMonth() - startDate.getMonth();
     let days = today.getDate() - startDate.getDate();
-    if (days < 0) { months--; const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0); days += prevMonth.getDate(); }
-    if (months < 0) { years--; months += 12; }
+
+    if (days < 0) {
+        months--;
+        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += prevMonth.getDate();
+    }
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
     return `${years} Tahun ${months} Bulan ${days} Hari`;
 }
 
+
+// ======== HITUNG USIA ========
 function calculateAge(birthDateStr) {
     if (!birthDateStr) return "-";
     const date = new Date(birthDateStr);
@@ -172,15 +206,12 @@ function calculateAge(birthDateStr) {
 
     const today = new Date();
     let age = today.getFullYear() - date.getFullYear();
-
-    // Koreksi jika belum ulang tahun tahun ini
     if (
         today.getMonth() < date.getMonth() ||
         (today.getMonth() === date.getMonth() && today.getDate() < date.getDate())
     ) {
         age--;
     }
-
     return age;
 }
 
@@ -194,7 +225,13 @@ function typeWriter(element, text, agent, callback, speed=10){
             element.textContent += text.charAt(i);
             if(!nameShown && element.textContent.includes("NAMA LENGKAP")){
                 nameShown = true;
-                setTimeout(()=>{ photoEl.src = agent.photo; photoEl.style.display = "block"; setTimeout(()=> photoEl.style.opacity = 1, 100); }, 200);
+                setTimeout(()=>{ 
+                    if (agent.photo) {
+                        photoEl.src = agent.photo; 
+                        photoEl.style.display = "block"; 
+                        setTimeout(()=> photoEl.style.opacity = 1, 100); 
+                    }
+                }, 200);
             }
             i++;
             outputPanel.scrollTop = outputPanel.scrollHeight;
@@ -225,6 +262,8 @@ function simulateAccessSequence(element, callback){
     nextStep();
 }
 
+
+// ======== FILTER DAN TAMPILKAN NAMA ANGGOTA ========
 function showMemberButtons(keyword){
   memberBtnContainer.innerHTML = "";
   const selectedCategory = document.getElementById("category-filter") 
@@ -234,9 +273,9 @@ function showMemberButtons(keyword){
   const filtered = personnelDB.filter(p => {
     const kw = keyword.toLowerCase();
     const matchKeyword = 
-      p.satker.toLowerCase().includes(kw) ||
-      p.nama_lengkap.toLowerCase().includes(kw) ||
-      p.kategori.toLowerCase().includes(kw); // 🟢 tambahkan ini
+      (p.satker && p.satker.toLowerCase().includes(kw)) ||
+      (p.nama_lengkap && p.nama_lengkap.toLowerCase().includes(kw)) ||
+      (p.kategori && p.kategori.toLowerCase().includes(kw));
     const matchCategory = !selectedCategory || p.kategori === selectedCategory;
     return matchKeyword && matchCategory;
   });
@@ -254,33 +293,8 @@ function showMemberButtons(keyword){
 }
 
 
+// ======== TAMPILKAN BIODATA DETAIL ========
 function displayAgent(agent) {
-    // Fungsi untuk format tanggal ke dd/mm/yyyy
-    function formatTanggalIndonesia(dateStr) {
-    if (!dateStr) return "-";
-
-    let date;
-    // Coba parse otomatis (termasuk format ISO)
-    try {
-        date = new Date(dateStr);
-        if (isNaN(date)) {
-            const parts = dateStr.includes("/") ? dateStr.split("/") : dateStr.split("-");
-            if (parts.length === 3) {
-                const [d, m, y] = parts.map(Number);
-                date = new Date(y, m - 1, d);
-            } else return dateStr;
-        }
-    } catch {
-        return dateStr;
-    }
-
-    const d = String(date.getDate()).padStart(2, "0");
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const y = date.getFullYear();
-
-    return `${d}/${m}/${y}`;
-}
-
     dossierEl.textContent = "";
     photoEl.style.display = "none";
     photoEl.style.opacity = 0;
@@ -319,7 +333,7 @@ KGB AKAN DATANG    : ${formatTanggalIndonesia(agent.akan_datang)}
 
 [DATA JABATAN]
 --------------------------------------------------
-NOMOR SKEP         : ${agent.nomer_skep}
+NOMOR SKEP         : ${agent.nomer_skep || "-"}
 TMT JABATAN        : ${formatTanggalIndonesia(agent.ops_completed)}
 MASA JABATAN       : ${masaKerja}
 
@@ -369,6 +383,7 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
 
 
