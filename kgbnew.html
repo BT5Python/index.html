@@ -153,8 +153,8 @@ const outputPanel = document.getElementById("output");
 // ======== FUNCTION PERHITUNGAN DETAIL ========
 function getDetailedDiff(startDateStr) {
     if (!startDateStr) return "-";
-    const [day, month, year] = startDateStr.split("/").map(Number);
-    if (!day || !month || !year) return "-";
+    const date = new Date(startDateStr);
+    if (isNaN(date)) return "-";
     const startDate = new Date(year, month - 1, day);
     const today = new Date();
     let years = today.getFullYear() - startDate.getFullYear();
@@ -167,13 +167,23 @@ function getDetailedDiff(startDateStr) {
 
 function calculateAge(birthDateStr) {
     if (!birthDateStr) return "-";
-    const [day, month, year] = birthDateStr.split("-").map(Number);
-    if (!day || !month || !year) return "-";
+    const date = new Date(birthDateStr);
+    if (isNaN(date)) return "-";
+
     const today = new Date();
-    let age = today.getFullYear() - year;
-    if (today.getMonth() + 1 < month || (today.getMonth() + 1 === month && today.getDate() < day)) age--;
+    let age = today.getFullYear() - date.getFullYear();
+
+    // Koreksi jika belum ulang tahun tahun ini
+    if (
+        today.getMonth() < date.getMonth() ||
+        (today.getMonth() === date.getMonth() && today.getDate() < date.getDate())
+    ) {
+        age--;
+    }
+
     return age;
 }
+
 
 // ======== ANIMASI DAN TAMPILAN ========
 function typeWriter(element, text, agent, callback, speed=10){
@@ -247,15 +257,29 @@ function showMemberButtons(keyword){
 function displayAgent(agent) {
     // Fungsi untuk format tanggal ke dd/mm/yyyy
     function formatTanggalIndonesia(dateStr) {
-        if (!dateStr) return "-";
-        const parts = dateStr.includes("/") ? dateStr.split("/") : dateStr.split("-");
-        if (parts.length !== 3) return dateStr;
-        let [d, m, y] = parts.map(Number);
-        if (!d || !m || !y) return dateStr;
-        d = String(d).padStart(2, "0");
-        m = String(m).padStart(2, "0");
-        return `${d}/${m}/${y}`;
+    if (!dateStr) return "-";
+
+    let date;
+    // Coba parse otomatis (termasuk format ISO)
+    try {
+        date = new Date(dateStr);
+        if (isNaN(date)) {
+            const parts = dateStr.includes("/") ? dateStr.split("/") : dateStr.split("-");
+            if (parts.length === 3) {
+                const [d, m, y] = parts.map(Number);
+                date = new Date(y, m - 1, d);
+            } else return dateStr;
+        }
+    } catch {
+        return dateStr;
     }
+
+    const d = String(date.getDate()).padStart(2, "0");
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const y = date.getFullYear();
+
+    return `${d}/${m}/${y}`;
+}
 
     dossierEl.textContent = "";
     photoEl.style.display = "none";
@@ -345,5 +369,6 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
 
