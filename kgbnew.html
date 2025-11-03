@@ -157,27 +157,42 @@ const agentContainer = document.getElementById("agent-container");
 const outputPanel = document.getElementById("output");
 
 // ======== FUNCTION PERHITUNGAN DETAIL ========
-function getDetailedDiff(startDateStr) {
-    if (!startDateStr) return "-";
-    const [day, month, year] = startDateStr.split("/").map(Number);
-    if (!day || !month || !year) return "-";
-    const startDate = new Date(year, month - 1, day);
-    const today = new Date();
-    let years = today.getFullYear() - startDate.getFullYear();
-    let months = today.getMonth() - startDate.getMonth();
-    let days = today.getDate() - startDate.getDate();
-    if (days < 0) { months--; const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0); days += prevMonth.getDate(); }
-    if (months < 0) { years--; months += 12; }
-    return `${years} Tahun ${months} Bulan ${days} Hari`;
-}
-
 function calculateAge(birthDateStr) {
     if (!birthDateStr) return "-";
-    const [day, month, year] = birthDateStr.split("-").map(Number);
+
+    // Hapus spasi ekstra
+    birthDateStr = birthDateStr.trim();
+
+    // Pisahkan berdasarkan "-" atau "/"
+    let parts;
+    if (birthDateStr.includes("-")) {
+        parts = birthDateStr.split("-");
+    } else if (birthDateStr.includes("/")) {
+        parts = birthDateStr.split("/");
+    } else {
+        return "-";
+    }
+
+    // Deteksi format
+    let day, month, year;
+    if (parts[0].length === 4) {
+        // format YYYY-MM-DD
+        [year, month, day] = parts.map(Number);
+    } else {
+        // format DD-MM-YYYY atau DD/MM/YYYY
+        [day, month, year] = parts.map(Number);
+    }
+
+    // Validasi
     if (!day || !month || !year) return "-";
+
+    // Hitung umur
     const today = new Date();
     let age = today.getFullYear() - year;
-    if (today.getMonth() + 1 < month || (today.getMonth() + 1 === month && today.getDate() < day)) age--;
+    if (today.getMonth() + 1 < month || (today.getMonth() + 1 === month && today.getDate() < day)) {
+        age--;
+    }
+
     return age;
 }
 
@@ -338,6 +353,7 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
 
 
