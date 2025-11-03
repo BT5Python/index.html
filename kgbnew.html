@@ -218,6 +218,7 @@ function getDetailedDiff(startDateStr) {
 
 
 // ======== HITUNG USIA ========
+// ======== HITUNG USIA ========
 function calculateAge(birthDateStr) {
     if (!birthDateStr) return "-";
     const date = new Date(birthDateStr);
@@ -233,6 +234,21 @@ function calculateAge(birthDateStr) {
     }
     return age;
 }
+
+// ======== KGB BERIKUTNYA ========
+function getNextKGB(tmtKGB) {
+    if (!tmtKGB) return "-";
+    const tmt = new Date(tmtKGB);
+    if (isNaN(tmt)) return "-";
+
+    // Asumsikan KGB setiap 2 tahun
+    const nextKGB = new Date(tmt.getFullYear() + 2, tmt.getMonth(), tmt.getDate());
+    return getDetailedDiff(nextKGB); // Selisih dari hari ini
+}
+
+// ======== ANIMASI DAN TAMPILAN ========
+// ... fungsi typeWriter, simulateAccessSequence, dll.
+
 
 
 // ======== ANIMASI DAN TAMPILAN ========
@@ -402,6 +418,7 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
 
 
