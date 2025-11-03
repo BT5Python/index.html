@@ -245,12 +245,30 @@ function showMemberButtons(keyword){
 
 
 function displayAgent(agent){
-    dossierEl.textContent = "";
-    photoEl.style.display = "none";
-    photoEl.style.opacity = 0;
-    photoEl.src = "";
-    const oldDocs = agentContainer.querySelector(".doc-buttons");
-    if(oldDocs) oldDocs.remove();
+    TEMPAT/TGL LAHIR   : ${agent.tempat_lahir}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
+    KGB TERAKHIR       : ${formatTanggalIndonesia(agent.kgb_terakhir)} (${masaKGB} lalu)
+    TMT KGB            : ${formatTanggalIndonesia(agent.tmt_kgb)}
+    KGB AKAN DATANG    : ${formatTanggalIndonesia(agent.akan_datang)}
+    TMT JABATAN        : ${formatTanggalIndonesia(agent.ops_completed)}
+
+    function formatTanggalIndonesia(dateStr) {
+    if (!dateStr) return "-";
+
+    // Tangani format dd/mm/yyyy atau dd-mm-yyyy
+    const parts = dateStr.includes("/") ? dateStr.split("/") : dateStr.split("-");
+    if (parts.length !== 3) return dateStr;
+
+    let [d, m, y] = parts.map(Number);
+    if (!d || !m || !y) return dateStr;
+
+    // Pastikan 2 digit untuk tanggal dan bulan
+    d = String(d).padStart(2, "0");
+    m = String(m).padStart(2, "0");
+
+    return `${d}/${m}/${y}`;
+}
+
+
 
     simulateAccessSequence(dossierEl, ()=> {
         const masaKerja = getDetailedDiff(agent.ops_completed);
@@ -331,3 +349,4 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
