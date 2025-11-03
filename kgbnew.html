@@ -346,9 +346,9 @@ USIA               : ${usia} Tahun
 
 [DATA KGB]
 --------------------------------------------------
-KGB TERAKHIR       : ${formatTanggalIndonesia(agent.kgb_terakhir)} (${masaKGB} lalu)
+KGB TERAKHIR       : ${formatTanggalIndonesia(agent.kgb_terakhir)
 TMT KGB            : ${formatTanggalIndonesia(agent.tmt_kgb)}
-KGB AKAN DATANG    : ${formatTanggalIndonesia(agent.akan_datang)}
+KGB AKAN DATANG    : ${masaKGB}
 
 [DATA JABATAN]
 --------------------------------------------------
@@ -402,6 +402,7 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
 
 
