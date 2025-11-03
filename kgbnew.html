@@ -244,33 +244,27 @@ function showMemberButtons(keyword){
 }
 
 
-function displayAgent(agent){
-    TEMPAT/TGL LAHIR   : ${agent.tempat_lahir}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
-    KGB TERAKHIR       : ${formatTanggalIndonesia(agent.kgb_terakhir)} (${masaKGB} lalu)
-    TMT KGB            : ${formatTanggalIndonesia(agent.tmt_kgb)}
-    KGB AKAN DATANG    : ${formatTanggalIndonesia(agent.akan_datang)}
-    TMT JABATAN        : ${formatTanggalIndonesia(agent.ops_completed)}
-
+function displayAgent(agent) {
+    // Fungsi untuk format tanggal ke dd/mm/yyyy
     function formatTanggalIndonesia(dateStr) {
-    if (!dateStr) return "-";
+        if (!dateStr) return "-";
+        const parts = dateStr.includes("/") ? dateStr.split("/") : dateStr.split("-");
+        if (parts.length !== 3) return dateStr;
+        let [d, m, y] = parts.map(Number);
+        if (!d || !m || !y) return dateStr;
+        d = String(d).padStart(2, "0");
+        m = String(m).padStart(2, "0");
+        return `${d}/${m}/${y}`;
+    }
 
-    // Tangani format dd/mm/yyyy atau dd-mm-yyyy
-    const parts = dateStr.includes("/") ? dateStr.split("/") : dateStr.split("-");
-    if (parts.length !== 3) return dateStr;
+    dossierEl.textContent = "";
+    photoEl.style.display = "none";
+    photoEl.style.opacity = 0;
+    photoEl.src = "";
+    const oldDocs = agentContainer.querySelector(".doc-buttons");
+    if (oldDocs) oldDocs.remove();
 
-    let [d, m, y] = parts.map(Number);
-    if (!d || !m || !y) return dateStr;
-
-    // Pastikan 2 digit untuk tanggal dan bulan
-    d = String(d).padStart(2, "0");
-    m = String(m).padStart(2, "0");
-
-    return `${d}/${m}/${y}`;
-}
-
-
-
-    simulateAccessSequence(dossierEl, ()=> {
+    simulateAccessSequence(dossierEl, () => {
         const masaKerja = getDetailedDiff(agent.ops_completed);
         const masaKGB = getDetailedDiff(agent.kgb_terakhir);
         const usia = calculateAge(agent.tanggal_lahir);
@@ -289,20 +283,20 @@ NRP/NIP            : ${agent.nrp_nip}
 JABATAN            : ${agent.jabatan}
 SATKER             : ${agent.satker}
 KORPS/SPESIALISASI : ${agent.korp_fung_spes}
-TEMPAT/TGL LAHIR   : ${agent.tempat_lahir}, ${agent.tanggal_lahir}
+TEMPAT/TGL LAHIR   : ${agent.tempat_lahir}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
 AGAMA              : ${agent.agama}
 USIA               : ${usia} Tahun
 
 [DATA KGB]
 --------------------------------------------------
-KGB TERAKHIR       : ${agent.kgb_terakhir} (${masaKGB} lalu)
-TMT KGB            : ${agent.tmt_kgb}
-KGB AKAN DATANG    : ${agent.akan_datang}
+KGB TERAKHIR       : ${formatTanggalIndonesia(agent.kgb_terakhir)} (${masaKGB} lalu)
+TMT KGB            : ${formatTanggalIndonesia(agent.tmt_kgb)}
+KGB AKAN DATANG    : ${formatTanggalIndonesia(agent.akan_datang)}
 
 [DATA JABATAN]
 --------------------------------------------------
 NOMOR SKEP         : ${agent.specialization}
-TMT JABATAN        : ${agent.ops_completed}
+TMT JABATAN        : ${formatTanggalIndonesia(agent.ops_completed)}
 MASA JABATAN       : ${masaKerja}
 
 [SECURITY FOOTNOTE]
@@ -314,24 +308,26 @@ Unauthorized access or duplication is punishable under applicable law.
 ========================================
 Retrieved on: ${new Date().toLocaleString()}
         `;
-        typeWriter(dossierEl, dossier, agent, ()=> {
+
+        typeWriter(dossierEl, dossier, agent, () => {
             const docContainer = document.createElement("div");
             docContainer.className = "doc-buttons";
             const docs = [
-                {label:"Pemuktahiran Data", url:"https://example.com/data-update"},
-                {label:"Riwayat Hidup", url:"https://example.com/riwayat-hidup"},
-                {label:"KU-1", url:"https://example.com/ku-1"}
+                { label: "Pemuktahiran Data", url: "https://example.com/data-update" },
+                { label: "Riwayat Hidup", url: "https://example.com/riwayat-hidup" },
+                { label: "KU-1", url: "https://example.com/ku-1" }
             ];
-            docs.forEach(d=>{
+            docs.forEach(d => {
                 const btn = document.createElement("button");
                 btn.textContent = d.label;
-                btn.onclick = ()=> window.open(d.url, "_blank");
+                btn.onclick = () => window.open(d.url, "_blank");
                 docContainer.appendChild(btn);
             });
             agentContainer.appendChild(docContainer);
         });
     });
 }
+
 
 // ======== EVENT SEARCH ========
 searchInput.addEventListener("input", ()=>{
@@ -349,4 +345,5 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
