@@ -279,7 +279,7 @@ SATKER              : ${agent.satker}
 KORPS/SPESIALISASI  : ${agent.korp_fung_spes}
 TEMPAT/TGL LAHIR    : ${agent.tempat_lahir}, ${agent.tanggal_lahir}
 AGAMA               : ${agent.agama}
-USIA                : ${usia} Tahun
+USIA                : ${calculateAge(agent.tanggal_lahir)} Tahun
 
 [DATA KGB]
 --------------------------------------------------
@@ -337,6 +337,7 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
 
 
