@@ -321,10 +321,22 @@ function showMemberButtons(keyword){
     });
   }
 }
+    
+// ======== KGB BERIKUTNYA ========
+function getNextKGB(tmtKGB) {
+    if (!tmtKGB) return "-";
+    const tmt = new Date(tmtKGB);
+    if (isNaN(tmt)) return "-";
+
+    // Asumsikan KGB setiap 2 tahun
+    const nextKGB = new Date(tmt.getFullYear() + 2, tmt.getMonth(), tmt.getDate());
+    return getDetailedDiff(nextKGB); // Selisih dari hari ini
+}
 
 
 // ======== TAMPILKAN BIODATA DETAIL ========
 function displayAgent(agent) {
+    // Reset tampilan
     dossierEl.textContent = "";
     photoEl.style.display = "none";
     photoEl.style.opacity = 0;
@@ -332,6 +344,7 @@ function displayAgent(agent) {
     const oldDocs = agentContainer.querySelector(".doc-buttons");
     if (oldDocs) oldDocs.remove();
 
+    // Simulasi loading
     simulateAccessSequence(dossierEl, () => {
         const masaKerja = getDetailedDiff(agent.tmt_jabatan);
         const masaKGB = getNextKGB(agent.tmt_kgb);
@@ -345,20 +358,20 @@ function displayAgent(agent) {
 
 [DATA IDENTITAS]
 --------------------------------------------------
-NAMA LENGKAP       : ${agent.nama_lengkap}
-PANGKAT            : ${agent.pangkat}
-NRP/NIP            : ${agent.nrp_nip}
-JABATAN            : ${agent.jabatan}
-SATKER             : ${agent.satker}
-KORPS/SPESIALISASI : ${agent.korp_fung_spes}
-TEMPAT/TGL LAHIR   : ${agent.tempat_lahir}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
-AGAMA              : ${agent.agama}
+NAMA LENGKAP       : ${agent.nama_lengkap || "-"}
+PANGKAT            : ${agent.pangkat || "-"}
+NRP/NIP            : ${agent.nrp_nip || "-"}
+JABATAN            : ${agent.jabatan || "-"}
+SATKER             : ${agent.satker || "-"}
+KORPS/SPESIALISASI : ${agent.korp_fung_spes || "-"}
+TEMPAT/TGL LAHIR   : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
+AGAMA              : ${agent.agama || "-"}
 USIA               : ${usia} Tahun
 
 [DATA KGB]
 --------------------------------------------------
-KGB TERAKHIR       : ${formatTanggalIndonesia(agent.kgb_terakhir)
-TMT KGB            : ${formatTanggalIndonesia(agent.tmt_kgb)}, ${formatTanggalIndonesia(agent.tmt_kgb)}
+KGB TERAKHIR       : ${formatTanggalIndonesia(agent.kgb_terakhir)}
+TMT KGB            : ${formatTanggalIndonesia(agent.tmt_kgb)}
 KGB AKAN DATANG    : ${masaKGB}
 
 [DATA JABATAN]
@@ -377,7 +390,9 @@ Unauthorized access or duplication is punishable under applicable law.
 Retrieved on: ${new Date().toLocaleString()}
         `;
 
+        // Tampilkan teks dengan efek typing
         typeWriter(dossierEl, dossier, agent, () => {
+            // Tombol dokumen
             const docContainer = document.createElement("div");
             docContainer.className = "doc-buttons";
             const docs = [
@@ -397,6 +412,7 @@ Retrieved on: ${new Date().toLocaleString()}
 }
 
 
+
 // ======== EVENT SEARCH ========
 searchInput.addEventListener("input", ()=>{
     dossierEl.textContent="Biodata will appear after clicking the member button";
@@ -413,6 +429,7 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
 
 
