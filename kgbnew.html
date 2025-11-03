@@ -3,133 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PUSLAT KODIKLATAU - Intelligence Database</title>
+<title>Personel Puslat Kodiklatau</title>
 <style>
-body {
-    font-family: 'Courier New', monospace;
-    background-color: black;
-    color: #00FF00;
+  body {
+    font-family: monospace;
+    background: #121212;
+    color: #f0f0f0;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-header {
-    background-color: black;
-    padding: 20px 0 10px 0;
+    padding: 0;
+  }
+  header {
+    padding: 1rem;
+    background: #1f1f1f;
     text-align: center;
-    line-height: 1.1;
-    border-bottom: 1px solid #00FF00;
-}
-
-.text {
-    font-size: 75px;
-    margin-bottom: 0;
-    color: #FFFF00; /* 🔴 hanya judul utama merah */
-}
-
-.text1 {
-    font-size: 30px;
-    margin-top: 0;
-    color: #FF0000; /* bisa juga tetap merah untuk kontras */
-    animation: blinkText 1s infinite;
-}
-
-.header-buttons button {
-    background: transparent;
-    border: 1px solid #00FF00;
-    color: #00FF00; /* tombol tetap hijau */
-    padding: 8px 15px;
+    font-size: 1.2rem;
+  }
+  #search-container {
+    display: flex;
+    padding: 1rem;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  #search { padding: 0.5rem; width: 250px; font-size: 1rem; }
+  #category-filter { padding: 0.5rem; font-size: 1rem; }
+  #member-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+  #member-buttons button {
+    padding: 0.5rem 1rem;
+    background: #1f1f1f;
+    border: 1px solid #555;
+    color: #fff;
     cursor: pointer;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    transition: background 0.3s, color 0.3s;
-}
-
-.header-buttons button:hover { background-color: #00FF00; color: black; }
-
-.main-container { display: flex; flex: 1; border-top: 1px solid #00FF00; }
-.search-panel {
-    width: 35%; padding: 20px; display: flex; flex-direction: column;
-    border-right: 2px solid #00FF00;
-}
-.search-panel h2 { text-align: center; margin-bottom: 20px; }
-input, select {
-    background: transparent; border: 1px solid #00FF00; color: #00FF00;
-    padding: 10px; margin-bottom: 15px; font-size: 16px; border-radius: 4px; outline: none;
-}
-.info-text { font-size: 14px; text-align: center; margin-top: 10px; }
-#member-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-
-.output-panel { flex: 1; padding: 20px; overflow-y: auto; border-left: 2px solid #00FF00; }
-
-.agent-profile { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
-.agent-profile pre { flex: 1; white-space: pre-wrap; line-height: 1.4; }
-.agent-profile img {
-    width: 135px; height: 185px; object-fit: cover;
-    border: 2px solid #00FF00; border-radius: 8px;
-    display: none; opacity: 0; transition: opacity 1.2s ease-in-out;
-}
-
-.doc-buttons { display: flex; gap: 10px; margin-top: 15px; }
-.not-found { color: #FF0000; font-weight: bold; }
-
-button {
-    background: transparent; border: 1px solid #00FF00; color: #00FF00;
-    padding: 8px 12px; cursor: pointer; border-radius: 4px;
-    font-family: 'Courier New', monospace; transition: background 0.3s, color 0.3s;
-}
-button:hover { background-color: #00FF00; color: black; }
-
-@media (max-width: 768px) {
-    .main-container { flex-direction: column; }
-    .search-panel, .output-panel { width: 100%; border: none; border-bottom: 1px solid #00FF00; }
-    .agent-profile { flex-direction: column; align-items: center; }
-}
-.agent-profile pre::after { content: "_"; animation: blink 1s infinite; }
-@keyframes blinkText { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
+  }
+  #member-buttons button:hover { background: #333; }
+  #output {
+    padding: 1rem;
+    max-height: 500px;
+    overflow-y: auto;
+    border-top: 1px solid #555;
+    background: #181818;
+  }
+  #agent-photo {
+    display: block;
+    margin: 1rem auto;
+    max-width: 250px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  .not-found { color: #ff4c4c; }
 </style>
 </head>
 <body>
 <header>
-    <h1 class="text">KENAIKAN GAJI BERKALA</h1>
-    <h1 class="text1">MONITORING TERMINAL</h1>
-    <div class="header-buttons">
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">PERWIRA</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">BINTARA</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">TAMTAMA</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/juknis')">PNS</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/orgas-puslat')">ORGAS PUSLAT</button>
-    </div>
+  PERSONEL PUSLAT KODIKLATAU – DATABASE
 </header>
 
-<div class="main-container">
-    <div class="search-panel">
-        <h2>🔍 Data Lookup</h2>
-        <label for="category-filter">Filter Berdasarkan Kategori:</label>
-        <select id="category-filter">
-          <option value="">-- Semua Kategori --</option>
-        </select>
+<div id="search-container">
+  <input type="text" id="search" placeholder="Cari nama, satker, kategori..." />
+  <select id="category-filter">
+    <option value="">-- Filter Kategori --</option>
+  </select>
+</div>
 
-        <label for="search">Masukkan Keyword Unit / Nama Lengkap:</label>
-        <input type="text" id="search" placeholder="">
-        <p class="info-text">Pilih kategori dan ketik keyword, lalu tekan ENTER untuk menampilkan daftar anggota</p>
-        <div id="member-buttons"></div>
-    </div>
+<div id="member-buttons"></div>
 
-    <div class="output-panel" id="output">
-        <div class="agent-profile" id="agent-container">
-            <pre id="agent-dossier">
-Biodata will appear after clicking the member button
-            </pre>
-            <img id="agent-photo" src="" alt="Foto Personel">
-        </div>
-    </div>
+<div id="output">
+  <pre id="agent-dossier"></pre>
+  <img id="agent-photo" src="" alt="Photo Personel">
 </div>
 
 <script>
-// ======== URL Web App dari Apps Script ========
-const SPREADSHEET_JSON_URL = "https://script.google.com/macros/s/AKfycbyO_PjHcEId2q4Nx2TQDanleq1IHabS-o0THzLSLnlPgdTAjfm03gxFwhbWVZKyESod/exec";
+// ======== GANTI DENGAN URL WEB APP APPS SCRIPT ========
+const SPREADSHEET_JSON_URL = "https://script.google.com/macros/s/AKfycbwLCvnk7j7Wb5zXYG_J9m8aih1cj_2aW7vmGF3e0fzbYxTuRjow1tXeqjugFz7OB4wq/exec";
 
 let personnelDB = [];
 
@@ -137,7 +89,7 @@ fetch(SPREADSHEET_JSON_URL)
   .then(res => res.json())
   .then(data => {
     personnelDB = data;
-    console.log("✅ Data loaded from Google Sheet", data);
+    console.log("✅ Data loaded", data);
     populateCategoryDropdown();
   })
   .catch(err => console.error("❌ Gagal memuat data:", err));
@@ -154,7 +106,6 @@ function populateCategoryDropdown() {
   });
 }
 
-// Fungsi search & tampilkan anggota
 function showMemberButtons(keyword){
   const memberBtnContainer = document.getElementById("member-buttons");
   memberBtnContainer.innerHTML = "";
@@ -171,7 +122,7 @@ function showMemberButtons(keyword){
   });
 
   if(filtered.length === 0){
-    memberBtnContainer.innerHTML = '<span class="not-found">❌ No members found</span>';
+    memberBtnContainer.innerHTML = '<span class="not-found">❌ Tidak ditemukan</span>';
   } else {
     filtered.forEach(agent => {
       const btn = document.createElement("button");
@@ -182,18 +133,16 @@ function showMemberButtons(keyword){
   }
 }
 
-// Tampilkan biodata
 function displayAgent(agent){
   const dossierEl = document.getElementById("agent-dossier");
   const photoEl = document.getElementById("agent-photo");
-  const agentContainer = document.getElementById("agent-container");
   const outputPanel = document.getElementById("output");
 
   dossierEl.textContent = "";
   photoEl.style.display = "none";
   photoEl.src = "";
 
-  function typeWriter(element, text, agent, callback, speed=10){
+  function typeWriter(element, text, callback, speed=10){
     element.textContent = "";
     let i = 0;
     function typing() {
@@ -242,7 +191,7 @@ MASA JABATAN       : ${agent.tmt_jabatan ? getDetailedDiff(agent.tmt_jabatan) : 
 Retrieved on: ${new Date().toLocaleString()}
   `;
 
-  typeWriter(dossierEl, dossier, agent, ()=>{
+  typeWriter(dossierEl, dossier, ()=>{
     if(agent.photo){
       photoEl.src = agent.photo;
       photoEl.style.display = "block";
@@ -251,7 +200,6 @@ Retrieved on: ${new Date().toLocaleString()}
   });
 }
 
-// ======== Fungsi tanggal & usia ========
 function calculateAge(birthDateStr){
   const date = new Date(birthDateStr);
   const today = new Date();
@@ -277,7 +225,6 @@ function getNextKGB(tmtKGB){
   return getDetailedDiff(tmt);
 }
 
-// ======== Search Event ========
 const searchInput = document.getElementById("search");
 searchInput.addEventListener("keydown", e=>{
   if(e.key==="Enter"){
@@ -285,34 +232,11 @@ searchInput.addEventListener("keydown", e=>{
     if(query) showMemberButtons(query);
   }
 });
+
+document.getElementById("category-filter").addEventListener("change", ()=>{
+  const query = searchInput.value.trim();
+  showMemberButtons(query || "");
+});
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
