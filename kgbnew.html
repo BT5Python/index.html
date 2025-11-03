@@ -322,7 +322,7 @@ function displayAgent(agent) {
     if (oldDocs) oldDocs.remove();
 
     simulateAccessSequence(dossierEl, () => {
-        const masaKerja = getDetailedDiff(agent.masa_jabatan);
+        const masaKerja = getDetailedDiff(agent.tmt_jabatan);
         const masaKGB = getDetailedDiff(agent.kgb_terakhir);
         const usia = calculateAge(agent.tanggal_lahir);
 
@@ -402,6 +402,7 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
 
 
