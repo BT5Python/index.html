@@ -128,13 +128,12 @@ Biodata will appear after clicking the member button
 </div>
 
 <script>
-function goTo(url) { window.location.href = url; }
+// ======== URL Web App dari Apps Script ========
+const SPREADSHEET_JSON_URL = "https://script.google.com/macros/s/AKfycbyO_PjHcEId2q4Nx2TQDanleq1IHabS-o0THzLSLnlPgdTAjfm03gxFwhbWVZKyESod/exec";
 
-// ======== LOAD DATABASE DARI GOOGLE SHEET ========
 let personnelDB = [];
 
-fetch("https://script.google.com/macros/library/d/1BeYGZwDW0nKi5Ba5cHF4s3AzNUxSJ0l9TVS6at5EGA6qImCNi8e84XRj/4")
-    
+fetch(SPREADSHEET_JSON_URL)
   .then(res => res.json())
   .then(data => {
     personnelDB = data;
@@ -155,151 +154,11 @@ function populateCategoryDropdown() {
   });
 }
 
-// ======== ELEMENTS ========
-const searchInput = document.getElementById("search");
-const dossierEl = document.getElementById("agent-dossier");
-const photoEl = document.getElementById("agent-photo");
-const memberBtnContainer = document.getElementById("member-buttons");
-const agentContainer = document.getElementById("agent-container");
-const outputPanel = document.getElementById("output");
-
-
-// ======== FUNGSI FORMAT TANGGAL ========
-function formatTanggalIndonesia(dateStr) {
-    if (!dateStr) return "-";
-    let date;
-    try {
-        date = new Date(dateStr);
-        if (isNaN(date)) {
-            const parts = dateStr.includes("/") ? dateStr.split("/") : dateStr.split("-");
-            if (parts.length === 3) {
-                const [d, m, y] = parts.map(Number);
-                date = new Date(y, m - 1, d);
-            } else return dateStr;
-        }
-    } catch {
-        return dateStr;
-    }
-    const d = String(date.getDate()).padStart(2, "0");
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const y = date.getFullYear();
-    return `${d}/${m}/${y}`;
-}
-
-
-// ======== PERHITUNGAN SELISIH WAKTU ========
-function getDetailedDiff(startDateStr) {
-    if (!startDateStr) return "-";
-    const startDate = new Date(startDateStr);
-    if (isNaN(startDate)) return "-";
-
-    const today = new Date();
-
-    if (startDate > today) {
-        // Jika tanggal mulai di masa depan, bisa tampilkan pesan ini:
-        return "Masa jabatan belum dimulai";
-    }
-
-    let years = today.getFullYear() - startDate.getFullYear();
-    let months = today.getMonth() - startDate.getMonth();
-    let days = today.getDate() - startDate.getDate();
-
-    if (days < 0) {
-        months--;
-        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-        days += prevMonth.getDate();
-    }
-    if (months < 0) {
-        years--;
-        months += 12;
-    }
-    return `${years} Tahun ${months} Bulan ${days} Hari`;
-}
-
-// ======== HITUNG USIA ========
-function calculateAge(birthDateStr) {
-    if (!birthDateStr) return "-";
-    const date = new Date(birthDateStr);
-    if (isNaN(date)) return "-";
-
-    const today = new Date();
-    let age = today.getFullYear() - date.getFullYear();
-    if (
-        today.getMonth() < date.getMonth() ||
-        (today.getMonth() === date.getMonth() && today.getDate() < date.getDate())
-    ) {
-        age--;
-    }
-    return age;
-}
-
-// ======== KGB BERIKUTNYA ========
-function getNextKGB(tmtKGB) {
-    if (!tmtKGB) return "-";
-    const tmt = new Date(tmtKGB);
-    if (isNaN(tmt)) return "-";
-
-    // Asumsikan KGB setiap 2 tahun
-    const nextKGB = new Date(tmt.getFullYear() + 2, tmt.getMonth(), tmt.getDate());
-    return getDetailedDiff(nextKGB); // Selisih dari hari ini
-}
-
-// ======== ANIMASI DAN TAMPILAN ========
-// ... fungsi typeWriter, simulateAccessSequence, dll.
-
-// ======== ANIMASI DAN TAMPILAN ========
-function typeWriter(element, text, agent, callback, speed=10){
-    element.textContent = "";
-    let i = 0, nameShown = false;
-    function typing() {
-        if(i < text.length){
-            element.textContent += text.charAt(i);
-            if(!nameShown && element.textContent.includes("NAMA LENGKAP")){
-                nameShown = true;
-                setTimeout(()=>{ 
-                    if (agent.photo) {
-                        photoEl.src = agent.photo; 
-                        photoEl.style.display = "block"; 
-                        setTimeout(()=> photoEl.style.opacity = 1, 100); 
-                    }
-                }, 200);
-            }
-            i++;
-            outputPanel.scrollTop = outputPanel.scrollHeight;
-            setTimeout(typing, speed);
-        } else if(callback) callback();
-    }
-    typing();
-}
-
-function simulateAccessSequence(element, callback){
-    const steps = [
-        ">>> initializing connection...",
-        ">>> accessing database node...",
-        ">>> verifying security clearance...",
-        ">>> clearance level verified ✔",
-        ">>> retrieving personnel data..."
-    ];
-    let i=0;
-    element.textContent="";
-    function nextStep(){
-        if(i<steps.length){
-            element.textContent += steps[i] + "\n";
-            outputPanel.scrollTop = outputPanel.scrollHeight;
-            i++;
-            setTimeout(nextStep, 600);
-        } else { setTimeout(callback, 600); }
-    }
-    nextStep();
-}
-
-
-// ======== FILTER DAN TAMPILKAN NAMA ANGGOTA ========
+// Fungsi search & tampilkan anggota
 function showMemberButtons(keyword){
+  const memberBtnContainer = document.getElementById("member-buttons");
   memberBtnContainer.innerHTML = "";
-  const selectedCategory = document.getElementById("category-filter") 
-      ? document.getElementById("category-filter").value 
-      : "";
+  const selectedCategory = document.getElementById("category-filter").value;
 
   const filtered = personnelDB.filter(p => {
     const kw = keyword.toLowerCase();
@@ -312,7 +171,7 @@ function showMemberButtons(keyword){
   });
 
   if(filtered.length === 0){
-    memberBtnContainer.innerHTML = '<span class="not-found">❌ No members found for this filter</span>';
+    memberBtnContainer.innerHTML = '<span class="not-found">❌ No members found</span>';
   } else {
     filtered.forEach(agent => {
       const btn = document.createElement("button");
@@ -322,36 +181,33 @@ function showMemberButtons(keyword){
     });
   }
 }
-    
-// ======== KGB BERIKUTNYA ========
-function getNextKGB(tmtKGB) {
-    if (!tmtKGB) return "-";
-    const tmt = new Date(tmtKGB);
-    if (isNaN(tmt)) return "-";
 
-    // Asumsikan KGB setiap 2 tahun
-    const nextKGB = new Date(tmt.getFullYear() + 2, tmt.getMonth(), tmt.getDate());
-    return getDetailedDiff(nextKGB); // Selisih dari hari ini
-}
+// Tampilkan biodata
+function displayAgent(agent){
+  const dossierEl = document.getElementById("agent-dossier");
+  const photoEl = document.getElementById("agent-photo");
+  const agentContainer = document.getElementById("agent-container");
+  const outputPanel = document.getElementById("output");
 
+  dossierEl.textContent = "";
+  photoEl.style.display = "none";
+  photoEl.src = "";
 
-// ======== TAMPILKAN BIODATA DETAIL ========
-function displayAgent(agent) {
-    // Reset tampilan
-    dossierEl.textContent = "";
-    photoEl.style.display = "none";
-    photoEl.style.opacity = 0;
-    photoEl.src = "";
-    const oldDocs = agentContainer.querySelector(".doc-buttons");
-    if (oldDocs) oldDocs.remove();
+  function typeWriter(element, text, agent, callback, speed=10){
+    element.textContent = "";
+    let i = 0;
+    function typing() {
+      if(i < text.length){
+        element.textContent += text.charAt(i);
+        i++;
+        outputPanel.scrollTop = outputPanel.scrollHeight;
+        setTimeout(typing, speed);
+      } else if(callback) callback();
+    }
+    typing();
+  }
 
-    // Simulasi loading
-    simulateAccessSequence(dossierEl, () => {
-        const masaKerja = getDetailedDiff(agent.tmt_jabatan);
-        const masaKGB = getNextKGB(agent.tmt_kgb);
-        const usia = calculateAge(agent.tanggal_lahir);
-
-        const dossier = `
+  const dossier = `
 ========================================
 |   FILE: PERSONEL PUSLAT KODIKLATAU   |
 |   CLASSIFICATION: RAHASIA            |
@@ -365,71 +221,74 @@ NRP/NIP            : ${agent.nrp_nip || "-"}
 JABATAN            : ${agent.jabatan || "-"}
 SATKER             : ${agent.satker || "-"}
 KORPS/SPESIALISASI : ${agent.korp_fung_spes || "-"}
-TEMPAT/TGL LAHIR   : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
+TEMPAT/TGL LAHIR   : ${agent.tempat_lahir || "-"}, ${agent.tanggal_lahir || "-"}
 AGAMA              : ${agent.agama || "-"}
-USIA               : ${usia} Tahun
+USIA               : ${agent.tanggal_lahir ? calculateAge(agent.tanggal_lahir) : "-"}
 
 [DATA KGB]
 --------------------------------------------------
-KGB TERAKHIR       : ${formatTanggalIndonesia(agent.kgb_terakhir)}
-TMT KGB            : ${formatTanggalIndonesia(agent.tmt_kgb)}
-KGB AKAN DATANG    : ${masaKGB}
+KGB TERAKHIR       : ${agent.kgb_terakhir || "-"}
+TMT KGB            : ${agent.tmt_kgb || "-"}
+KGB AKAN DATANG    : ${agent.tmt_kgb ? getNextKGB(agent.tmt_kgb) : "-"}
 
 [DATA JABATAN]
 --------------------------------------------------
 NOMOR SKEP         : ${agent.nomer_skep || "-"}
-TMT JABATAN        : ${formatTanggalIndonesia(agent.tmt_jabatan)}
-MASA JABATAN       : ${masaKerja}
-
-[SECURITY FOOTNOTE]
---------------------------------------------------
-This dossier is property of PUSLAT KODIKLATAU.
-Unauthorized access or duplication is punishable under applicable law.
+TMT JABATAN        : ${agent.tmt_jabatan || "-"}
+MASA JABATAN       : ${agent.tmt_jabatan ? getDetailedDiff(agent.tmt_jabatan) : "-"}
 
 <END OF FILE>
 ========================================
 Retrieved on: ${new Date().toLocaleString()}
-        `;
+  `;
 
-        // Tampilkan teks dengan efek typing
-        typeWriter(dossierEl, dossier, agent, () => {
-            // Tombol dokumen
-            const docContainer = document.createElement("div");
-            docContainer.className = "doc-buttons";
-            const docs = [
-                { label: "Pemuktahiran Data", url: "https://example.com/data-update" },
-                { label: "Riwayat Hidup", url: "https://example.com/riwayat-hidup" },
-                { label: "KU-1", url: "https://example.com/ku-1" }
-            ];
-            docs.forEach(d => {
-                const btn = document.createElement("button");
-                btn.textContent = d.label;
-                btn.onclick = () => window.open(d.url, "_blank");
-                docContainer.appendChild(btn);
-            });
-            agentContainer.appendChild(docContainer);
-        });
-    });
+  typeWriter(dossierEl, dossier, agent, ()=>{
+    if(agent.photo){
+      photoEl.src = agent.photo;
+      photoEl.style.display = "block";
+      setTimeout(()=> photoEl.style.opacity = 1, 100);
+    }
+  });
 }
 
+// ======== Fungsi tanggal & usia ========
+function calculateAge(birthDateStr){
+  const date = new Date(birthDateStr);
+  const today = new Date();
+  let age = today.getFullYear() - date.getFullYear();
+  if(today.getMonth() < date.getMonth() || (today.getMonth()===date.getMonth() && today.getDate()<date.getDate())) age--;
+  return age;
+}
 
+function getDetailedDiff(startDateStr){
+  const startDate = new Date(startDateStr);
+  const today = new Date();
+  let years = today.getFullYear() - startDate.getFullYear();
+  let months = today.getMonth() - startDate.getMonth();
+  let days = today.getDate() - startDate.getDate();
+  if(days < 0){ months--; days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); }
+  if(months < 0){ years--; months+=12; }
+  return `${years} Tahun ${months} Bulan ${days} Hari`;
+}
 
-// ======== EVENT SEARCH ========
-searchInput.addEventListener("input", ()=>{
-    dossierEl.textContent="Biodata will appear after clicking the member button";
-    const oldDocs = agentContainer.querySelector(".doc-buttons");
-    if(oldDocs) oldDocs.remove();
-    memberBtnContainer.innerHTML="";
-});
+function getNextKGB(tmtKGB){
+  const tmt = new Date(tmtKGB);
+  tmt.setFullYear(tmt.getFullYear() + 2);
+  return getDetailedDiff(tmt);
+}
+
+// ======== Search Event ========
+const searchInput = document.getElementById("search");
 searchInput.addEventListener("keydown", e=>{
-    if(e.key==="Enter"){
-        const query = searchInput.value.trim();
-        if(query) showMemberButtons(query);
-    }
+  if(e.key==="Enter"){
+    const query = searchInput.value.trim();
+    if(query) showMemberButtons(query);
+  }
 });
 </script>
 </body>
 </html>
+
 
 
 
