@@ -16,24 +16,36 @@ body {
 }
 header {
     background-color: black;
-    color: #FF0000;
     padding: 20px 0 10px 0;
     text-align: center;
     line-height: 1.1;
     border-bottom: 1px solid #00FF00;
 }
-.text { font-size: 75px; margin-bottom: 0; }
-.text1 { font-size: 30px; margin-top: 0; animation: blinkText 1s infinite; }
 
-.header-buttons {
-    display: flex; justify-content: center; gap: 15px; margin-top: 15px;
+.text {
+    font-size: 75px;
+    margin-bottom: 0;
+    color: red; /* 🔴 hanya judul utama merah */
 }
+
+.text1 {
+    font-size: 30px;
+    margin-top: 0;
+    color: #FF0000; /* bisa juga tetap merah untuk kontras */
+    animation: blinkText 1s infinite;
+}
+
 .header-buttons button {
-    background: transparent; border: 1px solid #00FF00; color: #00FF00;
-    padding: 8px 15px; cursor: pointer; border-radius: 4px;
+    background: transparent;
+    border: 1px solid #00FF00;
+    color: #00FF00; /* tombol tetap hijau */
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
     font-family: 'Courier New', monospace;
     transition: background 0.3s, color 0.3s;
 }
+
 .header-buttons button:hover { background-color: #00FF00; color: black; }
 
 .main-container { display: flex; flex: 1; border-top: 1px solid #00FF00; }
@@ -383,6 +395,7 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
 
 
