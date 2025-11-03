@@ -215,9 +215,6 @@ function getDetailedDiff(startDateStr) {
     return `${years} Tahun ${months} Bulan ${days} Hari`;
 }
 
-
-
-// ======== HITUNG USIA ========
 // ======== HITUNG USIA ========
 function calculateAge(birthDateStr) {
     if (!birthDateStr) return "-";
@@ -248,8 +245,6 @@ function getNextKGB(tmtKGB) {
 
 // ======== ANIMASI DAN TAMPILAN ========
 // ... fungsi typeWriter, simulateAccessSequence, dll.
-
-
 
 // ======== ANIMASI DAN TAMPILAN ========
 function typeWriter(element, text, agent, callback, speed=10){
@@ -339,7 +334,7 @@ function displayAgent(agent) {
 
     simulateAccessSequence(dossierEl, () => {
         const masaKerja = getDetailedDiff(agent.tmt_jabatan);
-        const masaKGB = getDetailedDiff(agent.tmt_kgb);
+        const masaKGB = getNextKGB(agent.tmt_kgb);
         const usia = calculateAge(agent.tanggal_lahir);
 
         const dossier = `
@@ -418,6 +413,7 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
 
 
