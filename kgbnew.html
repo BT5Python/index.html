@@ -159,34 +159,44 @@ const outputPanel = document.getElementById("output");
 // ======== FUNCTION PERHITUNGAN DETAIL ========
 function calculateAge(birthDateStr) {
     if (!birthDateStr) return "-";
-
-    // Hapus spasi ekstra
     birthDateStr = birthDateStr.trim();
 
-    // Pisahkan berdasarkan "-" atau "/"
+    // ✅ Jika format ISO dari Google Sheet (contoh: "1977-07-05T00:00:00Z")
+    if (birthDateStr.includes("T")) {
+        const date = new Date(birthDateStr);
+        if (isNaN(date)) return "-";
+        const today = new Date();
+        let age = today.getFullYear() - date.getFullYear();
+        if (
+            today.getMonth() < date.getMonth() ||
+            (today.getMonth() === date.getMonth() && today.getDate() < date.getDate())
+        ) {
+            age--;
+        }
+        return age;
+    }
+
+    // ✅ Format manual: dd/mm/yyyy atau dd-mm-yyyy atau yyyy-mm-dd
     let parts;
-    if (birthDateStr.includes("-")) {
-        parts = birthDateStr.split("-");
-    } else if (birthDateStr.includes("/")) {
+    if (birthDateStr.includes("/")) {
         parts = birthDateStr.split("/");
+    } else if (birthDateStr.includes("-")) {
+        parts = birthDateStr.split("-");
     } else {
         return "-";
     }
 
-    // Deteksi format
     let day, month, year;
     if (parts[0].length === 4) {
-        // format YYYY-MM-DD
+        // yyyy-mm-dd
         [year, month, day] = parts.map(Number);
     } else {
-        // format DD-MM-YYYY atau DD/MM/YYYY
+        // dd/mm/yyyy atau dd-mm-yyyy
         [day, month, year] = parts.map(Number);
     }
 
-    // Validasi
     if (!day || !month || !year) return "-";
 
-    // Hitung umur
     const today = new Date();
     let age = today.getFullYear() - year;
     if (today.getMonth() + 1 < month || (today.getMonth() + 1 === month && today.getDate() < day)) {
@@ -195,6 +205,7 @@ function calculateAge(birthDateStr) {
 
     return age;
 }
+
 
 // ======== ANIMASI DAN TAMPILAN ========
 function typeWriter(element, text, agent, callback, speed=10){
@@ -353,6 +364,7 @@ searchInput.addEventListener("keydown", e=>{
 </script>
 </body>
 </html>
+
 
 
 
