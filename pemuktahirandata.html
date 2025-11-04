@@ -133,7 +133,7 @@ function goTo(url) { window.location.href = url; }
 // ======== LOAD DATABASE DARI GOOGLE SHEET ========
 let personnelDB = [];
 
-fetch("https://script.google.com/macros/s/AKfycbx2wfJs_qCIZt78WcXT-kPOthIq97rg1qo3NKMIjNvgec-rBlebcjN3J4CMDdvYoZE7/exec")
+fetch("https://script.google.com/macros/s/AKfycby3yg_PvdS0USqTWJVybC5YHv6wYJXYiujBEC9v_FDR0EPIjCJhZNvxTeDLmtohJJuqKA/exec")
   .then(res => res.json())
   .then(data => {
     personnelDB = data;
