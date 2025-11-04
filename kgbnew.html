@@ -320,6 +320,7 @@ function typeWriter(element, text, agent, callback, speed = 10) {
                     // Warna kuning untuk bagian data
                     if (line.includes("[DATA IDENTITAS]") ||
                         line.includes("[DATA KGB]") ||
+                        line.includes("[SECURITY FOOTNOTE]") ||
                         line.includes("[DATA JABATAN]")) {
                         return `<span class="highlight-section">${line}</span>`;
                     }
@@ -543,6 +544,7 @@ searchInput.addEventListener("keydown", e=>{
 // ======== evolutionismyrevolution/BT5Python ========
 </body>
 </html>
+
 
 
 
