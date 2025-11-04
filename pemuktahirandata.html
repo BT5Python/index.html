@@ -194,26 +194,27 @@ function getDetailedDiff(startDateStr) {
 
     const today = new Date();
 
-    if (startDate > today) {
-        // Jika tanggal mulai di masa depan, bisa tampilkan pesan ini:
-        return "Masa jabatan belum dimulai";
-    }
-
-    let years = today.getFullYear() - startDate.getFullYear();
-    let months = today.getMonth() - startDate.getMonth();
-    let days = today.getDate() - startDate.getDate();
+    let years = startDate.getFullYear() - today.getFullYear();
+    let months = startDate.getMonth() - today.getMonth();
+    let days = startDate.getDate() - today.getDate();
 
     if (days < 0) {
         months--;
-        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        const prevMonth = new Date(startDate.getFullYear(), startDate.getMonth(), 0);
         days += prevMonth.getDate();
     }
     if (months < 0) {
         years--;
         months += 12;
     }
+
+    if (startDate < today) {
+        return "Sudah lewat";
+    }
+
     return `${years} Tahun ${months} Bulan ${days} Hari`;
 }
+
 
 // ======== HITUNG USIA ========
 function calculateAge(birthDateStr) {
