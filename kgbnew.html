@@ -55,7 +55,14 @@ header {
     color: #FFFF00; /* kuning terang */
     font-weight: bold;
 }
-
+    /* Highlight biru hanya untuk baris "Retrieved on" */
+.blue-highlight {
+  background-color: #0040FF;
+  color: #FFFFFF;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
 
 .header-buttons button:hover { background-color: #00FF00; color: black; }
 
@@ -356,8 +363,6 @@ function typeWriter(element, text, agent, callback, speed = 10) {
     typing();
 }
 
-
-
 function simulateAccessSequence(element, callback){
     const steps = [
         ">>> initializing connection...",
@@ -506,24 +511,29 @@ Retrieved on: ${new Date().toLocaleString()}
 
         // Tampilkan teks dengan efek typing
         typeWriter(dossierEl, dossier, agent, () => {
-            // Tombol dokumen
-            const docContainer = document.createElement("div");
-            docContainer.className = "doc-buttons";
-            const docs = [
-                { label: "Pemuktahiran Data", url: "https://example.com/data-update" },
-                { label: "Riwayat Hidup", url: "https://example.com/riwayat-hidup" },
-                { label: "KU-1", url: "https://example.com/ku-1" }
-            ];
-            docs.forEach(d => {
-                const btn = document.createElement("button");
-                btn.textContent = d.label;
-                btn.onclick = () => window.open(d.url, "_blank");
-                docContainer.appendChild(btn);
-            });
-            agentContainer.appendChild(docContainer);
-        });
+    // Ubah hanya baris "Retrieved on" jadi highlight biru
+    dossierEl.innerHTML = dossierEl.innerHTML.replace(
+      /(Retrieved on:[^<\n]*)/,
+      '<span class="blue-highlight">$1</span>'
+    );
+
+    // Tambahkan tombol dokumen seperti biasa
+    const docContainer = document.createElement("div");
+    docContainer.className = "doc-buttons";
+    const docs = [
+        { label: "Pemuktahiran Data", url: "https://example.com/data-update" },
+        { label: "Riwayat Hidup", url: "https://example.com/riwayat-hidup" },
+        { label: "KU-1", url: "https://example.com/ku-1" }
+    ];
+    docs.forEach(d => {
+        const btn = document.createElement("button");
+        btn.textContent = d.label;
+        btn.onclick = () => window.open(d.url, "_blank");
+        docContainer.appendChild(btn);
     });
-}
+    agentContainer.appendChild(docContainer);
+});
+
 
 
 
@@ -544,6 +554,7 @@ searchInput.addEventListener("keydown", e=>{
 // ======== evolutionismyrevolution/BT5Python ========
 </body>
 </html>
+
 
 
 
