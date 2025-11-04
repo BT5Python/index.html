@@ -455,7 +455,7 @@ function getMasaKerja(tmtStr) {
 // ======== TAMPILKAN BIODATA DETAIL ========
 function displayAgent(agent) {
     // Reset tampilan
-    photoEl.src = "https://drive.google.com/uc?export=view&id13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2=ID_FILE"; 
+    photoEl.src = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2"; 
     photoEl.style.display = "block";
     photoEl.style.opacity = 1;    
     const oldDocs = agentContainer.querySelector(".doc-buttons");
@@ -509,51 +509,38 @@ Unauthorized access or duplication is punishable under applicable law.
 Retrieved on: ${new Date().toLocaleString()}
         `;
 
-        // Tampilkan teks dengan efek typing
+        // Efek ketikan
         typeWriter(dossierEl, dossier, agent, () => {
-    // Ubah hanya baris "Retrieved on" jadi highlight biru
-    dossierEl.innerHTML = dossierEl.innerHTML.replace(
-      /(Retrieved on:[^<\n]*)/,
-      '<span class="blue-highlight">$1</span>'
-    );
+            // 💡 Ubah hanya baris "Retrieved on" menjadi highlight biru
+            dossierEl.innerHTML = dossierEl.innerHTML.replace(
+                /(Retrieved on:[^<\n]*)/,
+                '<span class="blue-highlight">$1</span>'
+            );
 
-    // Tambahkan tombol dokumen seperti biasa
-    const docContainer = document.createElement("div");
-    docContainer.className = "doc-buttons";
-    const docs = [
-        { label: "Pemuktahiran Data", url: "https://example.com/data-update" },
-        { label: "Riwayat Hidup", url: "https://example.com/riwayat-hidup" },
-        { label: "KU-1", url: "https://example.com/ku-1" }
-    ];
-    docs.forEach(d => {
-        const btn = document.createElement("button");
-        btn.textContent = d.label;
-        btn.onclick = () => window.open(d.url, "_blank");
-        docContainer.appendChild(btn);
-    });
-    agentContainer.appendChild(docContainer);
-});
+            // Tombol dokumen
+            const docContainer = document.createElement("div");
+            docContainer.className = "doc-buttons";
+            const docs = [
+                { label: "Pemuktahiran Data", url: "https://example.com/data-update" },
+                { label: "Riwayat Hidup", url: "https://example.com/riwayat-hidup" },
+                { label: "KU-1", url: "https://example.com/ku-1" }
+            ];
+            docs.forEach(d => {
+                const btn = document.createElement("button");
+                btn.textContent = d.label;
+                btn.onclick = () => window.open(d.url, "_blank");
+                docContainer.appendChild(btn);
+            });
+            agentContainer.appendChild(docContainer);
+        });
+    }); // ✅ penutup simulateAccessSequence
+}
 
-
-
-
-// ======== EVENT SEARCH ========
-searchInput.addEventListener("input", ()=>{
-    dossierEl.textContent="Biodata will appear after clicking the member button";
-    const oldDocs = agentContainer.querySelector(".doc-buttons");
-    if(oldDocs) oldDocs.remove();
-    memberBtnContainer.innerHTML="";
-});
-searchInput.addEventListener("keydown", e=>{
-    if(e.key==="Enter"){
-        const query = searchInput.value.trim();
-        if(query) showMemberButtons(query);
-    }
-});
 </script>
 // ======== evolutionismyrevolution/BT5Python ========
 </body>
 </html>
+
 
 
 
