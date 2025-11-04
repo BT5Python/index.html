@@ -405,7 +405,7 @@ USIA               : ${usia} Tahun
 
 [DATA KGB]
 --------------------------------------------------
-KGB TERAKHIR       : ${formatTanggalIndonesia(agent.kgb_terakhir)}
+KGB TERAKHIR       : ${agent.kgb_terakhir || "-"}
 TMT KGB            : ${formatTanggalIndonesia(agent.tmt_kgb)}
 KGB AKAN DATANG    : ${masaKGB}
 
