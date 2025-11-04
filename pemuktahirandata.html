@@ -16,152 +16,89 @@ body {
 }
 header {
     background-color: black;
-    color: #00FF00;
     padding: 20px 0 10px 0;
     text-align: center;
     line-height: 1.1;
     border-bottom: 1px solid #00FF00;
 }
+
 .text {
     font-size: 75px;
     margin-bottom: 0;
+    color: #FFFF00; /* 🔴 hanya judul utama merah */
 }
+
 .text1 {
     font-size: 30px;
     margin-top: 0;
+    color: #FF0000; /* bisa juga tetap merah untuk kontras */
     animation: blinkText 1s infinite;
 }
 
-/* 🔹 Tombol di bawah judul */
-.header-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 15px;
-}
 .header-buttons button {
     background: transparent;
     border: 1px solid #00FF00;
-    color: #00FF00;
+    color: #00FF00; /* tombol tetap hijau */
     padding: 8px 15px;
     cursor: pointer;
     border-radius: 4px;
     font-family: 'Courier New', monospace;
     transition: background 0.3s, color 0.3s;
 }
-.header-buttons button:hover {
-    background-color: #00FF00;
-    color: black;
-}
 
-.main-container {
-    display: flex;
-    flex: 1;
-    border-top: 1px solid #00FF00;
-}
+.header-buttons button:hover { background-color: #00FF00; color: black; }
+
+.main-container { display: flex; flex: 1; border-top: 1px solid #00FF00; }
 .search-panel {
-    width: 35%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
+    width: 35%; padding: 20px; display: flex; flex-direction: column;
     border-right: 2px solid #00FF00;
 }
 .search-panel h2 { text-align: center; margin-bottom: 20px; }
-input {
-    background: transparent;
-    border: 1px solid #00FF00;
-    color: #00FF00;
-    padding: 10px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    border-radius: 4px;
-    outline: none;
+input, select {
+    background: transparent; border: 1px solid #00FF00; color: #00FF00;
+    padding: 10px; margin-bottom: 15px; font-size: 16px; border-radius: 4px; outline: none;
 }
 .info-text { font-size: 14px; text-align: center; margin-top: 10px; }
-#member-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    margin-top: 10px;
-}
-.output-panel {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    border-left: 2px solid #00FF00;
-}
-.agent-profile {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    flex-wrap: wrap;
-}
-.agent-profile pre {
-    flex: 1;
-    white-space: pre-wrap;
-    line-height: 1.4;
-}
+#member-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+
+.output-panel { flex: 1; padding: 20px; overflow-y: auto; border-left: 2px solid #00FF00; }
+
+.agent-profile { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+.agent-profile pre { flex: 1; white-space: pre-wrap; line-height: 1.4; }
 .agent-profile img {
-    width: 135px;
-    height: 185px;
-    object-fit: cover;
-    border: 2px solid #00FF00;
-    border-radius: 8px;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.6s ease-in-out;
+    width: 135px; height: 185px; object-fit: cover;
+    border: 2px solid #00FF00; border-radius: 8px;
+    display: none; opacity: 0; transition: opacity 1.2s ease-in-out;
 }
-.doc-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
+
+.doc-buttons { display: flex; gap: 10px; margin-top: 15px; }
 .not-found { color: #FF0000; font-weight: bold; }
-.agent-profile button,
-#member-buttons button,
-.doc-buttons button {
-    background: transparent;
-    border: 1px solid #00FF00;
-    color: #00FF00;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    transition: background 0.3s, color 0.3s;
+
+button {
+    background: transparent; border: 1px solid #00FF00; color: #00FF00;
+    padding: 8px 12px; cursor: pointer; border-radius: 4px;
+    font-family: 'Courier New', monospace; transition: background 0.3s, color 0.3s;
 }
-.agent-profile button:hover,
-#member-buttons button:hover,
-.doc-buttons button:hover {
-    background-color: #00FF00;
-    color: black;
-}
+button:hover { background-color: #00FF00; color: black; }
+
 @media (max-width: 768px) {
     .main-container { flex-direction: column; }
     .search-panel, .output-panel { width: 100%; border: none; border-bottom: 1px solid #00FF00; }
     .agent-profile { flex-direction: column; align-items: center; }
 }
-.agent-profile pre::after {
-    content: "_";
-    animation: blink 1s infinite;
-}
-@keyframes blinkText {
-    0%, 50%, 100% { opacity: 1; }
-    25%, 75% { opacity: 0; }
-}
+.agent-profile pre::after { content: "_"; animation: blink 1s infinite; }
+@keyframes blinkText { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
 </style>
 </head>
 <body>
 <header>
-    <h1 class="text">PUSLAT KODIKLATAU</h1>
-    <h1 class="text1">DATABASE TERMINAL</h1>
-
-    <!-- 🔹 Tombol navigasi diarahkan ke URL (tanpa buka tab baru) -->
+    <h1 class="text">KENAIKAN GAJI BERKALA</h1>
+    <h1 class="text1">MONITORING TERMINAL</h1>
     <div class="header-buttons">
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">STRUKTUR ORGANISASI</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">RADIOGRAM</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">JAB KOSONG</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/juknis')">JUKNIS</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">PERWIRA</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">BINTARA</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">TAMTAMA</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/juknis')">PNS</button>
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/orgas-puslat')">ORGAS PUSLAT</button>
     </div>
 </header>
@@ -169,9 +106,14 @@ input {
 <div class="main-container">
     <div class="search-panel">
         <h2>🔍 Data Lookup</h2>
+        <label for="category-filter">Filter Berdasarkan Kategori:</label>
+        <select id="category-filter">
+          <option value="">-- Semua Kategori --</option>
+        </select>
+
         <label for="search">Masukkan Keyword Unit / Nama Lengkap:</label>
         <input type="text" id="search" placeholder="">
-        <p class="info-text">Type the keyword then press ENTER to display the member list</p>
+        <p class="info-text">Pilih kategori dan ketik keyword, lalu tekan ENTER untuk menampilkan daftar anggota</p>
         <div id="member-buttons"></div>
     </div>
 
@@ -186,20 +128,33 @@ Biodata will appear after clicking the member button
 </div>
 
 <script>
-// ========== FUNGSI TOMBOL HEADER ==========
-function goTo(url) {
-    window.location.href = url; // 🔸 buka di tab yang sama
+function goTo(url) { window.location.href = url; }
+
+// ======== LOAD DATABASE DARI GOOGLE SHEET ========
+let personnelDB = [];
+
+fetch("https://script.google.com/macros/s/AKfycbx2wfJs_qCIZt78WcXT-kPOthIq97rg1qo3NKMIjNvgec-rBlebcjN3J4CMDdvYoZE7/exec")
+  .then(res => res.json())
+  .then(data => {
+    personnelDB = data;
+    console.log("✅ Data loaded from Google Sheet", data);
+    populateCategoryDropdown();
+  })
+  .catch(err => console.error("❌ Gagal memuat data:", err));
+
+function populateCategoryDropdown() {
+  const categorySelect = document.getElementById("category-filter");
+  const uniqueCategories = [...new Set(personnelDB.map(p => p.kategori).filter(Boolean))];
+  uniqueCategories.sort();
+  uniqueCategories.forEach(cat => {
+    const opt = document.createElement("option");
+    opt.value = cat;
+    opt.textContent = cat;
+    categorySelect.appendChild(opt);
+  });
 }
 
-// ========== DATABASE ========== 
-const personnelDB = [
-    { nama_lengkap: "Endriady, S.H", pangkat: "Letkol Adm", nrp_nip: "522726", jabatan: "Kadispers", korp_fung_spes: "Adm Personel", tanggal_lahir: "1980-03-10", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "18/07/2025", photo: "kadispers new.jpg" },
-    { nama_lengkap: "Andi Darmawan, S.E", pangkat: "Penata Tk.I IIId", nrp_nip: "197905032009121002", jabatan: "Tur Adminpers Dispers", korp_fung_spes: "Adm Keuangan", tanggal_lahir: "03/05/1979", tempat_lahir: "Subang", agama: "Islam", satker: "DISPERS", specialization: "9-S/VIIIA/III/2025", ops_completed: "21/03/2025", photo: "https://i.pravatar.cc/150?img=15" },
-    { nama_lengkap: "Fata Patria", pangkat: "Marsekal Pertama TNI", nrp_nip: "4215896", jabatan: "Danpuslat Kodiklatau", korp_fung_spes: "PNB", tanggal_lahir: "30/11/1982", tempat_lahir: "Banjarmasin", agama: "Islam", satker: "DISPERS", specialization: "Recon Ops", ops_completed: "15/08/2025", photo: "danpus pdh.jpg" },
-    { nama_lengkap: "Muhammad Muslih", pangkat: "Penata Tk.I IIId", nrp_nip: "154267", jabatan: "Analis Data", korp_fung_spes: "Adm", tanggal_lahir: "24/10/1988", tempat_lahir: "Solo", agama: "Islam", satker: "DISPERS", specialization: "Tactical Planning", ops_completed: "24/06/2025", photo: "LETKOL mUSLIH.jpg" }
-];
-
-// ========== ELEMENTS ==========
+// ======== ELEMENTS ========
 const searchInput = document.getElementById("search");
 const dossierEl = document.getElementById("agent-dossier");
 const photoEl = document.getElementById("agent-photo");
@@ -207,31 +162,105 @@ const memberBtnContainer = document.getElementById("member-buttons");
 const agentContainer = document.getElementById("agent-container");
 const outputPanel = document.getElementById("output");
 
-// ========== HELPER FUNCTIONS ==========
-function getMonthsDiff(startDateStr) {
-    if (!startDateStr) return "-";
-    const [day, month, year] = startDateStr.split("/").map(Number);
-    if (!day || !month || !year) return "-";
-    const startDate = new Date(year, month - 1, day);
-    const now = new Date();
-    let months = (now.getFullYear() - startDate.getFullYear()) * 12 + (now.getMonth() - startDate.getMonth());
-    if (now.getDate() < startDate.getDate()) months -= 1;
-    return months >= 0 ? months : 0;
+
+// ======== FUNGSI FORMAT TANGGAL ========
+function formatTanggalIndonesia(dateStr) {
+    if (!dateStr) return "-";
+    let date;
+    try {
+        date = new Date(dateStr);
+        if (isNaN(date)) {
+            const parts = dateStr.includes("/") ? dateStr.split("/") : dateStr.split("-");
+            if (parts.length === 3) {
+                const [d, m, y] = parts.map(Number);
+                date = new Date(y, m - 1, d);
+            } else return dateStr;
+        }
+    } catch {
+        return dateStr;
+    }
+    const d = String(date.getDate()).padStart(2, "0");
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const y = date.getFullYear();
+    return `${d}/${m}/${y}`;
 }
 
-function typeWriter(element, text, agent, callback, speed=2){
+
+// ======== PERHITUNGAN SELISIH WAKTU ========
+function getDetailedDiff(startDateStr) {
+    if (!startDateStr) return "-";
+    const startDate = new Date(startDateStr);
+    if (isNaN(startDate)) return "-";
+
+    const today = new Date();
+
+    if (startDate > today) {
+        // Jika tanggal mulai di masa depan, bisa tampilkan pesan ini:
+        return "Masa jabatan belum dimulai";
+    }
+
+    let years = today.getFullYear() - startDate.getFullYear();
+    let months = today.getMonth() - startDate.getMonth();
+    let days = today.getDate() - startDate.getDate();
+
+    if (days < 0) {
+        months--;
+        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += prevMonth.getDate();
+    }
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+    return `${years} Tahun ${months} Bulan ${days} Hari`;
+}
+
+// ======== HITUNG USIA ========
+function calculateAge(birthDateStr) {
+    if (!birthDateStr) return "-";
+    const date = new Date(birthDateStr);
+    if (isNaN(date)) return "-";
+
+    const today = new Date();
+    let age = today.getFullYear() - date.getFullYear();
+    if (
+        today.getMonth() < date.getMonth() ||
+        (today.getMonth() === date.getMonth() && today.getDate() < date.getDate())
+    ) {
+        age--;
+    }
+    return age;
+}
+
+// ======== KGB BERIKUTNYA ========
+function getNextKGB(tmtKGB) {
+    if (!tmtKGB) return "-";
+    const tmt = new Date(tmtKGB);
+    if (isNaN(tmt)) return "-";
+
+    // Asumsikan KGB setiap 2 tahun
+    const nextKGB = new Date(tmt.getFullYear() + 2, tmt.getMonth(), tmt.getDate());
+    return getDetailedDiff(nextKGB); // Selisih dari hari ini
+}
+
+// ======== ANIMASI DAN TAMPILAN ========
+// ... fungsi typeWriter, simulateAccessSequence, dll.
+
+// ======== ANIMASI DAN TAMPILAN ========
+function typeWriter(element, text, agent, callback, speed=10){
     element.textContent = "";
-    let i = 0;
-    let nameShown = false;
+    let i = 0, nameShown = false;
     function typing() {
         if(i < text.length){
             element.textContent += text.charAt(i);
             if(!nameShown && element.textContent.includes("NAMA LENGKAP")){
                 nameShown = true;
-                setTimeout(()=>{
-                    photoEl.src = agent.photo;
-                    photoEl.style.display = "block";
-                    setTimeout(()=> photoEl.style.opacity = 1, 100);
+                setTimeout(()=>{ 
+                    if (agent.photo) {
+                        photoEl.src = agent.photo; 
+                        photoEl.style.display = "block"; 
+                        setTimeout(()=> photoEl.style.opacity = 1, 100); 
+                    }
                 }, 200);
             }
             i++;
@@ -258,41 +287,69 @@ function simulateAccessSequence(element, callback){
             outputPanel.scrollTop = outputPanel.scrollHeight;
             i++;
             setTimeout(nextStep, 600);
-        } else {
-            setTimeout(callback, 600);
-        }
+        } else { setTimeout(callback, 600); }
     }
     nextStep();
 }
 
+
+// ======== FILTER DAN TAMPILKAN NAMA ANGGOTA ========
 function showMemberButtons(keyword){
-    memberBtnContainer.innerHTML = "";
-    const filtered = personnelDB.filter(p => 
-        p.satker.toLowerCase().includes(keyword.toLowerCase()) ||
-        p.nama_lengkap.toLowerCase().includes(keyword.toLowerCase())
-    );
-    if(filtered.length===0){
-        memberBtnContainer.innerHTML='<span class="not-found">❌ No members found for this keyword</span>';
-    } else {
-        filtered.forEach(agent=>{
-            const btn = document.createElement("button");
-            btn.textContent = agent.nama_lengkap;
-            btn.onclick = ()=> displayAgent(agent);
-            memberBtnContainer.appendChild(btn);
-        });
-    }
+  memberBtnContainer.innerHTML = "";
+  const selectedCategory = document.getElementById("category-filter") 
+      ? document.getElementById("category-filter").value 
+      : "";
+
+  const filtered = personnelDB.filter(p => {
+    const kw = keyword.toLowerCase();
+    const matchKeyword = 
+      (p.satker && p.satker.toLowerCase().includes(kw)) ||
+      (p.nama_lengkap && p.nama_lengkap.toLowerCase().includes(kw)) ||
+      (p.kategori && p.kategori.toLowerCase().includes(kw));
+    const matchCategory = !selectedCategory || p.kategori === selectedCategory;
+    return matchKeyword && matchCategory;
+  });
+
+  if(filtered.length === 0){
+    memberBtnContainer.innerHTML = '<span class="not-found">❌ No members found for this filter</span>';
+  } else {
+    filtered.forEach(agent => {
+      const btn = document.createElement("button");
+      btn.textContent = agent.nama_lengkap;
+      btn.onclick = () => displayAgent(agent);
+      memberBtnContainer.appendChild(btn);
+    });
+  }
+}
+    
+// ======== KGB BERIKUTNYA ========
+function getNextKGB(tmtKGB) {
+    if (!tmtKGB) return "-";
+    const tmt = new Date(tmtKGB);
+    if (isNaN(tmt)) return "-";
+
+    // Asumsikan KGB setiap 2 tahun
+    const nextKGB = new Date(tmt.getFullYear() + 2, tmt.getMonth(), tmt.getDate());
+    return getDetailedDiff(nextKGB); // Selisih dari hari ini
 }
 
-function displayAgent(agent){
+
+// ======== TAMPILKAN BIODATA DETAIL ========
+function displayAgent(agent) {
+    // Reset tampilan
     dossierEl.textContent = "";
     photoEl.style.display = "none";
     photoEl.style.opacity = 0;
     photoEl.src = "";
     const oldDocs = agentContainer.querySelector(".doc-buttons");
-    if(oldDocs) oldDocs.remove();
+    if (oldDocs) oldDocs.remove();
 
-    simulateAccessSequence(dossierEl, ()=> {
-        const monthsSince = getMonthsDiff(agent.ops_completed);
+    // Simulasi loading
+    simulateAccessSequence(dossierEl, () => {
+        const masaKerja = getDetailedDiff(agent.tmt_jabatan);
+        const masaKGB = getNextKGB(agent.tmt_kgb);
+        const usia = calculateAge(agent.tanggal_lahir);
+
         const dossier = `
 ========================================
 |   FILE: PERSONEL PUSLAT KODIKLATAU   |
@@ -301,21 +358,27 @@ function displayAgent(agent){
 
 [DATA IDENTITAS]
 --------------------------------------------------
-NAMA LENGKAP    : ${agent.nama_lengkap}
-PANGKAT         : ${agent.pangkat}
-NRP/NIP         : ${agent.nrp_nip}
-JABATAN         : ${agent.jabatan}
-KORP/FUNG/SPES  : ${agent.korp_fung_spes}
-TANGGAL LAHIR   : ${agent.tanggal_lahir}
-TEMPAT LAHIR    : ${agent.tempat_lahir}
-AGAMA           : ${agent.agama}
+NAMA LENGKAP       : ${agent.nama_lengkap || "-"}
+PANGKAT            : ${agent.pangkat || "-"}
+NRP/NIP            : ${agent.nrp_nip || "-"}
+JABATAN            : ${agent.jabatan || "-"}
+SATKER             : ${agent.satker || "-"}
+KORPS/SPESIALISASI : ${agent.korp_fung_spes || "-"}
+TEMPAT/TGL LAHIR   : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
+AGAMA              : ${agent.agama || "-"}
+USIA               : ${usia} Tahun
 
-[OPERATIONAL RECORD]
+[DATA KGB]
 --------------------------------------------------
-SATKER          : ${agent.satker}
-NOMOR SKEP      : ${agent.specialization}
-TMT JABATAN     : ${agent.ops_completed}
-s.d SAAT INI    : ${monthsSince} bulan
+KGB TERAKHIR       : ${formatTanggalIndonesia(agent.kgb_terakhir)}
+TMT KGB            : ${formatTanggalIndonesia(agent.tmt_kgb)}
+KGB AKAN DATANG    : ${masaKGB}
+
+[DATA JABATAN]
+--------------------------------------------------
+NOMOR SKEP         : ${agent.nomer_skep || "-"}
+TMT JABATAN        : ${formatTanggalIndonesia(agent.tmt_jabatan)}
+MASA JABATAN       : ${masaKerja}
 
 [SECURITY FOOTNOTE]
 --------------------------------------------------
@@ -326,18 +389,21 @@ Unauthorized access or duplication is punishable under applicable law.
 ========================================
 Retrieved on: ${new Date().toLocaleString()}
         `;
-        typeWriter(dossierEl, dossier, agent, ()=> {
+
+        // Tampilkan teks dengan efek typing
+        typeWriter(dossierEl, dossier, agent, () => {
+            // Tombol dokumen
             const docContainer = document.createElement("div");
             docContainer.className = "doc-buttons";
             const docs = [
-                {label:"Pemuktahiran Data", url:"https://example.com/data-update"},
-                {label:"Riwayat Hidup", url:"https://example.com/riwayat-hidup"},
-                {label:"KU-1", url:"https://example.com/ku-1"}
+                { label: "Pemuktahiran Data", url: "https://example.com/data-update" },
+                { label: "Riwayat Hidup", url: "https://example.com/riwayat-hidup" },
+                { label: "KU-1", url: "https://example.com/ku-1" }
             ];
-            docs.forEach(d=>{
+            docs.forEach(d => {
                 const btn = document.createElement("button");
                 btn.textContent = d.label;
-                btn.onclick = ()=> window.open(d.url, "_blank");
+                btn.onclick = () => window.open(d.url, "_blank");
                 docContainer.appendChild(btn);
             });
             agentContainer.appendChild(docContainer);
@@ -345,7 +411,9 @@ Retrieved on: ${new Date().toLocaleString()}
     });
 }
 
-// ========== EVENT SEARCH ==========
+
+
+// ======== EVENT SEARCH ========
 searchInput.addEventListener("input", ()=>{
     dossierEl.textContent="Biodata will appear after clicking the member button";
     const oldDocs = agentContainer.querySelector(".doc-buttons");
@@ -358,23 +426,31 @@ searchInput.addEventListener("keydown", e=>{
         if(query) showMemberButtons(query);
     }
 });
-
-function doGet(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = sheet.getDataRange().getValues();
-  const headers = data.shift();
-  
-  const result = data.map(row => {
-    let obj = {};
-    headers.forEach((h, i) => obj[h] = row[i]);
-    return obj;
-  });
-
-  return ContentService
-    .createTextOutput(JSON.stringify(result))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
