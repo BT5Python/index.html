@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PUSLAT KODIKLATAU - Intelligence Database</title>
 <style>
-font-family: 'Courier New', monospace;
+body {
+    font-family: 'Courier New', monospace;
     background-color: black;
     color: #00FF00;
     margin: 0;
@@ -33,16 +34,17 @@ header {
     color: #FF0000; /* bisa juga tetap merah untuk kontras */
     animation: blinkText 1s infinite;
 }
-    
+
 .header-buttons button {
-background: transparent;
-border: 1px solid #00FF00;
-color: #00FF00; /* tombol tetap hijau */
-padding: 8px 15px;
-cursor: pointer;
-border-radius: 4px;
-font-family: 'Courier New', monospace;
-transition: background 0.3s, color 0.3s;
+    background: transparent;
+    border: 1px solid #00FF00;
+    color: #00FF00; /* tombol tetap hijau */
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    transition: background 0.3s, color 0.3s;
+}
 
 .header-buttons button:hover { background-color: #00FF00; color: black; }
 
@@ -90,8 +92,8 @@ button:hover { background-color: #00FF00; color: black; }
 </head>
 <body>
 <header>
-    <h1 class="text">DATABASE PERSONEL PUSLAT KODIKLATAU</h1>
-    <h1 class="text1">PORTAL MONITORING TERMINAL</h1>
+    <h1 class="text">KENAIKAN GAJI BERKALA</h1>
+    <h1 class="text1">MONITORING TERMINAL</h1>
     <div class="header-buttons">
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">PERWIRA</button>
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">BINTARA</button>
