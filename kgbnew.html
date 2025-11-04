@@ -449,14 +449,11 @@ function getMasaKerja(tmtStr) {
 
 // ======== TAMPILKAN BIODATA DETAIL ========
 function displayAgent(agent) {
-    // Reset tampilan
-    photoEl.src = "https://drive.google.com/uc?export=view&id13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2=ID_FILE"; 
-    photoEl.style.display = "block";
-    photoEl.style.opacity = 1;    
-    const oldDocs = agentContainer.querySelector(".doc-buttons");
-    if (oldDocs) oldDocs.remove();
+    // Sembunyikan foto dulu
+    photoEl.style.display = "none";
+    photoEl.style.opacity = 0;
 
-    // Simulasi loading
+    // Simulasi proses loading
     simulateAccessSequence(dossierEl, () => {
         const masaKerja = getMasaKerja(agent.tmt_jabatan);
         const masaKGB = getNextKGB(agent.tmt_kgb);
@@ -504,26 +501,42 @@ Unauthorized access or duplication is punishable under applicable law.
 Retrieved on: ${new Date().toLocaleString()}
         `;
 
-        // Tampilkan teks dengan efek typing
+        // Setelah selesai animasi mengetik
         typeWriter(dossierEl, dossier, agent, () => {
-            // Tombol dokumen
-            const docContainer = document.createElement("div");
-            docContainer.className = "doc-buttons";
-            const docs = [
-                { label: "Pemuktahiran Data", url: "https://example.com/data-update" },
-                { label: "Riwayat Hidup", url: "https://example.com/riwayat-hidup" },
-                { label: "KU-1", url: "https://example.com/ku-1" }
-            ];
-            docs.forEach(d => {
-                const btn = document.createElement("button");
-                btn.textContent = d.label;
-                btn.onclick = () => window.open(d.url, "_blank");
-                docContainer.appendChild(btn);
-            });
-            agentContainer.appendChild(docContainer);
+
+            // 🧠 BAGIAN INI YANG PENTING
+            // Otomatis ambil foto dari Google Sheet (kolom 'photo')
+            let photoURL = "";
+
+            if (agent.photo) {
+                if (agent.photo.includes("drive.google.com/file/d/")) {
+                    // Jika kolom berisi link Google Drive biasa
+                    const match = agent.photo.match(/\/d\/(.*?)\//);
+                    if (match && match[1]) {
+                        photoURL = `https://drive.google.com/uc?export=view&id=${match[1]}`;
+                    }
+                } else if (/^[a-zA-Z0-9_-]{10,}$/.test(agent.photo)) {
+                    // Jika hanya ID file (bukan link)
+                    photoURL = `https://drive.google.com/uc?export=view&id=${agent.photo}`;
+                } else {
+                    // Jika link langsung (misalnya imgur, i.ibb, dsb)
+                    photoURL = agent.photo;
+                }
+            }
+
+            // Jika tidak ada foto, tampilkan placeholder default
+            if (!photoURL) {
+                photoURL = "https://i.ibb.co/Yk2zkjX/placeholder.png";
+            }
+
+            // Tampilkan foto di panel kanan
+            photoEl.src = photoURL;
+            photoEl.style.display = "block";
+            setTimeout(() => (photoEl.style.opacity = 1), 200);
         });
     });
 }
+
 
 
 
@@ -544,6 +557,7 @@ searchInput.addEventListener("keydown", e=>{
 // ======== evolutionismyrevolution/BT5Python ========
 </body>
 </html>
+
 
 
 
