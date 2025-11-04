@@ -93,6 +93,19 @@ button:hover { background-color: #00FF00; color: black; }
 }
 .agent-profile pre::after { content: "_"; animation: blink 1s infinite; }
 @keyframes blinkText { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
+
+/* Warna merah dan efek berkedip */
+.secret-alert {
+    color: #FF0000;
+    font-weight: bold;
+    animation: blinkSecret 1s infinite;
+}
+
+@keyframes blinkSecret {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
+    
 </style>
 </head>
 <body>
@@ -272,19 +285,29 @@ function typeWriter(element, text, agent, callback, speed = 10) {
         if (i < text.length) {
             const char = text.charAt(i);
             buffer += char;
+
+            // Render ulang isi teks dengan warna sesuai konteks
             element.innerHTML = buffer
                 .split("\n")
                 .map(line => {
-                    // Warna kuning untuk bagian tertentu
+                    // Warna kuning untuk bagian data
                     if (line.includes("[DATA IDENTITAS]") ||
                         line.includes("[DATA KGB]") ||
                         line.includes("[DATA JABATAN]")) {
                         return `<span class="highlight-section">${line}</span>`;
                     }
+                    // Warna merah berkedip untuk tulisan RAHASIA
+                    if (line.includes("RAHASIA")) {
+                        return line.replace(
+                            "RAHASIA",
+                            `<span class="secret-alert">RAHASIA</span>`
+                        );
+                    }
                     return line;
                 })
                 .join("\n");
 
+            // Tampilkan foto saat nama muncul
             if (!nameShown && element.textContent.includes("NAMA LENGKAP")) {
                 nameShown = true;
                 setTimeout(() => {
@@ -304,6 +327,7 @@ function typeWriter(element, text, agent, callback, speed = 10) {
 
     typing();
 }
+
 
 
 function simulateAccessSequence(element, callback){
