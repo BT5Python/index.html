@@ -45,6 +45,11 @@ header {
     font-family: 'Courier New', monospace;
     transition: background 0.3s, color 0.3s;
 }
+    .highlight-section {
+    color: #FFFF00; /* kuning terang */
+    font-weight: bold;
+}
+
 
 .header-buttons button:hover { background-color: #00FF00; color: black; }
 
@@ -257,29 +262,49 @@ function getNextKGB(tmtKGB) {
 // ... fungsi typeWriter, simulateAccessSequence, dll.
 
 // ======== ANIMASI DAN TAMPILAN ========
-function typeWriter(element, text, agent, callback, speed=10){
-    element.textContent = "";
-    let i = 0, nameShown = false;
+function typeWriter(element, text, agent, callback, speed = 10) {
+    element.innerHTML = ""; // gunakan innerHTML agar bisa sisipkan <span>
+    let i = 0;
+    let buffer = "";
+    let nameShown = false;
+
     function typing() {
-        if(i < text.length){
-            element.textContent += text.charAt(i);
-            if(!nameShown && element.textContent.includes("NAMA LENGKAP")){
+        if (i < text.length) {
+            const char = text.charAt(i);
+            buffer += char;
+            element.innerHTML = buffer
+                .split("\n")
+                .map(line => {
+                    // Warna kuning untuk bagian tertentu
+                    if (line.includes("[DATA IDENTITAS]") ||
+                        line.includes("[DATA KGB]") ||
+                        line.includes("[DATA JABATAN]")) {
+                        return `<span class="highlight-section">${line}</span>`;
+                    }
+                    return line;
+                })
+                .join("\n");
+
+            if (!nameShown && element.textContent.includes("NAMA LENGKAP")) {
                 nameShown = true;
-                setTimeout(()=>{ 
+                setTimeout(() => {
                     if (agent.photo) {
-                        photoEl.src = agent.photo; 
-                        photoEl.style.display = "block"; 
-                        setTimeout(()=> photoEl.style.opacity = 1, 100); 
+                        photoEl.src = agent.photo;
+                        photoEl.style.display = "block";
+                        setTimeout(() => (photoEl.style.opacity = 1), 100);
                     }
                 }, 200);
             }
+
             i++;
             outputPanel.scrollTop = outputPanel.scrollHeight;
             setTimeout(typing, speed);
-        } else if(callback) callback();
+        } else if (callback) callback();
     }
+
     typing();
 }
+
 
 function simulateAccessSequence(element, callback){
     const steps = [
