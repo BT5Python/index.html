@@ -238,10 +238,19 @@ function getNextKGB(tmtKGB) {
     const tmt = new Date(tmtKGB);
     if (isNaN(tmt)) return "-";
 
-    // Asumsikan KGB setiap 2 tahun
+    // Hitung tanggal KGB berikutnya (2 tahun setelah TMT KGB)
     const nextKGB = new Date(tmt.getFullYear() + 2, tmt.getMonth(), tmt.getDate());
-    return getDetailedDiff(nextKGB); // Selisih dari hari ini
+
+    // Format tanggal Indonesia
+    const nextKGBformatted = formatTanggalIndonesia(nextKGB.toISOString());
+
+    // Hitung selisih waktu dari hari ini ke tanggal KGB berikutnya
+    const diffText = getDetailedDiff(nextKGB);
+
+    // Gabungkan hasilnya
+    return `${nextKGBformatted} (${diffText} lagi)`;
 }
+
 
 // ======== ANIMASI DAN TAMPILAN ========
 // ... fungsi typeWriter, simulateAccessSequence, dll.
