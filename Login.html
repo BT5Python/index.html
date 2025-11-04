@@ -5,34 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Futuristik</title>
   <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Orbitron', sans-serif;
-    }
-
     body {
-      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at top, #0f0c29, #302b63, #24243e);
+      height: 100vh;
+      margin: 0;
+      background: #0d0d0d;
+      font-family: 'Orbitron', sans-serif;
       color: #00fff7;
-      overflow: hidden;
     }
 
-    /* Neon box */
     .login-box {
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0,0,0,0.7);
       padding: 40px;
       border-radius: 15px;
       border: 2px solid #00fff7;
-      box-shadow: 0 0 20px #00fff7, 0 0 40px #00fff7, 0 0 60px #00fff7;
       text-align: center;
-      position: relative;
-      z-index: 2;
+      box-shadow: 0 0 20px #00fff7, 0 0 40px #00fff7;
     }
 
     .login-box h1 {
@@ -70,32 +60,14 @@
       box-shadow: 0 0 20px #00fff7, 0 0 40px #00fff7;
     }
 
-    /* Futuristic timer */
     .timer {
       position: absolute;
       top: 20px;
       right: 20px;
       font-size: 2em;
       text-shadow: 0 0 10px #00fff7;
-      font-family: 'Orbitron', sans-serif;
     }
 
-    /* Animated background lines */
-    .line {
-      position: absolute;
-      width: 2px;
-      height: 100%;
-      background: #00fff7;
-      opacity: 0.2;
-      animation: move 10s linear infinite;
-    }
-
-    @keyframes move {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100%); }
-    }
-
-    /* Import Orbitron font */
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
   </style>
 </head>
@@ -112,13 +84,6 @@
     <button>Login</button>
   </div>
 
-  <!-- Background Lines -->
-  <div class="line" style="left:10%; animation-duration:8s;"></div>
-  <div class="line" style="left:30%; animation-duration:12s;"></div>
-  <div class="line" style="left:50%; animation-duration:10s;"></div>
-  <div class="line" style="left:70%; animation-duration:14s;"></div>
-  <div class="line" style="left:90%; animation-duration:9s;"></div>
-
   <!-- Background Music -->
   <audio id="bgMusic" autoplay loop>
     <source src="lagu.mp3" type="audio/mpeg">
@@ -126,7 +91,7 @@
   </audio>
 
   <script>
-    // Timer logic (menit:detik)
+    // Timer logic
     let totalSeconds = 0;
     const timerEl = document.getElementById('timer');
 
@@ -139,7 +104,7 @@
 
     setInterval(updateTimer, 1000);
 
-    // Autoplay workaround untuk beberapa browser
+    // Autoplay workaround
     const music = document.getElementById('bgMusic');
     document.body.addEventListener('click', () => {
       music.play().catch(()=>{});
