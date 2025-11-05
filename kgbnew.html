@@ -456,6 +456,7 @@ function displayAgent(agent) {
         const masaKerja = getMasaKerja(agent.tmt_jabatan);
         const masaKGB = getNextKGB(agent.tmt_kgb);
         const usia = calculateAge(agent.tanggal_lahir);
+        const usia = calculateAge(agent.no_kta_tni/pns);
 
         const dossier = `
 ========================================
@@ -486,10 +487,10 @@ MASA JABATAN       : ${masaKerja}
 NO KTA TNI/PNS     : ${agent.no_kta_tni/pns || "-"}
 DI KELUARKAN TGL   : ${agent.kgb_terakhir || "-"}
 NO NIK             : ${agent.kgb_terakhir || "-"}
-NO SIM A UMUM      : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
-NO SIM C UMUM      : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)} 
-NO SIM A TNI       : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)} 
-NO SIM C TNI       : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
+NO SIM A UMUM      : ${agent.tempat_lahir || "-"}
+NO SIM C UMUM      : ${agent.tempat_lahir || "-"}
+NO SIM A TNI       : ${agent.tempat_lahir || "-"}
+NO SIM C TNI       : ${agent.tempat_lahir || "-"}
 KGB AKAN DATANG    : ${masaKGB}
 
 
@@ -546,6 +547,7 @@ searchInput.addEventListener("keydown", e=>{
 // ======== evolutionismyrevolution/BT5Python ========
 </body>
 </html>
+
 
 
 
