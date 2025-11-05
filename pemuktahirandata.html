@@ -428,26 +428,46 @@ function getMasaKerja(tmtStr) {
 
 
 // ======== TAMPILKAN BIODATA DETAIL ========
+// ======== TAMPILKAN BIODATA DETAIL ========
 function displayAgent(agent) {
-    // Reset tampilan
+    // ======== FOTO PERSONEL ========
     if (agent.photo) {
-    photoEl.src = agent.photo; // ambil dari database
-} else {
-    photoEl.src = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2"; // default
-}
-photoEl.style.display = "block";
-photoEl.style.opacity = 1;
+        // Jika link dari Google Drive → ubah ke format direct
+        if (agent.photo.includes("drive.google.com/file/d/")) {
+            const match = agent.photo.match(/\/d\/(.*?)\//);
+            if (match && match[1]) {
+                photoEl.src = `https://drive.google.com/uc?export=view&id=${match[1]}`;
+            } else {
+                photoEl.src = agent.photo; // fallback
+            }
+        } 
+        // Jika hanya berupa ID Google Drive
+        else if (/^[A-Za-z0-9_-]{25,}$/.test(agent.photo)) {
+            photoEl.src = `https://drive.google.com/uc?export=view&id=${agent.photo}`;
+        } 
+        // Jika link sudah valid (misal imgur, url langsung)
+        else {
+            photoEl.src = agent.photo;
+        }
+    } else {
+        // Gunakan foto default jika kosong
+        photoEl.src = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2";
+    }
 
-    
+    photoEl.style.display = "block";
+    photoEl.style.opacity = 1;
+
+    // ======== HAPUS TOMBOL DOKUMEN SEBELUMNYA ========
     const oldDocs = agentContainer.querySelector(".doc-buttons");
     if (oldDocs) oldDocs.remove();
 
-    // Simulasi loading
+    // ======== SIMULASI LOADING SEBELUM BIODATA ========
     simulateAccessSequence(dossierEl, () => {
         const masaKerja = getMasaKerja(agent.tmt_jabatan);
         const masaKGB = getNextKGB(agent.tmt_kgb);
         const usia = calculateAge(agent.tanggal_lahir);
 
+        // ======== TEMPLATE DATA PERSONEL ========
         const dossier = `
 ========================================
 |   FILE: PERSONEL PUSLAT KODIKLATAU   |
@@ -488,27 +508,29 @@ Unauthorized access or duplication is punishable under applicable law.
 Retrieved on: ${new Date().toLocaleString()}
         `;
 
-        // Tampilkan teks dengan efek typing
+        // ======== EFEK KETIK TEKS ========
         typeWriter(dossierEl, dossier, agent, () => {
-            // Tombol dokumen
+            // ======== TAMBAHKAN TOMBOL DOKUMEN ========
             const docContainer = document.createElement("div");
             docContainer.className = "doc-buttons";
+
             const docs = [
                 { label: "Pemuktahiran Data", url: "https://example.com/data-update" },
                 { label: "Riwayat Hidup", url: "https://example.com/riwayat-hidup" },
                 { label: "KU-1", url: "https://example.com/ku-1" }
             ];
+
             docs.forEach(d => {
                 const btn = document.createElement("button");
                 btn.textContent = d.label;
                 btn.onclick = () => window.open(d.url, "_blank");
                 docContainer.appendChild(btn);
             });
+
             agentContainer.appendChild(docContainer);
         });
     });
 }
-
 
 
 // ======== EVENT SEARCH ========
