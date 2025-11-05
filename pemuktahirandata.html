@@ -430,11 +430,24 @@ function getMasaKerja(tmtStr) {
 // ======== TAMPILKAN BIODATA DETAIL ========
 function displayAgent(agent) {
     // Reset tampilan
-    photoEl.src = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2"; 
+    if (agent.photo) {
+        photoEl.src = agent.photo;
+    } else {
+        // Gunakan foto default jika tidak ada
+        photoEl.src = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2";
+    }
     photoEl.style.display = "block";
-    photoEl.style.opacity = 1;    
+    photoEl.style.opacity = 1;
+    
     const oldDocs = agentContainer.querySelector(".doc-buttons");
     if (oldDocs) oldDocs.remove();
+
+    // Simulasi loading
+    simulateAccessSequence(dossierEl, () => {
+        ...
+    });
+}
+
 
     // Simulasi loading
     simulateAccessSequence(dossierEl, () => {
