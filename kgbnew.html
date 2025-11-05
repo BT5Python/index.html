@@ -483,7 +483,7 @@ MASA JABATAN       : ${masaKerja}
 
 [DATA KELENGKAPAN DIRI]
 --------------------------------------------------
-NO KTA TNI/PNS     : ${agent.kgb_terakhir || "-"}
+NO KTA TNI/PNS     : ${agent.no_kta_tni/pns || "-"}
 DI KELUARKAN TGL   : ${agent.kgb_terakhir || "-"}
 NO NIK             : ${agent.kgb_terakhir || "-"}
 NO SIM A UMUM      : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
@@ -546,6 +546,7 @@ searchInput.addEventListener("keydown", e=>{
 // ======== evolutionismyrevolution/BT5Python ========
 </body>
 </html>
+
 
 
 
