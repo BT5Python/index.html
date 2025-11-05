@@ -426,8 +426,6 @@ function getMasaKerja(tmtStr) {
     return `${years} Tahun ${months} Bulan ${days} Hari`;
 }
 
-
-// ======== TAMPILKAN BIODATA DETAIL ========
 // ======== TAMPILKAN BIODATA DETAIL ========
 function displayAgent(agent) {
     // Ambil URL foto (konversi otomatis jika masih format 'view')
@@ -483,13 +481,16 @@ NOMOR SKEP         : ${agent.nomer_skep || "-"}
 TMT JABATAN        : ${formatTanggalIndonesia(agent.tmt_jabatan)}
 MASA JABATAN       : ${masaKerja}
 
-[DATA KGB]
+[DATA KELENGKAPAN DIRI]
 --------------------------------------------------
+NO KTA TNI/PNS     : ${agent.kgb_terakhir || "-"}
+DI KELUARKAN TGL   : ${agent.kgb_terakhir || "-"}
 NO NIK             : ${agent.kgb_terakhir || "-"}
-NO NIK             : ${agent.kgb_terakhir || "-"}
-NO SIM             : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
+NO SIM A UMUM      : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
+NO SIM C UMUM      : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)} 
+NO SIM A TNI       : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)} 
+NO SIM C TNI       : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
 KGB AKAN DATANG    : ${masaKGB}
-
 
 
 
@@ -545,6 +546,7 @@ searchInput.addEventListener("keydown", e=>{
 // ======== evolutionismyrevolution/BT5Python ========
 </body>
 </html>
+
 
 
 
