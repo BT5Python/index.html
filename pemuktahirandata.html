@@ -158,35 +158,50 @@ button:hover { background-color: #00FF00; color: black; }
 <script>
 function goTo(url){ window.location.href = url; }
 
-// ================== LOAD DATABASE DARI GOOGLE SHEET ==================
+// ======== LOAD DATABASE DARI GOOGLE SHEET (MODIFIKASI DEBUG) ========
 let personnelDB = [];
-
-const loadingIndicator = document.getElementById("loading");
-loadingIndicator.style.display = "block"; // tampilkan saat awal
 
 fetch("https://script.google.com/macros/s/AKfycbyeW1HMOPvScfIBlVSjozy9NCZegIir741jH_P8F3qIrs0-MIW99sv1B-YAxvrgHhwtww/exec")
   .then(res => res.json())
   .then(data => {
     personnelDB = data.map(person => {
       let photoURL = person.photo?.trim() || "";
+      const originalPhotoURL = photoURL; // Simpan link asli
+
       if (photoURL) {
+        // Logika Normalisasi
         if (photoURL.includes("drive.google.com/file/d/")) {
           const match = photoURL.match(/\/d\/(.*?)\//);
-          if (match && match[1]) photoURL = `https://drive.google.com/uc?export=view&id=${match[1]}`;
-        } else if (/^[A-Za-z0-9_-]{25,}$/.test(photoURL)) {
+          if (match && match[1]) {
+            photoURL = `https://drive.google.com/uc?export=view&id=${match[1]}`;
+            console.log(`[DEBUG FOTO] ${person.nama_lengkap} - Normalisasi Link Penuh: ${photoURL}`);
+          } else {
+             // Jika ada drive link tapi gagal di-parse
+             console.warn(`[DEBUG FOTO] ${person.nama_lengkap} - Peringatan: Link Drive tidak terstruktur dengan benar.`);
+          }
+        }
+        else if (/^[A-Za-z0-9_-]{25,}$/.test(photoURL)) {
           photoURL = `https://drive.google.com/uc?export=view&id=${photoURL}`;
+          console.log(`[DEBUG FOTO] ${person.nama_lengkap} - Normalisasi Hanya ID: ${photoURL}`);
         }
       } else {
+        // Foto default jika kosong
         photoURL = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2";
+        console.log(`[DEBUG FOTO] ${person.nama_lengkap} - Menggunakan Foto Default: ${photoURL}`);
       }
+      
+      // Tambahkan foto default jika link gagal diakses
+      if (originalPhotoURL && photoURL === originalPhotoURL && !photoURL.includes('uc?export=view&id=')) {
+          console.warn(`[DEBUG FOTO] ${person.nama_lengkap} - Link tidak dinormalisasi. Pastikan izin akses publik.`);
+      }
+
       return { ...person, photo: photoURL };
     });
+
     console.log("✅ Data loaded & photo links normalized", personnelDB);
     populateCategoryDropdown();
   })
-  .catch(err => {
-    console.error("❌ Gagal memuat data:", err);
-    alert("Gagal memuat data dari server!");
+  .catch(err => console.error("❌ Gagal memuat data:", err));
   })
   .finally(() => loadingIndicator.style.display = "none");
 
@@ -304,27 +319,32 @@ function typeWriter(element, text, agent, callback, speed = 10) {
   typing();
 }
 
-// ================== FIX FOTO GOOGLE DRIVE + TAMPILAN ==================
+// ======== TAMPILKAN BIODATA DETAIL (MODIFIKASI DEBUG) ========
 function displayAgent(agent) {
-  // Foto personel
-  if (agent.photo) {
-    photoEl.src = agent.photo;
-  } else {
-    photoEl.src = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2";
-  }
-  photoEl.style.display = "block";
-  photoEl.style.opacity = 0;
-  setTimeout(() => (photoEl.style.opacity = 1), 200);
+    // Sembunyikan foto sebelum animasi
+    photoEl.style.opacity = 0;
 
-  const oldDocs = agentContainer.querySelector(".doc-buttons");
-  if (oldDocs) oldDocs.remove();
+    // ======== FOTO PERSONEL ========
+    let finalPhotoURL = agent.photo;
+    
+    // Log URL yang akan digunakan
+    console.log(`[DEBUG TAMPIL] URL Foto Final untuk ${agent.nama_lengkap}: ${finalPhotoURL}`);
+    
+    photoEl.src = finalPhotoURL;
 
-  simulateAccessSequence(dossierEl, () => {
-    const masaKerja = getMasaKerja(agent.tmt_jabatan);
-    const masaKGB = getNextKGB(agent.tmt_kgb);
-    const usia = calculateAge(agent.tanggal_lahir);
+    // ======== HAPUS TOMBOL DOKUMEN SEBELUMNYA ========
+    const oldDocs = agentContainer.querySelector(".doc-buttons");
+    if (oldDocs) oldDocs.remove();
 
-    const dossier = `
+    // ======== SIMULASI LOADING SEBELUM BIODATA ========
+    simulateAccessSequence(dossierEl, () => {
+        const masaKerja = getMasaKerja(agent.tmt_jabatan);
+        // ... (sisanya sama)
+        const masaKGB = getNextKGB(agent.tmt_kgb);
+        const usia = calculateAge(agent.tanggal_lahir);
+
+        // ======== TEMPLATE DATA PERSONEL ========
+        const dossier = `
 ========================================
 |   FILE: PERSONEL PUSLAT KODIKLATAU   |
 |   CLASSIFICATION: RAHASIA            |
@@ -362,25 +382,36 @@ Unauthorized access or duplication is punishable under applicable law.
 <END OF FILE>
 ========================================
 Retrieved on: ${new Date().toLocaleString()}
-    `;
+        `;
 
-    typeWriter(dossierEl, dossier, agent, () => {
-      const docContainer = document.createElement("div");
-      docContainer.className = "doc-buttons";
-      const docs = [
-        { label: "Pemuktahiran Data", url: "#" },
-        { label: "Riwayat Hidup", url: "#" },
-        { label: "KU-1", url: "#" }
-      ];
-      docs.forEach(d => {
-        const btn = document.createElement("button");
-        btn.textContent = d.label;
-        btn.onclick = () => window.open(d.url, "_blank");
-        docContainer.appendChild(btn);
-      });
-      agentContainer.appendChild(docContainer);
+        // ======== EFEK KETIK TEKS ========
+        typeWriter(dossierEl, dossier, agent, () => {
+             // Tampilkan foto setelah animasi loading selesai
+             photoEl.style.display = "block";
+             setTimeout(() => (photoEl.style.opacity = 1), 100);
+
+            // ======== TAMBAHKAN TOMBOL DOKUMEN ========
+            const docContainer = document.createElement("div");
+            docContainer.className = "doc-buttons";
+            
+            // ... (Kode tombol dokumen sama)
+
+            const docs = [
+                { label: "Pemuktahiran Data", url: "https://example.com/data-update" },
+                { label: "Riwayat Hidup", url: "https://example.com/riwayat-hidup" },
+                { label: "KU-1", url: "https://example.com/ku-1" }
+            ];
+
+            docs.forEach(d => {
+                const btn = document.createElement("button");
+                btn.textContent = d.label;
+                btn.onclick = () => window.open(d.url, "_blank");
+                docContainer.appendChild(btn);
+            });
+
+            agentContainer.appendChild(docContainer);
+        });
     });
-  });
 }
 
 // ================== FILTER ==================
