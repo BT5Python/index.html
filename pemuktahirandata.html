@@ -444,13 +444,6 @@ function displayAgent(agent) {
 
     // Simulasi loading
     simulateAccessSequence(dossierEl, () => {
-        ...
-    });
-}
-
-
-    // Simulasi loading
-    simulateAccessSequence(dossierEl, () => {
         const masaKerja = getMasaKerja(agent.tmt_jabatan);
         const masaKGB = getNextKGB(agent.tmt_kgb);
         const usia = calculateAge(agent.tanggal_lahir);
