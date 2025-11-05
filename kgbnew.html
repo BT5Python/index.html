@@ -455,8 +455,7 @@ function displayAgent(agent) {
     simulateAccessSequence(dossierEl, () => {
         const masaKerja = getMasaKerja(agent.tmt_jabatan);
         const masaKGB = getNextKGB(agent.tmt_kgb);
-        const usia = calculateAge(agent.tanggal_lahir);
-        const usia = calculateAge(agent.no_kta_tni/pns);
+        const usia = calculateAge(agent.tanggal_lahir);        
 
         const dossier = `
 ========================================
@@ -547,6 +546,7 @@ searchInput.addEventListener("keydown", e=>{
 // ======== evolutionismyrevolution/BT5Python ========
 </body>
 </html>
+
 
 
 
