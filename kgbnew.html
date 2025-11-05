@@ -278,26 +278,6 @@ function calculateAge(birthDateStr) {
     return age;
 }
 
-// ======== KGB BERIKUTNYA ========
-function getNextKGB(tmtKGB) {
-    if (!tmtKGB) return "-";
-    const tmt = new Date(tmtKGB);
-    if (isNaN(tmt)) return "-";
-
-    // Hitung tanggal KGB berikutnya (2 tahun setelah TMT KGB)
-    const nextKGB = new Date(tmt.getFullYear() + 2, tmt.getMonth(), tmt.getDate());
-
-    // Format tanggal Indonesia
-    const nextKGBformatted = formatTanggalIndonesia(nextKGB.toISOString());
-
-    // Hitung selisih waktu dari hari ini ke tanggal KGB berikutnya
-    const diffText = getDetailedDiff(nextKGB);
-
-    // Gabungkan hasilnya
-    return `${nextKGBformatted} (${diffText} lagi)`;
-}
-
-
 // ======== ANIMASI DAN TAMPILAN ========
 // ... fungsi typeWriter, simulateAccessSequence, dll.
 
@@ -497,17 +477,21 @@ TEMPAT/TGL LAHIR   : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agen
 AGAMA              : ${agent.agama || "-"}
 USIA               : ${usia} Tahun
 
-[DATA KGB]
---------------------------------------------------
-KGB TERAKHIR       : ${agent.kgb_terakhir || "-"}
-TMT KGB            : ${formatTanggalIndonesia(agent.tmt_kgb)}
-KGB AKAN DATANG    : ${masaKGB}
-
 [DATA JABATAN]
 --------------------------------------------------
 NOMOR SKEP         : ${agent.nomer_skep || "-"}
 TMT JABATAN        : ${formatTanggalIndonesia(agent.tmt_jabatan)}
 MASA JABATAN       : ${masaKerja}
+
+[DATA KGB]
+--------------------------------------------------
+NO NIK             : ${agent.kgb_terakhir || "-"}
+NO NIK             : ${agent.kgb_terakhir || "-"}
+NO SIM             : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
+KGB AKAN DATANG    : ${masaKGB}
+
+
+
 
 [SECURITY FOOTNOTE]
 --------------------------------------------------
@@ -561,6 +545,7 @@ searchInput.addEventListener("keydown", e=>{
 // ======== evolutionismyrevolution/BT5Python ========
 </body>
 </html>
+
 
 
 
