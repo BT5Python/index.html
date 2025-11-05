@@ -162,11 +162,35 @@ let personnelDB = [];
 fetch("https://script.google.com/macros/s/AKfycbyeW1HMOPvScfIBlVSjozy9NCZegIir741jH_P8F3qIrs0-MIW99sv1B-YAxvrgHhwtww/exec")
   .then(res => res.json())
   .then(data => {
-    personnelDB = data;
-    console.log("✅ Data loaded from Google Sheet", data);
+    // ✅ Bersihkan dan konversi link foto agar bisa langsung tampil
+    personnelDB = data.map(person => {
+      let photoURL = person.photo?.trim() || "";
+
+      if (photoURL) {
+        // Jika link Google Drive berformat /file/d/ID/view → ubah ke format direct
+        if (photoURL.includes("drive.google.com/file/d/")) {
+          const match = photoURL.match(/\/d\/(.*?)\//);
+          if (match && match[1]) {
+            photoURL = `https://drive.google.com/uc?export=view&id=${match[1]}`;
+          }
+        }
+        // Jika hanya ID (tanpa link)
+        else if (/^[A-Za-z0-9_-]{25,}$/.test(photoURL)) {
+          photoURL = `https://drive.google.com/uc?export=view&id=${photoURL}`;
+        }
+      } else {
+        // Foto default
+        photoURL = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2";
+      }
+
+      return { ...person, photo: photoURL };
+    });
+
+    console.log("✅ Data loaded & photo links normalized", personnelDB);
     populateCategoryDropdown();
   })
   .catch(err => console.error("❌ Gagal memuat data:", err));
+
 
 function populateCategoryDropdown() {
   const categorySelect = document.getElementById("category-filter");
