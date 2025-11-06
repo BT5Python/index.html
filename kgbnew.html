@@ -506,26 +506,46 @@ Retrieved on: ${new Date().toLocaleString()}
         `;
 
         typeWriter(dossierEl, dossier, agent, () => {
-            const docContainer = document.createElement("div");
-            docContainer.className = "doc-buttons";
-            const mergedLink = agent["Link to merged Doc - PEMUKTAHIRAN DATA"];
+    const docContainer = document.createElement("div");
+    docContainer.className = "doc-buttons";
 
-// Otomatis ubah link Google Drive “view” jadi “uc?export=download”
-let pdfLink = "#";
-if (mergedLink) {
-    if (mergedLink.includes("drive.google.com")) {
-        const match = mergedLink.match(/[-\w]{25,}/); // ambil ID file
-        if (match) pdfLink = `https://drive.google.com/uc?export=view&id=${match[0]}`;
-    } else {
-        pdfLink = mergedLink; // kalau bukan drive link, pakai langsung
+    // 🔹 Ambil link dari kolom spreadsheet
+    const mergedLink = agent["Link to merged Doc - PEMUKTAHIRAN DATA"];
+
+    let pdfLink = "#";
+    if (mergedLink) {
+        if (mergedLink.includes("drive.google.com")) {
+            const match = mergedLink.match(/[-\w]{25,}/);
+            if (match) pdfLink = `https://drive.google.com/uc?export=view&id=${match[0]}`;
+        } else {
+            pdfLink = mergedLink;
+        }
     }
-}
 
-const docs = [
-    { label: "Pemuktahiran Data", url: pdfLink },
-    { label: "Riwayat Hidup", url: "#" },
-    { label: "KU-1", url: "#" }
-];
+    // 🔹 Definisikan tombol dokumen
+    const docs = [
+        { label: "Pemuktahiran Data", url: pdfLink },
+        { label: "Riwayat Hidup", url: "#" },
+        { label: "KU-1", url: "#" }
+    ];
+
+    docs.forEach(d => {
+        const btn = document.createElement("button");
+        btn.textContent = d.label;
+
+        btn.onclick = () => {
+            if (d.url === "#" || !d.url) {
+                alert("❌ File belum tersedia untuk personel ini.");
+                return;
+            }
+            window.open(d.url, "_blank");
+        };
+
+        docContainer.appendChild(btn);
+    });
+
+    agentContainer.appendChild(docContainer);
+});
 
             docs.forEach(d => {
                 const btn = document.createElement("button");
@@ -556,6 +576,7 @@ searchInput.addEventListener("keydown", e=>{
 </body>
 </html>
 evolutionismyrevolution/BT5Python
+
 
 
 
