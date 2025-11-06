@@ -428,34 +428,31 @@ function getMasaKerja(tmtStr) {
 
 // ======== TAMPILKAN BIODATA DETAIL ========
 function displayAgent(agent) {
-    // Ambil URL foto (konversi otomatis jika masih format 'view')
+    // Ambil dan atur foto
     let photoURL = agent.photo || "";
     if (photoURL.includes("drive.google.com")) {
-        // Ambil ID file dari link Google Drive
         const match = photoURL.match(/\/d\/([a-zA-Z0-9_-]+)/);
         if (match && match[1]) {
             photoURL = `https://drive.google.com/uc?export=view&id=${match[1]}`;
         }
     }
-
-    // Jika tidak ada foto, tampilkan placeholder
     if (!photoURL) {
         photoURL = "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
     }
 
-    // Tampilkan foto
     photoEl.src = photoURL;
     photoEl.style.display = "block";
     photoEl.style.opacity = 1;
 
+    // Hapus tombol lama (kalau ada)
     const oldDocs = agentContainer.querySelector(".doc-buttons");
     if (oldDocs) oldDocs.remove();
 
-    // Simulasi loading
+    // Jalankan efek loading
     simulateAccessSequence(dossierEl, () => {
         const masaKerja = getMasaKerja(agent.tmt_jabatan);
         const masaKGB = getNextKGB(agent.tmt_kgb);
-        const usia = calculateAge(agent.tanggal_lahir);        
+        const usia = calculateAge(agent.tanggal_lahir);
 
         const dossier = `
 ========================================
@@ -484,14 +481,12 @@ MASA JABATAN       : ${masaKerja}
 [DATA KELENGKAPAN DIRI]
 --------------------------------------------------
 NO KTA TNI/PNS     : ${agent["no_kta_tni/pns"] || "-"}
-DI KELUARKAN TGL   : ${formatTanggalIndonesia(agent["di_keluarkan_tgl"])}
+DI KELUARKAN TGL   : ${formatTanggalIndonesia(agent["di_keluarkan_tgl"]) }
 NO NIK             : ${agent["no_nik"] || "-"}
 NO SIM A UMUM      : ${agent["no_sim_a_umum"] || "-"}
 NO SIM C UMUM      : ${agent["no_sim_c_umum"] || "-"}
 NO SIM A TNI       : ${agent["no_sim_a_tni"] || "-"}
 NO SIM C TNI       : ${agent["no_sim_c_tni"] || "-"}
-
-
 
 [SECURITY FOOTNOTE]
 --------------------------------------------------
@@ -505,58 +500,48 @@ Unauthorized access or duplication is punishable under applicable law.
 Retrieved on: ${new Date().toLocaleString()}
         `;
 
+        // Ketik animasi biodata
         typeWriter(dossierEl, dossier, agent, () => {
-    const docContainer = document.createElement("div");
-    docContainer.className = "doc-buttons";
+            const docContainer = document.createElement("div");
+            docContainer.className = "doc-buttons";
 
-    // 🔹 Ambil link dari kolom spreadsheet
-    const mergedLink = agent["Link to merged Doc - PEMUKTAHIRAN DATA"];
-
-    let pdfLink = "#";
-    if (mergedLink) {
-        if (mergedLink.includes("drive.google.com")) {
-            const match = mergedLink.match(/[-\w]{25,}/);
-            if (match) pdfLink = `https://drive.google.com/uc?export=view&id=${match[0]}`;
-        } else {
-            pdfLink = mergedLink;
-        }
-    }
-
-    // 🔹 Definisikan tombol dokumen
-    const docs = [
-        { label: "Pemuktahiran Data", url: pdfLink },
-        { label: "Riwayat Hidup", url: "#" },
-        { label: "KU-1", url: "#" }
-    ];
-
-    docs.forEach(d => {
-        const btn = document.createElement("button");
-        btn.textContent = d.label;
-
-        btn.onclick = () => {
-            if (d.url === "#" || !d.url) {
-                alert("❌ File belum tersedia untuk personel ini.");
-                return;
+            // Ambil link dari kolom spreadsheet
+            const mergedLink = agent["Link to merged Doc - PEMUKTAHIRAN DATA"];
+            let pdfLink = "#";
+            if (mergedLink) {
+                if (mergedLink.includes("drive.google.com")) {
+                    const match = mergedLink.match(/[-\w]{25,}/);
+                    if (match) pdfLink = `https://drive.google.com/uc?export=view&id=${match[0]}`;
+                } else {
+                    pdfLink = mergedLink;
+                }
             }
-            window.open(d.url, "_blank");
-        };
 
-        docContainer.appendChild(btn);
-    });
-
-    agentContainer.appendChild(docContainer);
-});
+            // Tombol di bawah biodata
+            const docs = [
+                { label: "Pemuktahiran Data", url: pdfLink },
+                { label: "Riwayat Hidup", url: "#" },
+                { label: "KU-1", url: "#" }
+            ];
 
             docs.forEach(d => {
                 const btn = document.createElement("button");
                 btn.textContent = d.label;
-                btn.onclick = () => window.open(d.url, "_blank");
+                btn.onclick = () => {
+                    if (d.url === "#" || !d.url) {
+                        alert("❌ File belum tersedia untuk personel ini.");
+                        return;
+                    }
+                    window.open(d.url, "_blank");
+                };
                 docContainer.appendChild(btn);
             });
+
             agentContainer.appendChild(docContainer);
         });
     });
 }
+
 
 
 // ======== EVENT SEARCH ========
@@ -576,6 +561,7 @@ searchInput.addEventListener("keydown", e=>{
 </body>
 </html>
 evolutionismyrevolution/BT5Python
+
 
 
 
