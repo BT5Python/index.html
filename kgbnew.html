@@ -509,10 +509,14 @@ Retrieved on: ${new Date().toLocaleString()}
             const docContainer = document.createElement("div");
             docContainer.className = "doc-buttons";
             const docs = [
-                { label: "Pemuktahiran Data", url: agent.link_pemuktahiran || "#" },
-                { label: "Riwayat Hidup", url: agent.link_riwayat || "#" },
-                { label: "KU-1", url: agent.link_ku1 || "#" }
-             ];
+    { 
+        label: "Pemuktahiran Data", 
+        url: agent["Link to merged Doc - PEMUKTAHIRAN DATA"] || "#" 
+    },
+    { label: "Riwayat Hidup", url: "#" },
+    { label: "KU-1", url: "#" }
+];
+
 
             docs.forEach(d => {
                 const btn = document.createElement("button");
@@ -543,6 +547,7 @@ searchInput.addEventListener("keydown", e=>{
 </body>
 </html>
 evolutionismyrevolution/BT5Python
+
 
 
 
