@@ -511,7 +511,7 @@ Retrieved on: ${new Date().toLocaleString()}
             if (mergedLink) {
                 if (mergedLink.includes("drive.google.com")) {
                     const match = mergedLink.match(/[-\w]{25,}/);
-                    if (match) pdfLink = `https://drive.google.com/uc?export=view&id=${match[0]}`;
+                    if (match) pdfLink = `https://drive.google.com/file/d/${match[0]}/preview`;
                 } else {
                     pdfLink = mergedLink;
                 }
@@ -561,6 +561,7 @@ searchInput.addEventListener("keydown", e=>{
 </body>
 </html>
 evolutionismyrevolution/BT5Python
+
 
 
 
