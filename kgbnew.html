@@ -483,14 +483,13 @@ MASA JABATAN       : ${masaKerja}
 
 [DATA KELENGKAPAN DIRI]
 --------------------------------------------------
-NO KTA TNI/PNS     : ${agent[no_kta_tni/pns] || "-"}
-DI KELUARKAN TGL   : ${agent[di_keluarkan_tgl] || "-"}
-NO NIK             : ${agent[no_nik] || "-"}
-NO SIM A UMUM      : ${agent[no_sim_A_umum] || "-"}
-NO SIM C UMUM      : ${agent[no_sim_c_umum] || "-"}
-NO SIM A TNI       : ${agent[no_sim_a_tni] || "-"}
-NO SIM C TNI       : ${agent[no_sim_c_tni] || "-"}
-KGB AKAN DATANG    : ${masaKGB}
+NO KTA TNI/PNS     : ${agent["no_kta_tni/pns"] || "-"}
+DI KELUARKAN TGL   : ${agent["di_keluarkan_tgl"] || "-"}
+NO NIK             : ${agent["no_nik"] || "-"}
+NO SIM A UMUM      : ${agent["no_sim_A_umum"] || "-"}
+NO SIM C UMUM      : ${agent["no_sim_c_umum"] || "-"}
+NO SIM A TNI       : ${agent["no_sim_a_tni"] || "-"}
+NO SIM C TNI       : ${agent["no_sim_c_tni"] || "-"}
 
 
 
@@ -546,6 +545,7 @@ searchInput.addEventListener("keydown", e=>{
 // ======== evolutionismyrevolution/BT5Python ========
 </body>
 </html>
+
 
 
 
