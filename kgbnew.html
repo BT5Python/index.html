@@ -508,31 +508,17 @@ Retrieved on: ${new Date().toLocaleString()}
         typeWriter(dossierEl, dossier, agent, () => {
             const docContainer = document.createElement("div");
             docContainer.className = "doc-buttons";
-            const mergedLink =
-              agent["Link to merged Doc - PEMUKTAHIRAN DATA"] ||
-              agent["Link to merged doc - PEMUKTAHIRAN DATA"] ||
-              agent["link_to_merged_doc"] ||
-              agent["merged_doc_link"] ||
-              agent["Pemuktahiran Data"] ||
-              agent["pemuktahiran_data"] ||
-              "";
+            const mergedLink = agent["Link to merged Doc - PEMUKTAHIRAN DATA"];
 
+// Otomatis ubah link Google Drive “view” jadi “uc?export=download”
 let pdfLink = "#";
-
 if (mergedLink) {
-  // Tangani berbagai format Google Drive link
-  if (mergedLink.includes("drive.google.com")) {
-    // Format /file/d/ atau ?id=
-    const idMatch = mergedLink.match(/(?:\/d\/|id=)([-\w]{25,})/);
-    if (idMatch && idMatch[1]) {
-      pdfLink = `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
+    if (mergedLink.includes("drive.google.com")) {
+        const match = mergedLink.match(/[-\w]{25,}/); // ambil ID file
+        if (match) pdfLink = `https://drive.google.com/uc?export=view&id=${match[0]}`;
     } else {
-      pdfLink = mergedLink;
+        pdfLink = mergedLink; // kalau bukan drive link, pakai langsung
     }
-  } else {
-    // Kalau bukan Drive, langsung pakai
-    pdfLink = mergedLink;
-  }
 }
 
 const docs = [
@@ -570,7 +556,6 @@ searchInput.addEventListener("keydown", e=>{
 </body>
 </html>
 evolutionismyrevolution/BT5Python
-
 
 
 
