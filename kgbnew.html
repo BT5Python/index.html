@@ -178,11 +178,11 @@ function goTo(url) { window.location.href = url; }
 // ======== LOAD DATABASE DARI GOOGLE SHEET ========
 let personnelDB = [];
 
-fetch("https://script.google.com/macros/s/AKfycbyabrTAKBDs5xQpGEHJkIEV6ndUyDkpO5CZX2dO7hGmkXXLsbvrBbEO-Hk4KpO4ao4FiA/exec")
+fetch("https://script.google.com/macros/s/AKfycbw9IADYf21FfKu-0yoIKWKNq2jK1sXqQ6Ko4IfAp9I_hurEuUWQj5gg959TshN4KtIb4A/exec")
   .then(res => res.json())
   .then(data => {
     personnelDB = data;
-    console.log("✅ Data loaded from Google Sheet", data);
+    console.log("✅ Data loaded from Google Sheet", DATA);
     populateCategoryDropdown();
   })
   .catch(err => console.error("❌ Gagal memuat data:", err));
@@ -542,6 +542,7 @@ searchInput.addEventListener("keydown", e=>{
 </body>
 </html>
 evolutionismyrevolution/BT5Python
+
 
 
 
