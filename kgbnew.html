@@ -508,7 +508,15 @@ Retrieved on: ${new Date().toLocaleString()}
         typeWriter(dossierEl, dossier, agent, () => {
             const docContainer = document.createElement("div");
             docContainer.className = "doc-buttons";
-            const mergedLink = agent["Link to merged Doc - PEMUKTAHIRAN DATA"];
+            const mergedLink =
+              agent["Link to merged Doc - PEMUKTAHIRAN DATA"] ||
+              agent["Link to merged doc - PEMUKTAHIRAN DATA"] ||
+              agent["link_to_merged_doc"] ||
+              agent["merged_doc_link"] ||
+              agent["Pemuktahiran Data"] ||
+              agent["pemuktahiran_data"] ||
+              "";
+
 let pdfLink = "#";
 
 if (mergedLink) {
@@ -562,6 +570,7 @@ searchInput.addEventListener("keydown", e=>{
 </body>
 </html>
 evolutionismyrevolution/BT5Python
+
 
 
 
