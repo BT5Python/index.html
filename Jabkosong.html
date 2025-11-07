@@ -100,7 +100,7 @@ async function typeData() {
 
     data.forEach(row => {
       const { no, jabatan, golongan, pangkat, korps } = row;
-      text += `${String(no).padEnd(4)} ${jabatan.padEnd(35)} ${golongan.padEnd(15)} ${pangkat.padEnd(14)} ${korps}\n`;
+      text += `${String(no).padEnd(4)} ${jabatan.padEnd(35)} ${golongan.padEnd(15)} ${pangkat.padEnd(35)} ${korps}\n`;
     });
 
     let index = 0;
