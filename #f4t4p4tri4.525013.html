@@ -119,6 +119,13 @@ header {
     text-align: center;
     margin-top: 100px;
 }
+
+/* NEW STYLES FOR IMAGE ABOVE LOGIN */
+#login-screen img {
+    width: 150px; /* Adjust as needed */
+    margin-bottom: 20px; /* Space between the image and the login form */
+    border-radius: 10px;
+}
 </style>
 </head>
 <body>
@@ -126,6 +133,9 @@ header {
 
 <!-- ===== LOGIN LAYER ===== -->
 <div id="login-screen">
+    <!-- Add your image here -->
+    <img src="path_to_your_image.jpg" alt="Logo">
+    
     <div id="login-box">
         <h2 style="color:#FFFF00;">LOGIN DATABASE</h2>
         <input type="text" id="username" placeholder="Username">
@@ -166,4 +176,3 @@ function login() {
 </script>
 </body>
 </html>
-
