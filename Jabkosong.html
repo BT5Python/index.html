@@ -23,6 +23,7 @@ pre {
 @keyframes blinkCursor {
     50% { border-color: transparent; }
 }
+/* efek kedip merah */
 .blink-red {
     color: #ff0000;
     animation: blinkRed 0.6s infinite;
@@ -63,7 +64,7 @@ NO   JABATAN KOSONG             GOL.JAB   PANGKAT          KORPS
 
 const terminal = document.getElementById("terminal");
 let index = 0;
-let step = 0; // 0=sebelum RAHASIA, 1=mengetik RAHASIA, 2=sesudahnya
+let step = 0; // 0 = sebelum RAHASIA, 1 = mengetik RAHASIA, 2 = lanjut teks berikutnya
 
 function type() {
   if (step === 0) {
@@ -87,20 +88,20 @@ function type() {
       index++;
       setTimeout(type, 2);
     } else {
-      // Mulai kedip permanen
+      // Begitu selesai ngetik langsung kedip terus
       rahasiaSpan.classList.add("blink-red");
       step = 2;
       index = 0;
-      setTimeout(type, 150);
+      setTimeout(type, 2);
     }
   } 
   else if (step === 2) {
     if (index < textAfter.length) {
-      terminal.textContent += textAfter.charAt(index);
+      terminal.innerHTML += textAfter.charAt(index);
       index++;
       setTimeout(type, 2);
     } else {
-      terminal.classList.remove("typing"); // hentikan cursor, tapi RAHASIA tetap kedip
+      terminal.classList.remove("typing"); // stop kursor
     }
   }
 }
