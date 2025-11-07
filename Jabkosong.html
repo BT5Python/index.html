@@ -25,11 +25,11 @@ pre {
 }
 .blink-red {
     color: #ff0000;
-    animation: blinkRed 0.7s infinite;
+    animation: blinkRed 0.6s infinite;
 }
 @keyframes blinkRed {
     0%, 100% { color: #ff0000; }
-    50% { color: #660000; }
+    50% { color: #440000; }
 }
 </style>
 </head>
@@ -38,7 +38,6 @@ pre {
 <pre id="terminal" class="typing"></pre>
 
 <script>
-// Teks dasar, tanpa kata RAHASIA (nanti ditambahkan manual pas waktunya)
 const textBefore = `
 ====================================================
 | FILE: PERSONEL PUSLAT KODIKLATAU                |
@@ -64,14 +63,14 @@ NO   JABATAN KOSONG             GOL.JAB   PANGKAT          KORPS
 
 const terminal = document.getElementById("terminal");
 let index = 0;
-let step = 0; // 0 = sebelum RAHASIA, 1 = mengetik RAHASIA, 2 = setelahnya
+let step = 0; // 0=sebelum RAHASIA, 1=mengetik RAHASIA, 2=sesudahnya
 
 function type() {
   if (step === 0) {
     if (index < textBefore.length) {
       terminal.textContent += textBefore.charAt(index);
       index++;
-      setTimeout(type, 2);
+      setTimeout(type, 2); // cepat
     } else {
       step = 1;
       index = 0;
@@ -88,10 +87,11 @@ function type() {
       index++;
       setTimeout(type, 2);
     } else {
-      rahasiaSpan.classList.add("blink-red"); // mulai kedip merah
+      // Mulai kedip permanen
+      rahasiaSpan.classList.add("blink-red");
       step = 2;
       index = 0;
-      setTimeout(type, 200);
+      setTimeout(type, 150);
     }
   } 
   else if (step === 2) {
@@ -100,7 +100,7 @@ function type() {
       index++;
       setTimeout(type, 2);
     } else {
-      terminal.classList.remove("typing");
+      terminal.classList.remove("typing"); // hentikan cursor, tapi RAHASIA tetap kedip
     }
   }
 }
