@@ -49,7 +49,86 @@ const text = `
 -------------------------------------------------------------------------------
 NO   JABATAN KOSONG                GOL.JAB        PANGKAT               KORPS
 -------------------------------------------------------------------------------
-1    Kasi Data & Dokumentasi       IV/a           Pembina               Adm
+1    <!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jabatan Kosong | PUSLAT KODIKLATAU</title>
+<style>
+body {
+    background-color: black;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    padding: 20px;
+    font-size: 12px; /* ukuran huruf kecil */
+}
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.red {
+    color: #ff0000;
+}
+.yellow {
+    color: #ffff00;
+}
+.typing {
+    border-right: 2px solid #00ff00;
+    white-space: pre-wrap;
+    overflow: hidden;
+    animation: blink 0.7s infinite;
+}
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+</style>
+</head>
+<body>
+
+<pre id="terminal" class="typing"></pre>
+
+<script>
+// isi teks yang akan "diketik"
+const text = `
+====================================================
+| FILE: PERSONEL PUSLAT KODIKLATAU                |
+| CLASSIFICATION: RAHASIA                         |
+====================================================
+
+[DAFTAR JABATAN KOSONG]
+--------------------------------------------------------------------------------------------
+NO   JABATAN KOSONG                    GOL.JAB            PANGKAT                    KORPS
+--------------------------------------------------------------------------------------------
+1    Kadisopslat                       IV/a               Pembina                    Adm
+2    Kaur Personel                     III/d              Penata Tk.I                Pers
+3    Analis Intelijen                  III/c              Penata                     Intel
+4    Kasi Keuangan                     IV/a               Pembina                    Keu
+5    Operator Data Satuan              III/b              Penata Muda Tk.I           Adm
+--------------------------------------------------------------------------------------------
+* Data jabatan kosong diperbarui per 08/11/2025.
+* Informasi hanya untuk lingkungan PUSLAT KODIKLATAU.
+--------------------------------------------------------------------------------------------
+`;
+
+const terminal = document.getElementById("terminal");
+let index = 0;
+
+function type() {
+  if (index < text.length) {
+    terminal.textContent += text.charAt(index);
+    index++;
+    setTimeout(type, 2); // ⚡ lebih cepat (2ms per huruf)
+  } else {
+    terminal.classList.remove("typing"); // hentikan kursor di akhir
+  }
+}
+
+type();
+</script>
+</body>
+</html>
+       IV/a           Pembina               Adm
 2    Kaur Personel                 III/d          Penata Tk.I           Pers
 3    Analis Intelijen              III/c          Penata                Intel
 4    Kasi Keuangan                 IV/a           Pembina               Keu
