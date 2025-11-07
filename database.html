@@ -21,28 +21,43 @@ header{background-color:black;padding:20px 0 10px;text-align:center;line-height:
 }
 .header-buttons button:hover{background-color:#00FF00;color:black;}
 .main-container{display:flex;flex:1;border-top:1px solid #00FF00;}
-.search-panel{width:35%;padding:20px;display:flex;flex-direction:column;border-right:2px solid #00FF00;}
-.search-panel h2{text-align:center;margin-bottom:20px;}
-input,select{
-    background:transparent;border:1px solid #00FF00;color:#00FF00;
-    padding:10px;margin-bottom:15px;font-size:16px;border-radius:4px;outline:none;
-}
-.info-text{font-size:14px;text-align:center;margin-top:10px;}
-#member-buttons{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+/* Menghapus kolom search panel yang sebelumnya */
+.search-panel{display:none;}
 .output-panel{flex:1;padding:20px;overflow-y:auto;border-left:2px solid #00FF00;}
-.agent-profile{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;}
-.agent-profile pre{flex:1;white-space:pre-wrap;line-height:1.4;}
-.agent-profile img{
-    width:135px;height:185px;object-fit:cover;
-    border:2px solid #00FF00;border-radius:8px;
-    display:none;opacity:0;transition:opacity 1.2s ease-in-out;
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
-button{
-    background:transparent;border:1px solid #00FF00;color:#00FF00;
-    padding:8px 12px;cursor:pointer;border-radius:4px;
-    font-family:'Courier New',monospace;transition:background .3s,color .3s;
+.slider {
+    display: flex;
+    transition: transform 0.5s ease;
 }
-button:hover{background-color:#00FF00;color:black;}
+.slider img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.slider-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+.slider-nav button {
+    background: rgba(0, 255, 0, 0.7);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+.slider-nav button:hover {
+    background: rgba(0, 255, 0, 1);
+}
+
 .recording-indicator{
     position:fixed;top:10px;left:15px;font-size:20px;font-weight:bold;
     color:#FF0000;animation:blinkRecording 1s infinite;z-index:9999;
@@ -91,21 +106,22 @@ button:hover{background-color:#00FF00;color:black;}
 </header>
 
 <div class="main-container">
-  <div class="search-panel">
-      <h2>Puslat Kodiklatau</h2>
-      <label for="category-filter">Filter By Category:</label>
-      <select id="category-filter"><option value="">-- All Categories --</option></select>
-      <label for="search">Enter the Unit Keyword / Full Name</label>
-      <input type="text" id="search" placeholder="">
-      <p class="info-text">Select a category and type a keyword, then press ENTER</p>
-      <div id="member-buttons"></div>
-  </div>
-
-  <div class="output-panel" id="output">
-      <div class="agent-profile" id="agent-container">
-          <pre id="agent-dossier">Biodata will appear after clicking the member button</pre>
-          <img id="agent-photo" src="" alt="Foto Personel">
-      </div>
+  <!-- Kolom pencarian sudah dihapus -->
+  
+  <!-- Slider Foto di panel output -->
+  <div class="output-panel">
+    <div class="slider-container">
+        <div class="slider" id="slider">
+            <img src="foto1.jpg" alt="Slide 1">
+            <img src="foto2.jpg" alt="Slide 2">
+            <img src="foto3.jpg" alt="Slide 3">
+            <!-- Tambahkan lebih banyak gambar sesuai kebutuhan -->
+        </div>
+        <div class="slider-nav">
+            <button onclick="prevSlide()">❮</button>
+            <button onclick="nextSlide()">❯</button>
+        </div>
+    </div>
   </div>
 </div>
 
@@ -122,6 +138,31 @@ button:hover{background-color:#00FF00;color:black;}
 </div>
 
 <script>
+// Fungsi navigasi slider
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slider img');
+
+function showSlide(index) {
+    const slider = document.getElementById('slider');
+    const totalSlides = slides.length;
+    if (index >= totalSlides) currentSlide = 0;
+    else if (index < 0) currentSlide = totalSlides - 1;
+    else currentSlide = index;
+
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+}
+
+function nextSlide() {
+    showSlide(currentSlide + 1);
+}
+
+function prevSlide() {
+    showSlide(currentSlide - 1);
+}
+
+// Auto slide
+setInterval(nextSlide, 5000); // Ganti gambar setiap 5 detik
+
 function goTo(url){window.location.href=url;}
 
 // === Password popup ===
