@@ -6,31 +6,30 @@
 <title>Jabatan Kosong | PUSLAT KODIKLATAU</title>
 <style>
 body {
-    background-color: black;
-    color: #00ff00;
-    font-family: 'Courier New', monospace;
-    padding: 20px;
-    font-size: 12px;
+  background-color: black;
+  color: #00ff00;
+  font-family: "Courier New", monospace;
+  padding: 20px;
+  font-size: 12px;
 }
 pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 .typing {
-    border-right: 2px solid #00ff00;
-    animation: blinkCursor 0.7s infinite;
+  border-right: 2px solid #00ff00;
+  animation: blinkCursor 0.7s infinite;
 }
 @keyframes blinkCursor {
-    50% { border-color: transparent; }
+  50% { border-color: transparent; }
 }
-/* efek kedip merah */
 .blink-red {
-    color: #ff0000;
-    animation: blinkRed 0.6s infinite;
+  color: #ff0000;
+  animation: blinkRed 0.5s infinite;
 }
 @keyframes blinkRed {
-    0%, 100% { color: #ff0000; }
-    50% { color: #440000; }
+  0%, 100% { color: #ff0000; }
+  50% { color: #400000; }
 }
 </style>
 </head>
@@ -63,45 +62,45 @@ NO   JABATAN KOSONG             GOL.JAB   PANGKAT          KORPS
 `;
 
 const terminal = document.getElementById("terminal");
-let index = 0;
-let step = 0; // 0 = sebelum RAHASIA, 1 = mengetik RAHASIA, 2 = lanjut teks berikutnya
+let i = 0;
+let step = 0;
+let rahasiaSpan;
 
 function type() {
   if (step === 0) {
-    if (index < textBefore.length) {
-      terminal.textContent += textBefore.charAt(index);
-      index++;
-      setTimeout(type, 2); // cepat
+    if (i < textBefore.length) {
+      terminal.textContent += textBefore.charAt(i);
+      i++;
+      setTimeout(type, 2);
     } else {
       step = 1;
-      index = 0;
-      const span = document.createElement("span");
-      span.id = "rahasia";
-      terminal.appendChild(span);
+      i = 0;
+      rahasiaSpan = document.createElement("span");
+      rahasiaSpan.id = "rahasia";
+      terminal.appendChild(rahasiaSpan);
       type();
     }
   } 
   else if (step === 1) {
-    const rahasiaSpan = document.getElementById("rahasia");
-    if (index < rahasiaWord.length) {
-      rahasiaSpan.textContent += rahasiaWord.charAt(index);
-      index++;
+    if (i < rahasiaWord.length) {
+      rahasiaSpan.textContent += rahasiaWord.charAt(i);
+      i++;
+      // pas huruf terakhir diketik, langsung aktif kedip (tanpa jeda)
+      if (i === rahasiaWord.length) rahasiaSpan.classList.add("blink-red");
       setTimeout(type, 2);
     } else {
-      // Begitu selesai ngetik langsung kedip terus
-      rahasiaSpan.classList.add("blink-red");
       step = 2;
-      index = 0;
-      setTimeout(type, 2);
+      i = 0;
+      type();
     }
   } 
   else if (step === 2) {
-    if (index < textAfter.length) {
-      terminal.innerHTML += textAfter.charAt(index);
-      index++;
+    if (i < textAfter.length) {
+      terminal.innerHTML += textAfter.charAt(i);
+      i++;
       setTimeout(type, 2);
     } else {
-      terminal.classList.remove("typing"); // stop kursor
+      terminal.classList.remove("typing");
     }
   }
 }
