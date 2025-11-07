@@ -6,105 +6,107 @@
 <title>Jabatan Kosong | PUSLAT KODIKLATAU</title>
 <style>
 body {
-    background-color: black;
-    color: #00ff00;
-    font-family: 'Courier New', monospace;
-    padding: 20px;
+  background-color: black;
+  color: #00ff00;
+  font-family: "Courier New", monospace;
+  padding: 20px;
+  font-size: 12px;
 }
 pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
-.red {
-    color: #ff0000;
+.typing {
+  border-right: 2px solid #00ff00;
+  animation: blinkCursor 0.7s infinite;
 }
-.yellow {
-    color: #ffff00;
+@keyframes blinkCursor {
+  50% { border-color: transparent; }
 }
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+/* Efek kedip merah cepat */
+.blink-red {
+  color: #ff0000;
+  animation: blinkRed 0.45s infinite;
 }
-th, td {
-    border: 1px solid #00ff00;
-    padding: 4px 8px;
-    text-align: left;
-}
-th {
-    background-color: #003300;
-    color: #00ff00;
-}
-td {
-    background-color: #000000;
+@keyframes blinkRed {
+  0%, 100% { color: #ff0000; }
+  50% { color: #330000; }
 }
 </style>
 </head>
 <body>
-<pre>
+
+<pre id="terminal" class="typing"></pre>
+
+<script>
+const textBefore = `
 ====================================================
 | FILE: PERSONEL PUSLAT KODIKLATAU                |
-| CLASSIFICATION: <span class="red">RAHASIA</span>                      |
+| CLASSIFICATION: `;
+const rahasiaWord = "RAHASIA";
+const textAfter = `
 ====================================================
 
-<span class="yellow">[DAFTAR JABATAN KOSONG]</span>
+[DAFTAR JABATAN KOSONG]
 ----------------------------------------------------
-</pre>
-
-<table>
-  <thead>
-    <tr>
-      <th>NO</th>
-      <th>JABATAN KOSONG</th>
-      <th>GOL. JAB</th>
-      <th>PANGKAT</th>
-      <th>KORPS</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>Kasi Data & Dokumentasi</td>
-      <td>IV/a</td>
-      <td>Pembina</td>
-      <td>Adm</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Kaur Personel</td>
-      <td>III/d</td>
-      <td>Penata Tk.I</td>
-      <td>Pers</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Analis Intelijen</td>
-      <td>III/c</td>
-      <td>Penata</td>
-      <td>Intel</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>Kasi Keuangan</td>
-      <td>IV/a</td>
-      <td>Pembina</td>
-      <td>Keu</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Operator Data Satuan</td>
-      <td>III/b</td>
-      <td>Penata Muda Tk.I</td>
-      <td>Adm</td>
-    </tr>
-  </tbody>
-</table>
-
-<pre>
+NO   JABATAN KOSONG             GOL.JAB   PANGKAT          KORPS
+----------------------------------------------------
+1    Kasi Data & Dokumentasi     IV/a      Pembina          Adm
+2    Kaur Personel               III/d     Penata Tk.I      Pers
+3    Analis Intelijen            III/c     Penata           Intel
+4    Kasi Keuangan               IV/a      Pembina          Keu
+5    Operator Data Satuan        III/b     Penata Muda Tk.I Adm
 ----------------------------------------------------
 * Data jabatan kosong diperbarui per 08/11/2025.
 * Informasi hanya untuk lingkungan PUSLAT KODIKLATAU.
 ----------------------------------------------------
-</pre>
+`;
+
+const terminal = document.getElementById("terminal");
+let i = 0;
+let step = 0;
+let rahasiaSpan;
+
+function type() {
+  if (step === 0) {
+    if (i < textBefore.length) {
+      terminal.textContent += textBefore.charAt(i);
+      i++;
+      setTimeout(type, 2);
+    } else {
+      step = 1;
+      i = 0;
+      rahasiaSpan = document.createElement("span");
+      rahasiaSpan.id = "rahasia";
+      terminal.appendChild(rahasiaSpan);
+      type();
+    }
+  } 
+  else if (step === 1) {
+    if (i < rahasiaWord.length) {
+      rahasiaSpan.textContent += rahasiaWord.charAt(i);
+      // Begitu huruf pertama keluar, langsung aktifkan kedip merah
+      if (i === 0) rahasiaSpan.classList.add("blink-red");
+      i++;
+      setTimeout(type, 2);
+    } else {
+      step = 2;
+      i = 0;
+      type();
+    }
+  } 
+  else if (step === 2) {
+    if (i < textAfter.length) {
+      terminal.innerHTML += textAfter.charAt(i);
+      i++;
+      setTimeout(type, 2);
+    } else {
+      terminal.classList.remove("typing");
+    }
+  }
+}
+
+type();
+</script>
 </body>
 </html>
