@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>DAFTAR JABATAN KOSONG - PUSLAT KODIKLATAU</title>
+<style>
+body {
+    background-color: black;
+    color: #00FF00;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}
+h2, h3 {
+    text-align: center;
+    color: #00FF00;
+    margin: 2px 0;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #00FF00;
+    border: 1px solid #00FF00;
+    margin-top: 10px;
+}
+th, td {
+    border: 1px solid #00FF00;
+    padding: 2px 5px;
+    text-align: center;
+}
+th {
+    background-color: #001a00;
+}
+td {
+    background-color: #000000;
+}
+.header {
+    text-align: left;
+    margin-left: 20px;
+    margin-bottom: -10px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <p><strong>KODIKLATAU</strong><br>
+    <strong>PUSLAT</strong></p>
+</div>
+
+<h2>DAFTAR JABATAN KOSONG</h2>
+<h3>PUSLAT KODIKLATAU PERIODE OKTOBER 2025</h3>
+
+<table>
+    <tr>
+        <th>NO</th>
+        <th>JABATAN KOSONG</th>
+        <th>GOL JAB</th>
+        <th>PANGKAT</th>
+        <th>KORPS</th>
+    </tr>
+    <tr><td>1</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>2</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>3</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>4</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>5</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>6</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>7</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>8</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>9</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>10</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>11</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>12</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>13</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>14</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>15</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>16</td><td></td><td></td><td></td><td></td></tr>
+</table>
+
+</body>
+</html>
