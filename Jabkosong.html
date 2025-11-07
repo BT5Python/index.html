@@ -15,6 +15,7 @@ body {
 pre {
   white-space: pre-wrap;
   word-wrap: break-word;
+  letter-spacing: 1px; /* jarak antar huruf sedikit lebih renggang */
 }
 .typing {
   border-right: 2px solid #00ff00;
@@ -23,7 +24,6 @@ pre {
 @keyframes blinkCursor {
   50% { border-color: transparent; }
 }
-/* Efek kedip merah cepat */
 .blink-red {
   color: #ff0000;
   animation: blinkRed 0.45s infinite;
@@ -31,6 +31,10 @@ pre {
 @keyframes blinkRed {
   0%, 100% { color: #ff0000; }
   50% { color: #330000; }
+}
+.yellow {
+  color: #ffff00;
+  font-weight: bold;
 }
 </style>
 </head>
@@ -44,22 +48,24 @@ const textBefore = `
 | FILE: PERSONEL PUSLAT KODIKLATAU                |
 | CLASSIFICATION: `;
 const rahasiaWord = "RAHASIA";
-const textAfter = `
+const textAfterTop = `
 ====================================================
 
-[DAFTAR JABATAN KOSONG]
-----------------------------------------------------
-NO   JABATAN KOSONG             GOL.JAB   PANGKAT          KORPS
-----------------------------------------------------
-1    Kasi Data & Dokumentasi     IV/a      Pembina          Adm
-2    Kaur Personel               III/d     Penata Tk.I      Pers
-3    Analis Intelijen            III/c     Penata           Intel
-4    Kasi Keuangan               IV/a      Pembina          Keu
-5    Operator Data Satuan        III/b     Penata Muda Tk.I Adm
-----------------------------------------------------
+`;
+const titleLine = `<span class="yellow">[DAFTAR JABATAN KOSONG]</span>\n`;
+const tableContent = `
+------------------------------------------------------------
+NO    JABATAN KOSONG                 GOL.JAB     PANGKAT           KORPS
+------------------------------------------------------------
+1     Kasi Data & Dokumentasi        IV/a        Pembina           Adm
+2     Kaur Personel                  III/d       Penata Tk.I        Pers
+3     Analis Intelijen               III/c       Penata             Intel
+4     Kasi Keuangan                  IV/a        Pembina            Keu
+5     Operator Data Satuan           III/b       Penata Muda Tk.I   Adm
+------------------------------------------------------------
 * Data jabatan kosong diperbarui per 08/11/2025.
 * Informasi hanya untuk lingkungan PUSLAT KODIKLATAU.
-----------------------------------------------------
+------------------------------------------------------------
 `;
 
 const terminal = document.getElementById("terminal");
@@ -85,8 +91,7 @@ function type() {
   else if (step === 1) {
     if (i < rahasiaWord.length) {
       rahasiaSpan.textContent += rahasiaWord.charAt(i);
-      // Begitu huruf pertama keluar, langsung aktifkan kedip merah
-      if (i === 0) rahasiaSpan.classList.add("blink-red");
+      if (i === 0) rahasiaSpan.classList.add("blink-red"); // langsung kedip pas "R" muncul
       i++;
       setTimeout(type, 2);
     } else {
@@ -96,8 +101,21 @@ function type() {
     }
   } 
   else if (step === 2) {
-    if (i < textAfter.length) {
-      terminal.innerHTML += textAfter.charAt(i);
+    if (i < textAfterTop.length) {
+      terminal.innerHTML += textAfterTop.charAt(i);
+      i++;
+      setTimeout(type, 2);
+    } else {
+      // tambahkan judul kuning
+      terminal.innerHTML += titleLine;
+      step = 3;
+      i = 0;
+      type();
+    }
+  }
+  else if (step === 3) {
+    if (i < tableContent.length) {
+      terminal.innerHTML += tableContent.charAt(i);
       i++;
       setTimeout(type, 2);
     } else {
