@@ -59,7 +59,7 @@ const terminal = document.getElementById("terminal");
 let i = 0, step = 0, rahasiaSpan;
 
 async function fetchData() {
-  const url = "https://script.google.com/macros/s/AKfycbyexzcrZz-eiXwvoYrhpqncUTvN8H1ri-yr3zmmhVcHa4nIFd7p--bfvZY4ZJb9zkqb/exec"; // Ganti dengan URL Apps Script kamu
+  const url = "https://script.google.com/macros/s/AKfycbyexzcrZz-eiXwvoYrhpqncUTvN8H1ri-yr3zmmhVcHa4nIFd7p--bfvZY4ZJb9zkqb/exec"; 
   const res = await fetch(url);
   return res.json();
 }
@@ -106,7 +106,13 @@ async function type() {
     const data = await fetchData();
     data.forEach((row, idx) => {
       const line = `${row.no.toString().padEnd(5)}${row.jabatan.padEnd(30)}${row.golongan.padEnd(10)}${row.pangkat.padEnd(25)}${row.korps}\n`;
-      terminal.innerHTML += line;
+      
+      // 🔹 Tambahan: Jika baris mengandung "PNS", ubah warnanya jadi kuning
+      if (line.toUpperCase().includes("PNS")) {
+        terminal.innerHTML += `<span class="yellow">${line}</span>`;
+      } else {
+        terminal.innerHTML += line;
+      }
     });
     terminal.innerHTML += footerText;
     terminal.classList.remove("typing");
