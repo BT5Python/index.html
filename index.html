@@ -157,7 +157,7 @@ function login() {
     if (user === validUser && pass === validPass) {
         document.getElementById("agent-dossier").textContent = ">>> Access granted...\n>>> Redirecting to secure module...";
         setTimeout(() => {
-            window.location.href = "kgbnew.html"; // ⬅️ redirect halaman
+            window.location.href = "database.html"; // ⬅️ redirect halaman
         }, 1500);
     } else {
         errorMsg.textContent = "❌ Akses ditolak. Username/Password salah.";
@@ -166,3 +166,4 @@ function login() {
 </script>
 </body>
 </html>
+
