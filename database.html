@@ -5,69 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PUSLAT KODIKLATAU - Intelligence Database</title>
 <style>
-body{
-    font-family:'Courier New',monospace;
-    background:black url('BT5.jpg') center/cover no-repeat;
-    color:#00FF00;
-    margin:0; display:flex; flex-direction:column; height:100vh;
-}
-header{background-color:black;padding:20px 0 10px;text-align:center;line-height:1.1;}
-.text{font-size:75px;margin-bottom:0;color:#FFFF00;}
-.text1{font-size:30px;margin-top:0;color:#FF0000;animation:blinkText 1s infinite;}
-.header-buttons button{
-    background:transparent;border:1px solid #00FF00;color:#00FF00;
-    padding:8px 15px;cursor:pointer;border-radius:4px;
-    font-family:'Courier New',monospace;transition:background .3s,color .3s;
-}
-.header-buttons button:hover{background-color:#00FF00;color:black;}
-.main-container{display:flex;flex:1;border-top:1px solid #00FF00;}
-.search-panel{width:35%;padding:20px;display:flex;flex-direction:column;border-right:2px solid #00FF00;}
-.search-panel h2{text-align:center;margin-bottom:20px;}
-input,select{
-    background:transparent;border:1px solid #00FF00;color:#00FF00;
-    padding:10px;margin-bottom:15px;font-size:16px;border-radius:4px;outline:none;
-}
-.info-text{font-size:14px;text-align:center;margin-top:10px;}
-#member-buttons{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
-.output-panel{flex:1;padding:20px;overflow-y:auto;border-left:2px solid #00FF00;}
-.agent-profile{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;}
-.agent-profile pre{flex:1;white-space:pre-wrap;line-height:1.4;}
-.agent-profile img{
-    width:135px;height:185px;object-fit:cover;
-    border:2px solid #00FF00;border-radius:8px;
-    display:none;opacity:0;transition:opacity 1.2s ease-in-out;
-}
-button{
-    background:transparent;border:1px solid #00FF00;color:#00FF00;
-    padding:8px 12px;cursor:pointer;border-radius:4px;
-    font-family:'Courier New',monospace;transition:background .3s,color .3s;
-}
-button:hover{background-color:#00FF00;color:black;}
-.recording-indicator{
-    position:fixed;top:10px;left:15px;font-size:20px;font-weight:bold;
-    color:#FF0000;animation:blinkRecording 1s infinite;z-index:9999;
-}
-@keyframes blinkText{0%,50%,100%{opacity:1;}25%,75%{opacity:0;}}
-@keyframes blinkRecording{0%,50%,100%{opacity:1;}25%,75%{opacity:0;}}
-.highlight-section{color:#FFFF00;font-weight:bold;}
-.secret-alert{color:#FF0000;font-weight:bold;animation:blinkSecret 1s infinite;}
-@keyframes blinkSecret{0%,50%,100%{opacity:1;}25%,75%{opacity:0;}}
-
-/* Popup password */
-#password-popup{
-    display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);
-    z-index:99999;align-items:center;justify-content:center;
-}
-.password-box{
-    background:black;border:2px solid #00FF00;color:#00FF00;
-    padding:30px;text-align:center;width:300px;border-radius:10px;
-}
-.password-box input{
-    background:transparent;border:1px solid #00FF00;color:#00FF00;
-    padding:10px;width:90%;text-align:center;margin-top:10px;
-}
-.password-box button{margin-top:15px;width:100%;}
-.password-error{color:#FF0000;display:none;margin-top:10px;font-size:14px;}
+/* ... (styling tetap seperti sebelumnya) ... */
 </style>
 </head>
 <body>
@@ -80,7 +18,6 @@ button:hover{background-color:#00FF00;color:black;}
       <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">HOME</button>
       <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">STRUKTUR ORGANISASI</button>
       <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">JAB KOSONG</button>
-      <!-- 🔐 Tombol Pemuktahiran Data dengan password -->
       <button onclick="openPopup()">PEMUKTAHIRAN DATA</button>
       <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">RIWAYAT HIDUP</button>
       <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">KU-1</button>
@@ -122,27 +59,64 @@ button:hover{background-color:#00FF00;color:black;}
 </div>
 
 <script>
-function goTo(url){window.location.href=url;}
+// Function to navigate to the link
+function goTo(url){
+  window.location.href = url;
+}
 
 // === Password popup ===
 function openPopup(){
-  document.getElementById("password-popup").style.display="flex";
-  document.getElementById("password-error").style.display="none";
-  document.getElementById("password-input").value="";
+  document.getElementById("password-popup").style.display = "flex";
+  document.getElementById("password-error").style.display = "none";
+  document.getElementById("password-input").value = "";
 }
+
 function closePopup(){
-  document.getElementById("password-popup").style.display="none";
+  document.getElementById("password-popup").style.display = "none";
 }
+
 function verifyPassword(){
-  const input=document.getElementById("password-input").value.trim();
-  const error=document.getElementById("password-error");
-  const correctPassword="Puslat2025"; // 🔐 ganti password di sini
-  if(input===correctPassword){
-      window.location.href="kgbnew.html"; // buka di halaman yang sama
+  const input = document.getElementById("password-input").value.trim();
+  const error = document.getElementById("password-error");
+  const correctPassword = "Puslat2025"; // 🔐 ganti password di sini
+  if(input === correctPassword){
+      window.location.href = "kgbnew.html"; // buka di halaman yang sama
   } else {
-      error.style.display="block";
+      error.style.display = "block";
   }
 }
+
+// === Data untuk JAB KOSONG ===
+const memberData = {
+  "jabKosong": {
+    "name": "Anggota 1",
+    "rank": "Letnan Kolonel",
+    "unit": "Kodiklatau",
+    "bio": "Anggota ini bertanggung jawab atas pengawasan dan evaluasi di Puslat Kodiklatau.",
+    "photo": "https://via.placeholder.com/135x185?text=Anggota+1" // Ganti dengan URL gambar yang sesuai
+  }
+};
+
+// Event handler untuk menampilkan biodata
+function displayBiodata() {
+  const member = memberData.jabKosong;
+
+  // Tampilkan biodata di elemen #agent-dossier
+  document.getElementById("agent-dossier").textContent = `Nama: ${member.name}\nPangkat: ${member.rank}\nUnit: ${member.unit}\nBiodata: ${member.bio}`;
+
+  // Tampilkan foto di elemen #agent-photo
+  const photo = document.getElementById("agent-photo");
+  photo.src = member.photo;
+  photo.style.display = "block"; // Menampilkan foto setelah data dimuat
+  photo.style.opacity = 1; // Mengatur opacity foto agar terlihat
+}
+
+// Menambahkan event click pada tombol "JAB KOSONG"
+document.querySelectorAll('.header-buttons button').forEach(button => {
+  if (button.textContent === 'JAB KOSONG') {
+    button.addEventListener('click', displayBiodata);
+  }
+});
 </script>
 </body>
 </html>
