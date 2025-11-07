@@ -12,12 +12,17 @@ body {
   padding: 20px;
   font-size: 12px;
 }
-pre { white-space: pre-wrap; word-wrap: break-word; letter-spacing: 1px; line-height: 1.5; }
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
 .typing {
   border-right: 2px solid #00ff00;
   animation: blinkCursor 0.7s infinite;
 }
-@keyframes blinkCursor { 50% { border-color: transparent; } }
+@keyframes blinkCursor {
+  50% { border-color: transparent; }
+}
 .blink-red {
   color: #ff0000;
   animation: blinkRed 0.45s infinite;
@@ -26,94 +31,98 @@ pre { white-space: pre-wrap; word-wrap: break-word; letter-spacing: 1px; line-he
   0%, 100% { color: #ff0000; }
   50% { color: #330000; }
 }
-.yellow { color: #ffff00; font-weight: bold; }
+.yellow { color: #ffff00; }
 </style>
 </head>
 <body>
+
 <pre id="terminal" class="typing"></pre>
 
 <script>
-const textBefore = `
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx.../exec"; // GANTI dengan URL Web App kamu
+
+const headerText = `
 ====================================================
 | FILE: PERSONEL PUSLAT KODIKLATAU                |
 | CLASSIFICATION: `;
 const rahasiaWord = "RAHASIA";
-const textAfterTop = `
+const footerTop = `
 ====================================================
 
+[DAFTAR <span class='yellow'>JABATAN KOSONG</span>]
+----------------------------------------------------
+NO   JABATAN KOSONG                     GOL.JAB   PANGKAT         KORPS
+----------------------------------------------------
 `;
-const titleLine = `<span class="yellow">[   DAFTAR JABATAN KOSONG   ]</span>\n\n`;
-const tableHeader = `
-------------------------------------------------------------
-NO    JABATAN KOSONG                   GOL.JAB   PANGKAT         KORPS
-------------------------------------------------------------
-`;
-const footerText = `
-------------------------------------------------------------
-* Data jabatan kosong diperbarui otomatis dari Spreadsheet.
-* Informasi hanya untuk lingkungan PUSLAT KODIKLATAU.
-------------------------------------------------------------
+const footerBottom = `
+----------------------------------------------------
+* Data diambil langsung dari Google Sheet.
+* Diperbarui otomatis setiap kali Web App diakses.
+----------------------------------------------------
 `;
 
 const terminal = document.getElementById("terminal");
 let i = 0, step = 0, rahasiaSpan;
 
-async function fetchData() {
-  const url = "https://script.google.com/macros/s/AKfycbyexzcrZz-eiXwvoYrhpqncUTvN8H1ri-yr3zmmhVcHa4nIFd7p--bfvZY4ZJb9zkqb/exec"; // Ganti dengan URL Apps Script kamu
-  const res = await fetch(url);
-  return res.json();
+function typeHeader() {
+  if (i < headerText.length) {
+    terminal.innerHTML += headerText.charAt(i);
+    i++;
+    setTimeout(typeHeader, 2);
+  } else {
+    i = 0;
+    rahasiaSpan = document.createElement("span");
+    rahasiaSpan.id = "rahasia";
+    terminal.appendChild(rahasiaSpan);
+    typeRahasia();
+  }
 }
 
-async function type() {
-  if (step === 0) {
-    if (i < textBefore.length) {
-      terminal.textContent += textBefore.charAt(i);
-      i++;
-      setTimeout(type, 1);
-    } else {
-      step = 1;
-      i = 0;
-      rahasiaSpan = document.createElement("span");
-      rahasiaSpan.id = "rahasia";
-      terminal.appendChild(rahasiaSpan);
-      type();
-    }
-  } else if (step === 1) {
-    if (i < rahasiaWord.length) {
-      rahasiaSpan.textContent += rahasiaWord.charAt(i);
-      if (i === 0) rahasiaSpan.classList.add("blink-red");
-      i++;
-      setTimeout(type, 1);
-    } else {
-      step = 2;
-      i = 0;
-      type();
-    }
-  } else if (step === 2) {
-    if (i < textAfterTop.length) {
-      terminal.innerHTML += textAfterTop.charAt(i);
-      i++;
-      setTimeout(type, 1);
-    } else {
-      terminal.innerHTML += titleLine;
-      step = 3;
-      i = 0;
-      type();
-    }
-  } else if (step === 3) {
-    terminal.innerHTML += tableHeader;
-    step = 4;
-    const data = await fetchData();
-    data.forEach((row, idx) => {
-      const line = `${row.no.toString().padEnd(5)}${row.jabatan.padEnd(30)}${row.golongan.padEnd(10)}${row.pangkat.padEnd(15)}${row.korps}\n`;
-      terminal.innerHTML += line;
+function typeRahasia() {
+  if (i < rahasiaWord.length) {
+    rahasiaSpan.textContent += rahasiaWord.charAt(i);
+    if (i === 0) rahasiaSpan.classList.add("blink-red");
+    i++;
+    setTimeout(typeRahasia, 2);
+  } else {
+    i = 0;
+    typeData();
+  }
+}
+
+async function typeData() {
+  terminal.innerHTML += footerTop;
+
+  try {
+    const res = await fetch(WEB_APP_URL);
+    const data = await res.json();
+    let text = "";
+
+    data.forEach(row => {
+      const { no, jabatan, golongan, pangkat, korps } = row;
+      text += `${String(no).padEnd(4)} ${jabatan.padEnd(35)} ${golongan.padEnd(8)} ${pangkat.padEnd(14)} ${korps}\n`;
     });
-    terminal.innerHTML += footerText;
+
+    let index = 0;
+    function typeLine() {
+      if (index < text.length) {
+        terminal.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeLine, 2);
+      } else {
+        terminal.innerHTML += footerBottom;
+        terminal.classList.remove("typing");
+      }
+    }
+    typeLine();
+  } catch (e) {
+    terminal.innerHTML += "\n[ERROR] Tidak dapat memuat data dari Google Sheet.";
     terminal.classList.remove("typing");
   }
 }
 
-type();
+typeHeader();
 </script>
+
 </body>
 </html>
