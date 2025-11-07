@@ -42,23 +42,23 @@ pre {
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyexzcrZz-eiXwvoYrhpqncUTvN8H1ri-yr3zmmhVcHa4nIFd7p--bfvZY4ZJb9zkqb/exec"; // GANTI dengan URL Web App kamu
 
 const headerText = `
-====================================================
-| FILE: PERSONEL PUSLAT KODIKLATAU                |
+====================================
+| FILE: PERSONEL PUSLAT KODIKLATAU |
 | CLASSIFICATION: `;
 const rahasiaWord = "RAHASIA";
 const footerTop = `
-====================================================
+====================================
 
 [DAFTAR <span class='yellow'>JABATAN KOSONG</span>]
--------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
 NO   JABATAN KOSONG                     GOL.JAB   PANGKAT         KORPS
--------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
 `;
 const footerBottom = `
--------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
 * Data diambil langsung dari Google Sheet.
 * Diperbarui otomatis setiap kali Web App diakses.
---------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
 `;
 
 const terminal = document.getElementById("terminal");
@@ -100,7 +100,7 @@ async function typeData() {
 
     data.forEach(row => {
       const { no, jabatan, golongan, pangkat, korps } = row;
-      text += `${String(no).padEnd(4)} ${jabatan.padEnd(35)} ${golongan.padEnd(15)} ${pangkat.padEnd(30)} ${korps}\n`;
+      text += `${String(no).padEnd(4)} ${jabatan.padEnd(35)} ${golongan.padEnd(15)} ${pangkat.padEnd(25)} ${korps}\n`;
     });
 
     let index = 0;
