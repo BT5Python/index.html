@@ -10,6 +10,7 @@ body {
     color: #00ff00;
     font-family: 'Courier New', monospace;
     padding: 20px;
+    font-size: 12px; /* ukuran huruf kecil */
 }
 pre {
     white-space: pre-wrap;
@@ -21,90 +22,58 @@ pre {
 .yellow {
     color: #ffff00;
 }
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+.typing {
+    border-right: 2px solid #00ff00;
+    white-space: pre-wrap;
+    overflow: hidden;
+    animation: blink 0.7s infinite;
 }
-th, td {
-    border: 1px solid #00ff00;
-    padding: 4px 8px;
-    text-align: left;
-}
-th {
-    background-color: #003300;
-    color: #00ff00;
-}
-td {
-    background-color: #000000;
+@keyframes blink {
+    50% { border-color: transparent; }
 }
 </style>
 </head>
 <body>
-<pre>
+
+<pre id="terminal" class="typing"></pre>
+
+<script>
+// isi teks yang akan "diketik"
+const text = `
 ====================================================
 | FILE: PERSONEL PUSLAT KODIKLATAU                |
-| CLASSIFICATION: <span class="red">RAHASIA</span>                      |
+| CLASSIFICATION: RAHASIA                         |
 ====================================================
 
-<span class="yellow">[DAFTAR JABATAN KOSONG]</span>
+[DAFTAR JABATAN KOSONG]
 ----------------------------------------------------
-</pre>
-
-<table>
-  <thead>
-    <tr>
-      <th>NO</th>
-      <th>JABATAN KOSONG</th>
-      <th>GOL. JAB</th>
-      <th>PANGKAT</th>
-      <th>KORPS</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>Kasi Data & Dokumentasi</td>
-      <td>IV/a</td>
-      <td>Pembina</td>
-      <td>Adm</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Kaur Personel</td>
-      <td>III/d</td>
-      <td>Penata Tk.I</td>
-      <td>Pers</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Analis Intelijen</td>
-      <td>III/c</td>
-      <td>Penata</td>
-      <td>Intel</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>Kasi Keuangan</td>
-      <td>IV/a</td>
-      <td>Pembina</td>
-      <td>Keu</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Operator Data Satuan</td>
-      <td>III/b</td>
-      <td>Penata Muda Tk.I</td>
-      <td>Adm</td>
-    </tr>
-  </tbody>
-</table>
-
-<pre>
+NO   JABATAN KOSONG             GOL.JAB   PANGKAT          KORPS
+----------------------------------------------------
+1    Kasi Data & Dokumentasi     IV/a      Pembina          Adm
+2    Kaur Personel               III/d     Penata Tk.I      Pers
+3    Analis Intelijen            III/c     Penata           Intel
+4    Kasi Keuangan               IV/a      Pembina          Keu
+5    Operator Data Satuan        III/b     Penata Muda Tk.I Adm
 ----------------------------------------------------
 * Data jabatan kosong diperbarui per 08/11/2025.
 * Informasi hanya untuk lingkungan PUSLAT KODIKLATAU.
 ----------------------------------------------------
-</pre>
+`;
+
+const terminal = document.getElementById("terminal");
+let index = 0;
+
+function type() {
+  if (index < text.length) {
+    terminal.textContent += text.charAt(index);
+    index++;
+    setTimeout(type, 2); // ⚡ lebih cepat (2ms per huruf)
+  } else {
+    terminal.classList.remove("typing"); // hentikan kursor di akhir
+  }
+}
+
+type();
+</script>
 </body>
 </html>
