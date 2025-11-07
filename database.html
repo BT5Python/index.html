@@ -6,355 +6,125 @@
 <title>PUSLAT KODIKLATAU - Intelligence Database</title>
 <style>
 body{
-    font-family: 'Courier New', monospace;
-    background-color: black;
-    background-image: url('BT5.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: #00FF00;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    font-family:'Courier New',monospace;
+    background:black url('BT5.jpg') center/cover no-repeat;
+    color:#00FF00;
+    margin:0; display:flex; flex-direction:column; height:100vh;
 }
-header {
-    background-color: black;
-    padding: 20px 0 10px 0;
-    text-align: center;
-    line-height: 1.1;
+header{background-color:black;padding:20px 0 10px;text-align:center;line-height:1.1;}
+.text{font-size:75px;margin-bottom:0;color:#FFFF00;}
+.text1{font-size:30px;margin-top:0;color:#FF0000;animation:blinkText 1s infinite;}
+.header-buttons button{
+    background:transparent;border:1px solid #00FF00;color:#00FF00;
+    padding:8px 15px;cursor:pointer;border-radius:4px;
+    font-family:'Courier New',monospace;transition:background .3s,color .3s;
 }
-.text {
-    font-size: 75px;
-    margin-bottom: 0;
-    color: #FFFF00;
+.header-buttons button:hover{background-color:#00FF00;color:black;}
+.main-container{display:flex;flex:1;border-top:1px solid #00FF00;}
+.search-panel{width:35%;padding:20px;display:flex;flex-direction:column;border-right:2px solid #00FF00;}
+.search-panel h2{text-align:center;margin-bottom:20px;}
+input,select{
+    background:transparent;border:1px solid #00FF00;color:#00FF00;
+    padding:10px;margin-bottom:15px;font-size:16px;border-radius:4px;outline:none;
 }
-.text1 {
-    font-size: 30px;
-    margin-top: 0;
-    color: #FF0000;
-    animation: blinkText 1s infinite;
+.info-text{font-size:14px;text-align:center;margin-top:10px;}
+#member-buttons{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.output-panel{flex:1;padding:20px;overflow-y:auto;border-left:2px solid #00FF00;}
+.agent-profile{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;}
+.agent-profile pre{flex:1;white-space:pre-wrap;line-height:1.4;}
+.agent-profile img{
+    width:135px;height:185px;object-fit:cover;
+    border:2px solid #00FF00;border-radius:8px;
+    display:none;opacity:0;transition:opacity 1.2s ease-in-out;
 }
-.header-buttons button {
-    background: transparent;
-    border: 1px solid #00FF00;
-    color: #00FF00;
-    padding: 8px 15px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    transition: background 0.3s, color 0.3s;
+button{
+    background:transparent;border:1px solid #00FF00;color:#00FF00;
+    padding:8px 12px;cursor:pointer;border-radius:4px;
+    font-family:'Courier New',monospace;transition:background .3s,color .3s;
 }
-.header-buttons button:hover { background-color: #00FF00; color: black; }
-.main-container { display: flex; flex: 1; border-top: 1px solid #00FF00; }
-.search-panel {
-    width: 35%; padding: 20px; display: flex; flex-direction: column;
-    border-right: 2px solid #00FF00;
+button:hover{background-color:#00FF00;color:black;}
+.recording-indicator{
+    position:fixed;top:10px;left:15px;font-size:20px;font-weight:bold;
+    color:#FF0000;animation:blinkRecording 1s infinite;z-index:9999;
 }
-.search-panel h2 { text-align: center; margin-bottom: 20px; }
-input, select {
-    background: transparent; border: 1px solid #00FF00; color: #00FF00;
-    padding: 10px; margin-bottom: 15px; font-size: 16px; border-radius: 4px; outline: none;
-}
-.info-text { font-size: 14px; text-align: center; margin-top: 10px; }
-#member-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-.output-panel { flex: 1; padding: 20px; overflow-y: auto; border-left: 2px solid #00FF00; }
-.agent-profile { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
-.agent-profile pre { flex: 1; white-space: pre-wrap; line-height: 1.4; }
-.agent-profile img {
-    width: 135px; height: 185px; object-fit: cover;
-    border: 2px solid #00FF00; border-radius: 8px;
-    display: none; opacity: 0; transition: opacity 1.2s ease-in-out;
-}
-.doc-buttons { display: flex; gap: 10px; margin-top: 15px; }
-.not-found { color: #FF0000; font-weight: bold; }
+@keyframes blinkText{0%,50%,100%{opacity:1;}25%,75%{opacity:0;}}
+@keyframes blinkRecording{0%,50%,100%{opacity:1;}25%,75%{opacity:0;}}
+.highlight-section{color:#FFFF00;font-weight:bold;}
+.secret-alert{color:#FF0000;font-weight:bold;animation:blinkSecret 1s infinite;}
+@keyframes blinkSecret{0%,50%,100%{opacity:1;}25%,75%{opacity:0;}}
 
-button {
-    background: transparent; border: 1px solid #00FF00; color: #00FF00;
-    padding: 8px 12px; cursor: pointer; border-radius: 4px;
-    font-family: 'Courier New', monospace; transition: background 0.3s, color 0.3s;
+/* Popup password */
+#password-popup{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);
+    z-index:99999;align-items:center;justify-content:center;
 }
-button:hover { background-color: #00FF00; color: black; }
-
-.highlight-section { color: #FFFF00; font-weight: bold; }
-.secret-alert {
-    color: #FF0000;
-    font-weight: bold;
-    animation: blinkSecret 1s infinite;
+.password-box{
+    background:black;border:2px solid #00FF00;color:#00FF00;
+    padding:30px;text-align:center;width:300px;border-radius:10px;
 }
-@keyframes blinkText { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
-@keyframes blinkSecret { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
-
-/* ===== RECORDING TEXT ===== */
-.recording-indicator {
-    position: fixed; top: 10px; left: 15px;
-    font-family: 'Courier New', monospace;
-    font-size: 20px; font-weight: bold; color: #FF0000;
-    animation: blinkRecording 1s infinite; z-index: 9999;
+.password-box input{
+    background:transparent;border:1px solid #00FF00;color:#00FF00;
+    padding:10px;width:90%;text-align:center;margin-top:10px;
 }
-@keyframes blinkRecording { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
-
-/* ===== POPUP PASSWORD ===== */
-#password-popup {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.9);
-    z-index: 99999;
-    align-items: center;
-    justify-content: center;
-}
-.password-box {
-    background-color: black;
-    border: 2px solid #00FF00;
-    padding: 30px;
-    text-align: center;
-    color: #00FF00;
-    width: 300px;
-    border-radius: 10px;
-}
-.password-box input {
-    background: transparent;
-    border: 1px solid #00FF00;
-    color: #00FF00;
-    padding: 10px;
-    width: 90%;
-    margin-top: 10px;
-    text-align: center;
-}
-.password-box button {
-    margin-top: 15px;
-    width: 100%;
-}
-.password-error {
-    color: #FF0000;
-    font-size: 14px;
-    margin-top: 10px;
-    display: none;
-}
+.password-box button{margin-top:15px;width:100%;}
+.password-error{color:#FF0000;display:none;margin-top:10px;font-size:14px;}
 </style>
 </head>
-
 <body>
 <div class="recording-indicator">● RECORDING</div>
 
 <header>
-    <h1 class="text">DATABASE PUSLAT KODIKLATAU</h1>
-    <h1 class="text1">PORTAL MONITORING TERMINAL</h1>
-    <div class="header-buttons">
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">HOME</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">STRUKTUR ORGANISASI</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">JAB KOSONG</button>
-        <button>PEMUKTAHIRAN DATA</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">RIWAYAT HIDUP</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">KU-1</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">RADIOGRAM</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/juknis')">BACK</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/orgas-puslat')">NEXT</button>
-    </div>
+  <h1 class="text">DATABASE PUSLAT KODIKLATAU</h1>
+  <h1 class="text1">PORTAL MONITORING TERMINAL</h1>
+  <div class="header-buttons">
+      <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">HOME</button>
+      <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">STRUKTUR ORGANISASI</button>
+      <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">JAB KOSONG</button>
+      <!-- 🔐 Tombol Pemuktahiran Data dengan password -->
+      <button onclick="openPopup()">PEMUKTAHIRAN DATA</button>
+      <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">RIWAYAT HIDUP</button>
+      <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">KU-1</button>
+      <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">RADIOGRAM</button>
+      <button onclick="goTo('https://kodiklatau.tni-au.mil.id/juknis')">BACK</button>
+      <button onclick="goTo('https://kodiklatau.tni-au.mil.id/orgas-puslat')">NEXT</button>
+  </div>
 </header>
 
 <div class="main-container">
-    <div class="search-panel">
-        <h2>Puslat Kodiklatau</h2>
-        <label for="category-filter">Filter By Category:</label>
-        <select id="category-filter"><option value="">-- All Categories --</option></select>
+  <div class="search-panel">
+      <h2>Puslat Kodiklatau</h2>
+      <label for="category-filter">Filter By Category:</label>
+      <select id="category-filter"><option value="">-- All Categories --</option></select>
+      <label for="search">Enter the Unit Keyword / Full Name</label>
+      <input type="text" id="search" placeholder="">
+      <p class="info-text">Select a category and type a keyword, then press ENTER</p>
+      <div id="member-buttons"></div>
+  </div>
 
-        <label for="search">Enter the Unit Keyword / Full Name</label>
-        <input type="text" id="search" placeholder="">
-        <p class="info-text">Select a category and type a keyword, then press ENTER</p>
-        <div id="member-buttons"></div>
-    </div>
-
-    <div class="output-panel" id="output">
-        <div class="agent-profile" id="agent-container">
-            <pre id="agent-dossier">Biodata will appear after clicking the member button</pre>
-            <img id="agent-photo" src="" alt="Foto Personel">
-        </div>
-    </div>
+  <div class="output-panel" id="output">
+      <div class="agent-profile" id="agent-container">
+          <pre id="agent-dossier">Biodata will appear after clicking the member button</pre>
+          <img id="agent-photo" src="" alt="Foto Personel">
+      </div>
+  </div>
 </div>
 
 <!-- 🔐 POPUP PASSWORD -->
 <div id="password-popup">
   <div class="password-box">
-      <h3>🔒 AKSES PEMUKTAHIRAN DATA</h3>
-      <p>Masukkan password keamanan:</p>
-      <input type="password" id="password-input" placeholder="••••••••">
-      <div class="password-error" id="password-error">❌ Password salah!</div>
-      <button onclick="verifyPassword()">MASUK</button>
-      <button onclick="closePopup()">BATAL</button>
+    <h3>🔒 AKSES PEMUKTAHIRAN DATA</h3>
+    <p>Masukkan password keamanan:</p>
+    <input type="password" id="password-input" placeholder="••••••••">
+    <div class="password-error" id="password-error">❌ Password salah!</div>
+    <button onclick="verifyPassword()">MASUK</button>
+    <button onclick="closePopup()">BATAL</button>
   </div>
 </div>
 
 <script>
-function goTo(url){ window.location.href=url; }
+function goTo(url){window.location.href=url;}
 
-let personnelDB=[];
-
-fetch("https://script.google.com/macros/s/AKfycbyBLR9WNavK1tzFJt6YCtJhKY6Pzoa3Ho9g-G9fvubNc7pAlhuDhzmteIE0w-hqBo6b/exec")
-.then(res=>res.json())
-.then(data=>{
-  personnelDB=data;
-  populateCategoryDropdown();
-})
-.catch(err=>console.error("❌ Gagal memuat data:",err));
-
-function populateCategoryDropdown(){
-  const categorySelect=document.getElementById("category-filter");
-  const uniqueCategories=[...new Set(personnelDB.map(p=>p.kategori).filter(Boolean))];
-  uniqueCategories.sort();
-  uniqueCategories.forEach(cat=>{
-    const opt=document.createElement("option");
-    opt.value=cat; opt.textContent=cat;
-    categorySelect.appendChild(opt);
-  });
-}
-
-const searchInput=document.getElementById("search");
-const dossierEl=document.getElementById("agent-dossier");
-const photoEl=document.getElementById("agent-photo");
-const memberBtnContainer=document.getElementById("member-buttons");
-const agentContainer=document.getElementById("agent-container");
-const outputPanel=document.getElementById("output");
-
-function formatTanggalIndonesia(dateStr){
-  if(!dateStr) return "-";
-  let date=new Date(dateStr);
-  if(isNaN(date)) return dateStr;
-  const d=String(date.getDate()).padStart(2,"0");
-  const m=String(date.getMonth()+1).padStart(2,"0");
-  const y=date.getFullYear();
-  return `${d}/${m}/${y}`;
-}
-
-function calculateAge(birthDateStr){
-  if(!birthDateStr) return "-";
-  const date=new Date(birthDateStr);
-  if(isNaN(date)) return "-";
-  const today=new Date();
-  let age=today.getFullYear()-date.getFullYear();
-  if(today.getMonth()<date.getMonth()||(today.getMonth()===date.getMonth()&&today.getDate()<date.getDate())) age--;
-  return age;
-}
-
-function simulateAccessSequence(element,callback){
-  const steps=[
-    ">>> initializing connection...",
-    ">>> accessing database node...",
-    ">>> verifying security clearance...",
-    ">>> clearance level verified ✔",
-    ">>> retrieving personnel data..."
-  ];
-  let i=0; element.textContent="";
-  function nextStep(){
-    if(i<steps.length){
-      element.textContent+=steps[i]+"\n"; i++;
-      setTimeout(nextStep,500);
-    } else setTimeout(callback,500);
-  }
-  nextStep();
-}
-
-function typeWriter(element,text,agent,callback,speed=10){
-  element.innerHTML=""; let i=0,buffer="",nameShown=false;
-  function typing(){
-    if(i<text.length){
-      buffer+=text.charAt(i);
-      element.innerHTML=buffer.split("\n").map(line=>{
-        if(line.includes("[DATA IDENTITAS]")||line.includes("[DATA JABATAN]")) return `<span class='highlight-section'>${line}</span>`;
-        if(line.includes("RAHASIA")) return line.replace("RAHASIA","<span class='secret-alert'>RAHASIA</span>");
-        return line;
-      }).join("\n");
-      if(!nameShown && element.textContent.includes("NAMA LENGKAP")){
-        nameShown=true;
-        setTimeout(()=>{
-          if(agent.photo){ photoEl.src=agent.photo; photoEl.style.display="block"; setTimeout(()=>photoEl.style.opacity=1,100);}
-        },200);
-      }
-      i++; outputPanel.scrollTop=outputPanel.scrollHeight;
-      setTimeout(typing,speed);
-    } else if(callback) callback();
-  } typing();
-}
-
-function showMemberButtons(keyword){
-  memberBtnContainer.innerHTML="";
-  const selectedCategory=document.getElementById("category-filter").value;
-  const filtered=personnelDB.filter(p=>{
-    const kw=keyword.toLowerCase();
-    const matchKeyword=(p.satker&&p.satker.toLowerCase().includes(kw))||(p.nama_lengkap&&p.nama_lengkap.toLowerCase().includes(kw));
-    const matchCategory=!selectedCategory||p.kategori===selectedCategory;
-    return matchKeyword&&matchCategory;
-  });
-  if(filtered.length===0){
-    memberBtnContainer.innerHTML='<span class="not-found">❌ No members found</span>';
-  } else {
-    filtered.forEach(agent=>{
-      const btn=document.createElement("button");
-      btn.textContent=agent.nama_lengkap;
-      btn.onclick=()=>displayAgent(agent);
-      memberBtnContainer.appendChild(btn);
-    });
-  }
-}
-
-function displayAgent(agent){
-  simulateAccessSequence(dossierEl,()=>{
-    const usia=calculateAge(agent.tanggal_lahir);
-    const dossier=`
-========================================
-|   FILE: PERSONEL PUSLAT KODIKLATAU   |
-|   CLASSIFICATION: RAHASIA            |
-========================================
-
-[DATA IDENTITAS]
---------------------------------------------------
-NAMA LENGKAP       : ${agent.nama_lengkap || "-"}
-PANGKAT            : ${agent.pangkat || "-"}
-NRP/NIP            : ${agent.nrp_nip || "-"}
-SATKER             : ${agent.satker || "-"}
-TEMPAT/TGL LAHIR   : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
-USIA               : ${usia} Tahun
-
-[DATA JABATAN]
---------------------------------------------------
-JABATAN            : ${agent.jabatan || "-"}
-TMT JABATAN        : ${formatTanggalIndonesia(agent.tmt_jabatan)}
-
-========================================
-Retrieved on: ${new Date().toLocaleString()}
-    `;
-    typeWriter(dossierEl,dossier,agent,()=>{
-      const docContainer=document.createElement("div");
-      docContainer.className="doc-buttons";
-      const docs=[
-        {label:"Pemuktahiran Data",type:"secure"},
-        {label:"Riwayat Hidup",url:"#"},
-        {label:"KU-1",url:"#"}
-      ];
-      docs.forEach(d=>{
-        const btn=document.createElement("button");
-        btn.textContent=d.label;
-        btn.onclick=()=>{
-          if(d.type==="secure"){ openPopup(); return; }
-          if(d.url==="#"||!d.url){ alert("❌ File belum tersedia."); return; }
-          window.open(d.url,"_blank");
-        };
-        docContainer.appendChild(btn);
-      });
-      agentContainer.appendChild(docContainer);
-    });
-  });
-}
-
-searchInput.addEventListener("keydown",e=>{
-  if(e.key==="Enter"){
-    const query=searchInput.value.trim();
-    if(query) showMemberButtons(query);
-  }
-});
-
-// === Popup Password Logic ===
+// === Password popup ===
 function openPopup(){
   document.getElementById("password-popup").style.display="flex";
   document.getElementById("password-error").style.display="none";
@@ -364,13 +134,13 @@ function closePopup(){
   document.getElementById("password-popup").style.display="none";
 }
 function verifyPassword(){
-  const input=document.getElementById("password-input").value;
+  const input=document.getElementById("password-input").value.trim();
   const error=document.getElementById("password-error");
-  const correctPassword="Puslat2025"; // 🔐 GANTI password di sini
+  const correctPassword="Puslat2025"; // 🔐 ganti password di sini
   if(input===correctPassword){
-    window.location.href="kgbnew.html"; // membuka di halaman yang sama
+      window.location.href="kgbnew.html"; // buka di halaman yang sama
   } else {
-    error.style.display="block";
+      error.style.display="block";
   }
 }
 </script>
