@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PUSLAT KODIKLATAU - Intelligence Database</title>
+<title>PUSLAT KODIKLATAU - Login Portal</title>
 <style>
 body{
     font-family: 'Courier New', monospace;
@@ -40,30 +40,30 @@ header {
     animation: blinkText 1s infinite;
 }
 
-.header-buttons button {
-    background: transparent;
-    border: 1px solid #00FF00;
-    color: #00FF00;
-    padding: 8px 15px;
-    cursor: pointer;
-    border-radius: 4px;
+@keyframes blinkText {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
+
+.recording-indicator {
+    position: fixed;
+    top: 10px;
+    left: 15px;
     font-family: 'Courier New', monospace;
-    transition: background 0.3s, color 0.3s;
-}
-.header-buttons button:hover { background-color: #00FF00; color: black; }
-
-.main-container { display: flex; flex: 1; border-top: 1px solid #00FF00; }
-.output-panel { flex: 1; padding: 20px; overflow-y: auto; border-left: 2px solid #00FF00; }
-
-.agent-profile { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
-.agent-profile pre { flex: 1; white-space: pre-wrap; line-height: 1.4; }
-.agent-profile img {
-    width: 135px; height: 185px; object-fit: cover;
-    border: 2px solid #00FF00; border-radius: 8px;
-    display: none; opacity: 0; transition: opacity 1.2s ease-in-out;
+    font-size: 20px;
+    font-weight: bold;
+    color: #FF0000;
+    animation: blinkRecording 1s infinite;
+    z-index: 9999;
+    user-select: none;
 }
 
-/* ===== LOGIN OVERLAY ===== */
+@keyframes blinkRecording {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
+
+/* ===== LOGIN BOX ===== */
 #login-screen {
     position: fixed;
     top: 0; left: 0;
@@ -113,29 +113,12 @@ header {
 
 #error-msg { color: #FF0000; font-weight: bold; }
 
-.recording-indicator {
-    position: fixed;
-    top: 10px;
-    left: 15px;
-    font-family: 'Courier New', monospace;
-    font-size: 20px;
-    font-weight: bold;
-    color: #FF0000;
-    animation: blinkRecording 1s infinite;
-    z-index: 9999;
-    user-select: none;
+.agent-profile pre {
+    white-space: pre-wrap;
+    line-height: 1.4;
+    text-align: center;
+    margin-top: 100px;
 }
-
-@keyframes blinkRecording {
-    0%, 50%, 100% { opacity: 1; }
-    25%, 75% { opacity: 0; }
-}
-
-@keyframes blinkText { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
-
-.highlight-section { color: #FFFF00; font-weight: bold; }
-.secret-alert { color: #FF0000; font-weight: bold; animation: blinkSecret 1s infinite; }
-@keyframes blinkSecret { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
 </style>
 </head>
 <body>
@@ -157,71 +140,28 @@ header {
     <h1 class="text1">PORTAL MONITORING TERMINAL</h1>
 </header>
 
-<div class="main-container">
-    <div class="output-panel" id="output">
-        <div class="agent-profile" id="agent-container">
-            <pre id="agent-dossier">Silakan login untuk mengakses data...</pre>
-            <img id="agent-photo" src="" alt="Foto Personel">
-        </div>
-    </div>
+<div class="agent-profile">
+    <pre id="agent-dossier">Silakan login untuk mengakses sistem...</pre>
 </div>
 
 <script>
-// ===== LOGIN LOGIC =====
 function login() {
     const user = document.getElementById("username").value.trim();
     const pass = document.getElementById("password").value.trim();
     const errorMsg = document.getElementById("error-msg");
 
-    // Ganti sesuai keinginan (saat ini: admin / kodiklatau)
+    // 🔐 Ganti sesuai kebutuhan
     const validUser = "admin";
     const validPass = "kodiklatau";
 
     if (user === validUser && pass === validPass) {
-        document.getElementById("login-screen").style.display = "none";
-        loadDatabase();
+        document.getElementById("agent-dossier").textContent = ">>> Access granted...\n>>> Redirecting to secure module...";
+        setTimeout(() => {
+            window.location.href = "kgbnew.html"; // ⬅️ redirect halaman
+        }, 1500);
     } else {
         errorMsg.textContent = "❌ Akses ditolak. Username/Password salah.";
     }
-}
-
-// ===== DATABASE LOADER =====
-let personnelDB = [];
-
-function loadDatabase() {
-    fetch("https://script.google.com/macros/s/AKfycbyBLR9WNavK1tzFJt6YCtJhKY6Pzoa3Ho9g-G9fvubNc7pAlhuDhzmteIE0w-hqBo6b/exec")
-      .then(res => res.json())
-      .then(data => {
-        personnelDB = data;
-        simulateAccessSequence(document.getElementById("agent-dossier"), () => {
-            document.getElementById("agent-dossier").textContent = "Database loaded. Search access enabled...";
-        });
-      })
-      .catch(err => {
-        document.getElementById("agent-dossier").textContent = "❌ Gagal memuat data database.";
-        console.error(err);
-      });
-}
-
-// ====== ACCESS SEQUENCE EFFECT ======
-function simulateAccessSequence(element, callback){
-    const steps = [
-        ">>> initializing connection...",
-        ">>> accessing database node...",
-        ">>> verifying security clearance...",
-        ">>> clearance level verified ✔",
-        ">>> retrieving personnel data..."
-    ];
-    let i=0;
-    element.textContent="";
-    function nextStep(){
-        if(i<steps.length){
-            element.textContent += steps[i] + "\n";
-            i++;
-            setTimeout(nextStep, 600);
-        } else { setTimeout(callback, 600); }
-    }
-    nextStep();
 }
 </script>
 </body>
