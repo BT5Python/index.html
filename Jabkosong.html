@@ -3,125 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jabatan Kosong | PUSLAT KODIKLATAU</title>
+<title>DAFTAR JABATAN KOSONG</title>
 <style>
 body {
   background-color: black;
   color: #00ff00;
-  font-family: "Courier New", monospace;
+  font-family: 'Courier New', monospace;
+  white-space: pre;
   padding: 20px;
-  font-size: 12px;
 }
-pre {
-  white-space: pre-wrap;
-  word-wrap: break-word;
+.rahasia {
+  color: red;
+  animation: blink 0.6s infinite alternate;
 }
-.typing {
-  border-right: 2px solid #00ff00;
-  animation: blinkCursor 0.7s infinite;
+@keyframes blink {
+  from { opacity: 1; }
+  to { opacity: 0.2; }
 }
-@keyframes blinkCursor {
-  50% { border-color: transparent; }
+.yellow-row {
+  color: yellow;
 }
-.blink-red {
-  color: #ff0000;
-  animation: blinkRed 0.45s infinite;
-}
-@keyframes blinkRed {
-  0%, 100% { color: #ff0000; }
-  50% { color: #330000; }
-}
-.yellow { color: #ffff00; }
 </style>
 </head>
 <body>
 
-<pre id="terminal" class="typing"></pre>
+<pre id="output"></pre>
 
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyexzcrZz-eiXwvoYrhpqncUTvN8H1ri-yr3zmmhVcHa4nIFd7p--bfvZY4ZJb9zkqb/exec"; // GANTI dengan URL Web App kamu
+const data = [
+  {no:1, jabatan:"Kadisosplat", gol:"V M", pangkat:"Letkol", korps:"Pnb/Nav/Pas"},
+  {no:2, jabatan:"Kasiosplat", gol:"VI", pangkat:"Mayor", korps:"Pnb/Nav/Pas"},
+  {no:3, jabatan:"Kasubsimninjurit dan PNS", gol:"VII", pangkat:"Kapten/PNS IIIC-IIID", korps:"Adm"},
+  {no:4, jabatan:"Kasubsipropapl", gol:"VII", pangkat:"Kapten", korps:"Mhti"},
+  {no:5, jabatan:"Kasubsiipsi", gol:"VII", pangkat:"Kapten", korps:"Kes"},
+];
 
-const headerText = `
-====================================
-| FILE: PERSONEL PUSLAT KODIKLATAU |
-| CLASSIFICATION: `;
-const rahasiaWord = "RAHASIA";
-const footerTop = `
-====================================
+const output = document.getElementById("output");
+let text = "";
 
-[DAFTAR <span class='yellow'>JABATAN KOSONG</span>]
-------------------------------------------------------------------------------------------------
-NO   JABATAN KOSONG                     GOL.JAB          PANGKAT                   KORPS
-------------------------------------------------------------------------------------------------
-`;
-const footerBottom = `
-------------------------------------------------------------------------------------------------
-* Data diambil langsung dari Google Sheet.
-* Diperbarui otomatis setiap kali Web App diakses.
-------------------------------------------------------------------------------------------------
-`;
-
-const terminal = document.getElementById("terminal");
-let i = 0, step = 0, rahasiaSpan;
-
-function typeHeader() {
-  if (i < headerText.length) {
-    terminal.innerHTML += headerText.charAt(i);
-    i++;
-    setTimeout(typeHeader, 2);
-  } else {
-    i = 0;
-    rahasiaSpan = document.createElement("span");
-    rahasiaSpan.id = "rahasia";
-    terminal.appendChild(rahasiaSpan);
-    typeRahasia();
+async function typeEffect(content, delay=20) {
+  for (let char of content) {
+    output.innerHTML += char;
+    await new Promise(r => setTimeout(r, delay));
   }
 }
 
-function typeRahasia() {
-  if (i < rahasiaWord.length) {
-    rahasiaSpan.textContent += rahasiaWord.charAt(i);
-    if (i === 0) rahasiaSpan.classList.add("blink-red");
-    i++;
-    setTimeout(typeRahasia, 2);
-  } else {
-    i = 0;
-    typeData();
-  }
-}
+async function start() {
+  // Header
+  await typeEffect("PUSLAT KODIKLATAU\nDAFTAR JABATAN KOSONG\nPERIODE OKTOBER 2025\n\n", 20);
 
-async function typeData() {
-  terminal.innerHTML += footerTop;
+  // Kolom
+  await typeEffect("NO  JABATAN KOSONG                         GOL.JAB   PANGKAT            KORPS\n", 10);
+  await typeEffect("--------------------------------------------------------------------------------\n", 5);
 
-  try {
-    const res = await fetch(WEB_APP_URL);
-    const data = await res.json();
-    let text = "";
+  // Data
+  for (let row of data) {
+    const isPNS = row.pangkat.toUpperCase().includes("PNS") || row.jabatan.toUpperCase().includes("PNS") || row.korps.toUpperCase().includes("PNS");
 
-    data.forEach(row => {
-      const { no, jabatan, golongan, pangkat, korps } = row;
-      text += `${String(no).padEnd(4)} ${jabatan.padEnd(35)} ${golongan.padEnd(15)} ${pangkat.padEnd(25)} ${korps}\n`;
-    });
+    const line = `${String(row.no).padEnd(4)}${row.jabatan.padEnd(40)}${row.gol.padEnd(10)}${row.pangkat.padEnd(18)}${row.korps}\n`;
 
-    let index = 0;
-    function typeLine() {
-      if (index < text.length) {
-        terminal.innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typeLine, 2);
-      } else {
-        terminal.innerHTML += footerBottom;
-        terminal.classList.remove("typing");
-      }
+    if (isPNS) {
+      output.innerHTML += `<span class="yellow-row">${line}</span>`;
+    } else {
+      await typeEffect(line, 5);
     }
-    typeLine();
-  } catch (e) {
-    terminal.innerHTML += "\n[ERROR] Tidak dapat memuat data dari Google Sheet.";
-    terminal.classList.remove("typing");
   }
+
+  // Teks rahasia + kedip terus
+  await typeEffect("\nTEXT RAHASIA AKTIF\n", 30);
+  output.innerHTML += `<span class="rahasia">RAHASIA</span>`;
 }
 
-typeHeader();
+start();
 </script>
 
 </body>
