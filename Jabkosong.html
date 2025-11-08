@@ -12,28 +12,14 @@ body {
   padding: 20px;
   font-size: 12px;
 }
-pre { 
-  white-space: pre-wrap; 
-  word-wrap: break-word; 
-  letter-spacing: 1px; 
-  line-height: 1.5; 
-}
-.typing {
-  border-right: 2px solid #00ff00;
-  animation: blinkCursor 0.7s infinite;
-}
+pre { white-space: pre-wrap; word-wrap: break-word; letter-spacing: 1px; line-height: 1.5; }
+.typing { border-right: 2px solid #00ff00; animation: blinkCursor 0.7s infinite; }
 @keyframes blinkCursor { 50% { border-color: transparent; } }
-.blink-red {
-  color: #ff0000;
-  animation: blinkRed 0.45s infinite;
-}
-@keyframes blinkRed {
-  0%, 100% { color: #ff0000; }
-  50% { color: #330000; }
-}
+.blink-red { color: #ff0000; animation: blinkRed 0.45s infinite; }
+@keyframes blinkRed { 0%, 100% { color: #ff0000; } 50% { color: #330000; } }
 .yellow { color: #ffff00; font-weight: bold; }
 
-/* Tombol Navigasi */
+/* Tombol navigasi */
 .buttons {
   margin-top: 30px;
   text-align: center;
@@ -54,7 +40,7 @@ button:hover {
   color: black;
 }
 
-/* Tombol Download Merah Kedip Terus */
+/* Tombol download merah kedip */
 #download-btn {
   color: red;
   border-color: red;
@@ -96,23 +82,18 @@ const textAfterTop = `
 ====================================
 
 `;
-const titleLine = `<span class="yellow">[   DAFTAR JABATAN KOSONG   ]</span>\n\n`;
-const tableHeader = `
-------------------------------------------------------------------------------------
-NO    JABATAN KOSONG               GOL.JAB   PANGKAT                  KORPS
-------------------------------------------------------------------------------------
-`;
-const footerText = `
-------------------------------------------------------------------------------------
-* Data jabatan kosong diperbarui otomatis dari Spreadsheet.
-* Informasi hanya untuk lingkungan PUSLAT KODIKLATAU.
-------------------------------------------------------------------------------------
-`;
 
 const terminal = document.getElementById("terminal");
 let i = 0, step = 0, rahasiaSpan;
 
-// ==================== Simulasi Terminal Loading ====================
+// ==================== AMBIL DATA DARI GOOGLE SHEET ====================
+async function fetchData() {
+  const url = "https://script.google.com/macros/s/AKfycbyexzcrZz-eiXwvoYrhpqncUTvN8H1ri-yr3zmmhVcHa4nIFd7p--bfvZY4ZJb9zkqb/exec";
+  const res = await fetch(url);
+  return res.json();
+}
+
+// ==================== SIMULASI TERMINAL LOADING ====================
 async function showIntro() {
   for (let line of introLines) {
     terminal.textContent += line + "\n";
@@ -122,14 +103,7 @@ async function showIntro() {
   setTimeout(startTyping, 500);
 }
 
-// ==================== Ambil Data dari Google Sheet ====================
-async function fetchData() {
-  const url = "https://script.google.com/macros/s/AKfycbyexzcrZz-eiXwvoYrhpqncUTvN8H1ri-yr3zmmhVcHa4nIFd7p--bfvZY4ZJb9zkqb/exec";
-  const res = await fetch(url);
-  return res.json();
-}
-
-// ==================== Efek Ketik Teks ====================
+// ==================== EFEK KETIK DAN TAMPIL DATA ====================
 async function startTyping() {
   if (step === 0) {
     if (i < textBefore.length) {
@@ -159,29 +133,50 @@ async function startTyping() {
       i++;
       setTimeout(startTyping, 1);
     } else {
-      terminal.innerHTML += titleLine;
-      step = 3; i = 0;
-      startTyping();
+      step = 3;
+      i = 0;
+      loadTable();
     }
-  } else if (step === 3) {
-    terminal.innerHTML += tableHeader;
-    step = 4;
-    const data = await fetchData();
-    data.forEach((row, idx) => {
-      const line = `${row.no.toString().padEnd(5)}${row.jabatan.padEnd(30)}${row.golongan.padEnd(10)}${row.pangkat.padEnd(25)}${row.korps}\n`;
-      if (line.toUpperCase().includes("PNS")) {
-        terminal.innerHTML += `<span class="yellow">${line}</span>`;
-      } else {
-        terminal.innerHTML += line;
-      }
-    });
-    terminal.innerHTML += footerText;
-    terminal.classList.remove("typing");
-    document.getElementById("menu").style.display = "block"; // tampilkan tombol
   }
 }
 
-// ==================== Jalankan efek ====================
+// ==================== TAMPILKAN DATA ====================
+async function loadTable() {
+  const data = await fetchData();
+
+  // Ambil 2 baris pertama sebagai judul
+  const headerTitle = data[0].judul || "DAFTAR JABATAN KOSONG";
+  const headerSubtitle = data[0].subjudul || "PUSLAT KODIKLATAU PERIODE OKTOBER 2025";
+  
+  terminal.innerHTML += `<span class="yellow">[   ${headerTitle.toUpperCase()}   ]</span>\n${headerSubtitle}\n\n`;
+
+  const tableHeader = `
+------------------------------------------------------------------------------------
+NO    JABATAN KOSONG               GOL.JAB   PANGKAT                  KORPS
+------------------------------------------------------------------------------------
+`;
+  terminal.innerHTML += tableHeader;
+
+  data.forEach((row) => {
+    if (!row.no) return; // skip header baris
+    const line = `${row.no.toString().padEnd(5)}${row.jabatan.padEnd(30)}${row.golongan.padEnd(10)}${row.pangkat.padEnd(25)}${row.korps}\n`;
+    if (line.toUpperCase().includes("PNS")) {
+      terminal.innerHTML += `<span class="yellow">${line}</span>`;
+    } else {
+      terminal.innerHTML += line;
+    }
+  });
+
+  const footerText = `
+------------------------------------------------------------------------------------
+* Data jabatan kosong diperbarui otomatis dari Spreadsheet.
+* Informasi hanya untuk lingkungan PUSLAT KODIKLATAU.
+------------------------------------------------------------------------------------
+`;
+  terminal.innerHTML += footerText;
+  document.getElementById("menu").style.display = "block";
+}
+
 showIntro();
 </script>
 </body>
