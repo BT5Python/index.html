@@ -160,22 +160,21 @@ function login() {
     const pass = document.getElementById("password").value.trim();
     const errorMsg = document.getElementById("error-msg");
 
-    // 🔐 Ganti sesuai kebutuhan
     const validUser = "admin";
     const validPass = "kodiklatau";
 
     if (user === validUser && pass === validPass) {
         document.getElementById("agent-dossier").textContent = ">>> Access granted...\n>>> Redirecting to secure module...";
         setTimeout(() => {
-            window.location.href = window.location.origin + "database.html"; // ⬅️ redirect halaman
+            window.location.href = "database.html"; // ✅ Perbaikan
         }, 1500);
     } else {
         errorMsg.textContent = "❌ Akses ditolak. Username/Password salah.";
     }
 }
 </script>
-</body>
-</html>
+
+
 
 
 
