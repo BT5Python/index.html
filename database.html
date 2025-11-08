@@ -569,67 +569,146 @@ searchInput.addEventListener("keydown", e=>{
 <iframe id="pdfViewer" style="width:100%; height:600px; border:1px solid #00ff00; display:none; margin-top:20px;"></iframe>
 
 <script>
-const webAppUrl = "https://script.google.com/macros/s/AKfycbxkt4dgwrvmIc33XEQ6_LjZjeKflty4GyHWzH0-Nc-pFG_Q1zfEOQQq2p4FTESMcry6Sw/exec"; // 🔹 Ganti URL kamu
+const webAppUrl = "https://script.google.com/macros/s/AKfycbyWAs5GZkEf8AUZ4gv2H5iUx6O_ra-icLPR0R7TDPmWxv8ClNeB8Fs8TPqRihSCib897g/exec"; // 🔹 Ganti dengan URL kamu
+let currentFolderId = null;
+let previousFolderId = null;
 
+// 🔸 Tombol Radiogram diklik
 document.getElementById("radiogram").addEventListener("click", () => {
-  loadFolder(); // pertama kali: tampilkan folder utama
+  currentFolderId = null;
+  loadFolders();
 });
 
-function loadFolder(folderId = null, path = "📁 RADIAGRAM") {
+// 🔸 Ambil daftar folder dari root Radiogram
+function loadFolders() {
   const output = document.getElementById("output");
-  output.innerHTML = `<pre>🔍 Memuat ${path}...</pre>`;
+  output.innerHTML = `<pre>🔍 Memuat daftar folder Radiogram...</pre>`;
 
-  const url = folderId ? `${webAppUrl}?folderId=${folderId}` : webAppUrl;
-
-  fetch(url)
+  fetch(webAppUrl)
     .then(res => res.json())
     .then(data => {
-      let html = `<pre><span style='color:#FFFF00'>${path}</span>\n----------------------------------------</pre>`;
+      let html = `<pre><span style='color:#FFFF00'>📁 DAFTAR FOLDER RADIOGRAM:</span>\n----------------------------------------</pre>`;
+      html += `<div id="folderList" style="display:flex;flex-direction:column;gap:6px;">`;
 
-      // tampilkan subfolder
-      if (data.folders.length > 0) {
-        html += `<pre>📂 <u>Subfolder:</u></pre><div style="display:flex;flex-direction:column;gap:6px;">`;
+      if (data.folders.length === 0) {
+        html += `<pre>Tidak ada folder ditemukan.</pre>`;
+      } else {
         data.folders.forEach(f => {
           html += `
-            <button style="background:transparent;border:1px solid #00FF00;color:#00FF00;
-              font-family:'Courier New',monospace;padding:6px 10px;text-align:left;cursor:pointer;"
-              onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
-              onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';"
-              onclick="loadFolder('${f.id}', '${path} / ${f.name}')">
+            <button style="
+              background:transparent;
+              border:1px solid #00FF00;
+              color:#00FF00;
+              font-family:'Courier New',monospace;
+              padding:6px 10px;
+              text-align:left;
+              cursor:pointer;
+            "
+            onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
+            onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';"
+            onclick="openFolder('${f.id}', '${f.name}')">
               📁 ${f.name}
-            </button>`;
+            </button>
+          `;
         });
-        html += `</div>`;
       }
 
-      // tampilkan file PDF
-      if (data.files.length > 0) {
-        html += `<pre style="margin-top:10px;">📄 <u>File PDF:</u></pre><div style="display:flex;flex-direction:column;gap:6px;">`;
-        data.files.forEach(file => {
-          html += `
-            <button style="background:transparent;border:1px solid #00FF00;color:#00FF00;
-              font-family:'Courier New',monospace;padding:6px 10px;text-align:left;cursor:pointer;"
-              onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
-              onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';"
-              onclick="openPdf('${file.id}')">
-              ${file.name}   <span style='color:gray;font-size:12px;'>(${file.date})</span>
-            </button>`;
-        });
-        html += `</div>
-        <iframe id="pdfViewer" style="width:100%;height:600px;border:1px solid #00ff00;margin-top:20px;display:none;"></iframe>`;
-      }
+      html += `</div>
+      <div id="navButtons" style="margin-top:20px;display:flex;gap:10px;">
+        <button onclick="goBack()" style="background:transparent;border:1px solid #00FF00;color:#00FF00;font-family:'Courier New',monospace;padding:6px 12px;cursor:pointer;"
+          onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
+          onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';">⬅️ BACK</button>
+
+        <button onclick="goNext()" style="background:transparent;border:1px solid #00FF00;color:#00FF00;font-family:'Courier New',monospace;padding:6px 12px;cursor:pointer;"
+          onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
+          onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';">➡️ NEXT</button>
+      </div>`;
 
       output.innerHTML = html;
     })
     .catch(err => {
-      output.innerHTML = `<pre>⚠️ Gagal memuat: ${err}</pre>`;
+      output.innerHTML = `<pre>⚠️ Gagal memuat folder: ${err}</pre>`;
     });
 }
 
+// 🔸 Buka folder dan tampilkan file PDF-nya
+function openFolder(folderId, folderName) {
+  previousFolderId = currentFolderId;
+  currentFolderId = folderId;
+
+  const output = document.getElementById("output");
+  output.innerHTML = `<pre>📂 Membuka folder: ${folderName}...</pre>`;
+
+  fetch(`${webAppUrl}?folderId=${folderId}`)
+    .then(res => res.json())
+    .then(data => {
+      let html = `<pre><span style='color:#FFFF00'>📂 ${folderName}</span>\n----------------------------------------</pre>`;
+      html += `<div id="pdfList" style="display:flex;flex-direction:column;gap:6px;">`;
+
+      if (data.files.length === 0) {
+        html += `<pre>Tidak ada file PDF dalam folder ini.</pre>`;
+      } else {
+        data.files.forEach(file => {
+          html += `
+            <button style="
+              background:transparent;
+              border:1px solid #00FF00;
+              color:#00FF00;
+              font-family:'Courier New',monospace;
+              padding:6px 10px;
+              text-align:left;
+              cursor:pointer;
+            "
+            onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
+            onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';"
+            onclick="openPdf('${file.id}')">
+              📄 ${file.name} <span style='color:gray;font-size:12px;'>(${file.date})</span>
+            </button>
+          `;
+        });
+      }
+
+      html += `</div>
+      <div id="navButtons" style="margin-top:20px;display:flex;gap:10px;">
+        <button onclick="goBack()" style="background:transparent;border:1px solid #00FF00;color:#00FF00;font-family:'Courier New',monospace;padding:6px 12px;cursor:pointer;"
+          onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
+          onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';">⬅️ BACK</button>
+
+        <button onclick="goNext()" style="background:transparent;border:1px solid #00FF00;color:#00FF00;font-family:'Courier New',monospace;padding:6px 12px;cursor:pointer;"
+          onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
+          onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';">➡️ NEXT</button>
+      </div>`;
+
+      output.innerHTML = html;
+    })
+    .catch(err => {
+      output.innerHTML = `<pre>⚠️ Gagal membuka folder: ${err}</pre>`;
+    });
+}
+
+// 🔸 Kembali ke daftar folder utama
+function goBack() {
+  currentFolderId = null;
+  loadFolders();
+}
+
+// 🔸 Placeholder tombol Next (belum dipakai)
+function goNext() {
+  alert("Fungsi NEXT belum diaktifkan, nanti bisa diarahkan ke folder berikutnya 👌");
+}
+
+// 🔸 Buka file PDF
 function openPdf(fileId) {
-  const viewer = document.getElementById("pdfViewer");
+  let viewer = document.getElementById("pdfViewer");
+  if (!viewer) {
+    const output = document.getElementById("output");
+    output.insertAdjacentHTML(
+      "beforeend",
+      `<iframe id="pdfViewer" style="width:100%;height:600px;border:1px solid #00ff00;margin-top:20px;"></iframe>`
+    );
+    viewer = document.getElementById("pdfViewer");
+  }
   viewer.src = `https://drive.google.com/file/d/${fileId}/preview`;
-  viewer.style.display = "block";
   viewer.scrollIntoView({ behavior: 'smooth' });
 }
 </script>
