@@ -13,99 +13,152 @@ body {
   font-size: 12px;
 }
 pre { white-space: pre-wrap; word-wrap: break-word; letter-spacing: 1px; line-height: 1.5; }
-.typing {
-  border-right: 2px solid #00ff00;
-  animation: blinkCursor 0.7s infinite;
-}
+.typing { border-right: 2px solid #00ff00; animation: blinkCursor 0.7s infinite; }
 @keyframes blinkCursor { 50% { border-color: transparent; } }
-
-.blink-red {
-  color: #ff0000;
-  animation: blinkRed 0.45s infinite;
-}
-@keyframes blinkRed {
-  0%, 100% { color: #ff0000; }
-  50% { color: #330000; }
-}
-
+.blink-red { color: #ff0000; animation: blinkRed 0.45s infinite; }
+@keyframes blinkRed { 0%, 100% { color: #ff0000; } 50% { color: #330000; } }
 .yellow { color: #ffff00; font-weight: bold; }
 
+/* Tombol navigasi */
 .buttons {
-  text-align: center;
   margin-top: 30px;
+  text-align: center;
 }
-.button {
+button {
+  background: black;
   border: 1px solid #00ff00;
   color: #00ff00;
-  padding: 8px 16px;
-  margin: 4px;
-  background: transparent;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  padding: 6px 14px;
+  margin: 5px;
   cursor: pointer;
-  font-family: 'Courier New', monospace;
-  font-weight: bold;
+  transition: all 0.3s ease;
 }
-.button:hover {
+button:hover {
   background-color: #00ff00;
   color: black;
 }
-.blink-download {
-  border-color: #ff0000;
-  color: #ff0000;
-  animation: blinkRed 0.5s infinite;
+
+/* Tombol download merah kedip */
+#download-btn {
+  color: red;
+  border-color: red;
+  animation: blink-download 0.5s linear infinite;
+}
+@keyframes blink-download {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
 }
 </style>
 </head>
 <body>
+
 <pre id="terminal" class="typing"></pre>
 
-<div class="buttons">
-  <button class="button" onclick="history.back()">BACK</button>
-  <button id="downloadBtn" class="button blink-download" onclick="downloadPDF()">DOWNLOAD</button>
+<!-- Tombol Navigasi -->
+<div class="buttons" id="menu" style="display:none;">
+  <button onclick="window.history.back()">BACK</button>
+  <button id="download-btn" onclick="window.location.href='data_jabatan_kosong.pdf'">DOWNLOAD</button>
 </div>
 
 <script>
+// ==================== TEXT AWAL (sebelum data muncul) ====================
+const introLines = [
+  ">>> initializing connection...",
+  ">>> accessing database node...",
+  ">>> verifying security clearance...",
+  ">>> clearance level verified ✓",
+  ">>> retrieving personnel data..."
+];
+
 const textBefore = `
->>> initializing connection...
->>> accessing database node...
->>> verifying security clearance...
->>> clearance level verified ✓
->>> retrieving personnel data...
+====================================
+| FILE: PERSONEL PUSLAT KODIKLATAU |
+| CLASSIFICATION: `;
+const rahasiaWord = "RAHASIA";
+const textAfterTop = `
+====================================
+
 `;
 
 const terminal = document.getElementById("terminal");
+let i = 0, step = 0, rahasiaSpan;
 
+// ==================== AMBIL DATA DARI GOOGLE SHEET ====================
 async function fetchData() {
-  const url = "https://script.google.com/macros/s/AKfycbzBYm7QSOuamAty3WbwXgXvyV9pwsYShharbNnBH89i4Tw5FmitP_XFPn96jR2JKqya/exec";
+  const url = "https://script.google.com/macros/s/AKfycbyexzcrZz-eiXwvoYrhpqncUTvN8H1ri-yr3zmmhVcHa4nIFd7p--bfvZY4ZJb9zkqb/exec";
   const res = await fetch(url);
   return res.json();
 }
 
-async function typeText(text) {
-  for (let i = 0; i < text.length; i++) {
-    terminal.textContent += text.charAt(i);
-    await new Promise(r => setTimeout(r, 10));
+// ==================== SIMULASI TERMINAL LOADING ====================
+async function showIntro() {
+  for (let line of introLines) {
+    terminal.textContent += line + "\n";
+    await new Promise(r => setTimeout(r, 500));
+  }
+  terminal.textContent += "\n";
+  setTimeout(startTyping, 500);
+}
+
+// ==================== EFEK KETIK DAN TAMPIL DATA ====================
+async function startTyping() {
+  if (step === 0) {
+    if (i < textBefore.length) {
+      terminal.textContent += textBefore.charAt(i);
+      i++;
+      setTimeout(startTyping, 1);
+    } else {
+      step = 1; i = 0;
+      rahasiaSpan = document.createElement("span");
+      rahasiaSpan.id = "rahasia";
+      terminal.appendChild(rahasiaSpan);
+      startTyping();
+    }
+  } else if (step === 1) {
+    if (i < rahasiaWord.length) {
+      rahasiaSpan.textContent += rahasiaWord.charAt(i);
+      if (i === 0) rahasiaSpan.classList.add("blink-red");
+      i++;
+      setTimeout(startTyping, 100);
+    } else {
+      step = 2; i = 0;
+      startTyping();
+    }
+  } else if (step === 2) {
+    if (i < textAfterTop.length) {
+      terminal.innerHTML += textAfterTop.charAt(i);
+      i++;
+      setTimeout(startTyping, 1);
+    } else {
+      step = 3;
+      i = 0;
+      loadTable();
+    }
   }
 }
 
-async function main() {
-  await typeText(textBefore);
+// ==================== TAMPILKAN DATA ====================
+async function loadTable() {
+  const data = await fetchData();
 
-  const dataObj = await fetchData();
-  const data = dataObj.data;
-  const judul = dataObj.data[0]?.judul || "DAFTAR JABATAN KOSONG";
-  const subjudul = dataObj.data[0]?.subjudul || "PUSLAT KODIKLATAU";
+  // Ambil 2 baris pertama sebagai judul
+  const headerTitle = data[0].judul || "DAFTAR JABATAN KOSONG";
+  const headerSubtitle = data[0].subjudul || "PUSLAT KODIKLATAU PERIODE OKTOBER 2025";
+  
+  terminal.innerHTML += `<span class="yellow">[   ${headerTitle.toUpperCase()}   ]</span>\n${headerSubtitle}\n\n`;
 
-  terminal.innerHTML += `\n====================================\n`;
-  terminal.innerHTML += `| ${judul} |\n`;
-  terminal.innerHTML += `| ${subjudul} |\n`;
-  terminal.innerHTML += `====================================\n\n`;
-  terminal.innerHTML += `<span class="yellow">[   DAFTAR JABATAN KOSONG   ]</span>\n\n`;
-  terminal.innerHTML += `
+  const tableHeader = `
 ------------------------------------------------------------------------------------
 NO    JABATAN KOSONG               GOL.JAB   PANGKAT                  KORPS
-------------------------------------------------------------------------------------\n`;
+------------------------------------------------------------------------------------
+`;
+  terminal.innerHTML += tableHeader;
 
-  data.forEach((row, idx) => {
+  data.forEach((row) => {
+    if (!row.no) return; // skip header baris
     const line = `${row.no.toString().padEnd(5)}${row.jabatan.padEnd(30)}${row.golongan.padEnd(10)}${row.pangkat.padEnd(25)}${row.korps}\n`;
     if (line.toUpperCase().includes("PNS")) {
       terminal.innerHTML += `<span class="yellow">${line}</span>`;
@@ -114,27 +167,17 @@ NO    JABATAN KOSONG               GOL.JAB   PANGKAT                  KORPS
     }
   });
 
-  terminal.innerHTML += `
+  const footerText = `
 ------------------------------------------------------------------------------------
 * Data jabatan kosong diperbarui otomatis dari Spreadsheet.
 * Informasi hanya untuk lingkungan PUSLAT KODIKLATAU.
-------------------------------------------------------------------------------------`;
-
-  terminal.classList.remove("typing");
-
-  // Simpan link PDF untuk tombol download
-  window.pdfLink = dataObj.pdf || "";
+------------------------------------------------------------------------------------
+`;
+  terminal.innerHTML += footerText;
+  document.getElementById("menu").style.display = "block";
 }
 
-function downloadPDF() {
-  if (window.pdfLink) {
-    window.open(window.pdfLink, "_blank");
-  } else {
-    alert("File PDF belum tersedia.");
-  }
-}
-
-main();
+showIntro();
 </script>
 </body>
 </html>
