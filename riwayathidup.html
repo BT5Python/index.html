@@ -531,23 +531,48 @@ Retrieved on: ${new Date().toLocaleString()}
         `;
 
         // ======== EFEK KETIK TEKS ========
-        typeWriter(dossierEl, dossier, agent, () => {
-            // ======== TAMBAHKAN TOMBOL DOKUMEN ========
-            const docContainer = document.createElement("div");
-            docContainer.className = "doc-buttons";
+typeWriter(dossierEl, dossier, agent, () => {
+    // ======== TAMBAHKAN TOMBOL DOKUMEN ========
+    const docContainer = document.createElement("div");
+    docContainer.className = "doc-buttons";
 
-            const docs = [
-                { label: "KOSONG", url: "" },
-                { label: "Riwayat Hidup", url: "https://example.com/riwayat-hidup" },
-                { label: "KOSONG", url: "" }
-            ];
+    // 🔹 Ambil link PDF dari kolom merged_doc_url di Google Sheet
+    let mergedURL = agent.merged_doc_url?.trim() || "";
 
-            docs.forEach(d => {
-                const btn = document.createElement("button");
-                btn.textContent = d.label;
-                btn.onclick = () => window.open(d.url, "_blank");
-                docContainer.appendChild(btn);
-            });
+    // 🔹 Jika link berupa format Google Drive, ubah ke direct download link
+    if (mergedURL) {
+        if (mergedURL.includes("drive.google.com/file/d/")) {
+            const match = mergedURL.match(/\/d\/(.*?)\//);
+            if (match && match[1]) {
+                mergedURL = `https://drive.google.com/uc?export=download&id=${match[1]}`;
+            }
+        } else if (/^[A-Za-z0-9_-]{25,}$/.test(mergedURL)) {
+            mergedURL = `https://drive.google.com/uc?export=download&id=${mergedURL}`;
+        }
+    }
+
+    // 🔹 Tombol Riwayat Hidup PDF (ambil dari merged_doc_url)
+    const btnRiwayat = document.createElement("button");
+    btnRiwayat.textContent = "Riwayat Hidup (PDF)";
+    if (mergedURL) {
+        btnRiwayat.onclick = () => window.open(mergedURL, "_blank");
+    } else {
+        btnRiwayat.disabled = true;
+        btnRiwayat.style.opacity = "0.5";
+        btnRiwayat.title = "Dokumen merged_doc_url belum tersedia";
+    }
+    docContainer.appendChild(btnRiwayat);
+
+    // 🔹 Tambahkan tombol tambahan opsional (misalnya kembali ke atas)
+    const btnBack = document.createElement("button");
+    btnBack.textContent = "Back to Top";
+    btnBack.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+    docContainer.appendChild(btnBack);
+
+    // 🔹 Tambahkan container tombol ke tampilan
+    agentContainer.appendChild(docContainer);
+});
+
 
             agentContainer.appendChild(docContainer);
         });
