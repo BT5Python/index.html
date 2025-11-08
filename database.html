@@ -708,7 +708,10 @@ function openPdf(fileId) {
     );
     viewer = document.getElementById("pdfViewer");
   }
+
+  // Gunakan URL embed Google Drive viewer
   viewer.src = `https://drive.google.com/file/d/${fileId}/preview`;
+  viewer.style.display = "block";
   viewer.scrollIntoView({ behavior: 'smooth' });
 }
 </script>
