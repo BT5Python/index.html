@@ -11,13 +11,20 @@ body {
   font-family: "Courier New", monospace;
   padding: 20px;
   font-size: 12px;
+  text-align: left;
 }
-pre { white-space: pre-wrap; word-wrap: break-word; letter-spacing: 1px; line-height: 1.5; }
+pre { 
+  white-space: pre-wrap; 
+  word-wrap: break-word; 
+  letter-spacing: 1px; 
+  line-height: 1.5; 
+}
 .typing {
   border-right: 2px solid #00ff00;
   animation: blinkCursor 0.7s infinite;
 }
 @keyframes blinkCursor { 50% { border-color: transparent; } }
+
 .blink-red {
   color: #ff0000;
   animation: blinkRed 0.45s infinite;
@@ -28,6 +35,41 @@ pre { white-space: pre-wrap; word-wrap: break-word; letter-spacing: 1px; line-he
 }
 .yellow { color: #ffff00; font-weight: bold; }
 .hidden { display: none; }
+
+/* Tombol */
+.button-container {
+  text-align: center;
+  margin-top: 25px;
+}
+button {
+  background-color: black;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  font-family: "Courier New", monospace;
+  padding: 8px 20px;
+  font-size: 12px;
+  margin: 0 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  background-color: #00ff00;
+  color: black;
+  font-weight: bold;
+}
+
+/* Tombol DOWNLOAD Berkedip Merah */
+button.download-btn {
+  color: #ff0000;
+  border-color: #ff0000;
+  animation: blinkRed 0.5s infinite;
+}
+button.download-btn:hover {
+  background-color: #ff0000;
+  color: black;
+  animation: none;
+}
 </style>
 </head>
 <body>
@@ -41,13 +83,19 @@ pre { white-space: pre-wrap; word-wrap: break-word; letter-spacing: 1px; line-he
   <p class="hidden">>>> retrieving personnel data...</p>
 </div>
 
-<!-- Bagian Utama: Jabatan Kosong -->
+<!-- Bagian Utama -->
 <pre id="terminal" class="typing hidden"></pre>
+
+<!-- Tombol di bawah -->
+<div class="button-container hidden" id="buttons">
+  <button onclick="window.history.back()">← BACK</button>
+  <button class="download-btn" onclick="downloadFile()">⬇ DOWNLOAD</button>
+</div>
 
 <script>
 /* ================== EFEK LOADING TERMINAL ================== */
 const lines = document.querySelectorAll("#loading p");
-let delay = 800; // jeda antar baris loading
+let delay = 800;
 lines.forEach((line, index) => {
   setTimeout(() => {
     line.classList.remove("hidden");
@@ -55,7 +103,7 @@ lines.forEach((line, index) => {
       setTimeout(() => {
         document.getElementById("loading").style.display = "none";
         document.getElementById("terminal").classList.remove("hidden");
-        startTyping(); // lanjut ke bagian utama
+        startTyping();
       }, 1000);
     }
   }, delay * (index + 1));
@@ -144,10 +192,20 @@ NO    JABATAN KOSONG               GOL.JAB   PANGKAT                  KORPS
       });
       terminal.innerHTML += footerText;
       terminal.classList.remove("typing");
+
+      // ✅ Tampilkan tombol setelah selesai
+      document.getElementById("buttons").classList.remove("hidden");
     }
   }
 
   type();
+}
+
+/* ================== FUNGSI DOWNLOAD ================== */
+function downloadFile() {
+  // Ganti URL file download kamu di sini (misal PDF di Google Drive)
+  const fileUrl = "https://drive.google.com/uc?export=download&id=1GAPWqs98GSMypnKYeow_oWzSYtAgzK6h";
+  window.open(fileUrl, "_blank");
 }
 </script>
 </body>
