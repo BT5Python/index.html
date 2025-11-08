@@ -13,171 +13,142 @@ body {
   font-size: 12px;
 }
 pre { white-space: pre-wrap; word-wrap: break-word; letter-spacing: 1px; line-height: 1.5; }
-.typing { border-right: 2px solid #00ff00; animation: blinkCursor 0.7s infinite; }
+.typing {
+  border-right: 2px solid #00ff00;
+  animation: blinkCursor 0.7s infinite;
+}
 @keyframes blinkCursor { 50% { border-color: transparent; } }
-.blink-red { color: #ff0000; animation: blinkRed 0.45s infinite; }
-@keyframes blinkRed { 0%, 100% { color: #ff0000; } 50% { color: #330000; } }
+.blink-red {
+  color: #ff0000;
+  animation: blinkRed 0.45s infinite;
+}
+@keyframes blinkRed {
+  0%, 100% { color: #ff0000; }
+  50% { color: #330000; }
+}
 .yellow { color: #ffff00; font-weight: bold; }
-
-/* Tombol navigasi */
-.buttons {
-  margin-top: 30px;
-  text-align: center;
-}
-button {
-  background: black;
-  border: 1px solid #00ff00;
-  color: #00ff00;
-  font-family: "Courier New", monospace;
-  font-size: 12px;
-  padding: 6px 14px;
-  margin: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-button:hover {
-  background-color: #00ff00;
-  color: black;
-}
-
-/* Tombol download merah kedip */
-#download-btn {
-  color: red;
-  border-color: red;
-  animation: blink-download 0.5s linear infinite;
-}
-@keyframes blink-download {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
-}
+.hidden { display: none; }
 </style>
 </head>
 <body>
 
-<pre id="terminal" class="typing"></pre>
-
-<!-- Tombol Navigasi -->
-<div class="buttons" id="menu" style="display:none;">
-  <button onclick="window.history.back()">BACK</button>
-  <button id="download-btn" onclick="window.location.href='data_jabatan_kosong.pdf'">DOWNLOAD</button>
+<!-- Bagian Loading Terminal -->
+<div id="loading">
+  <p>>> initializing connection...</p>
+  <p class="hidden">>>> accessing database node...</p>
+  <p class="hidden">>>> verifying security clearance...</p>
+  <p class="hidden">>>> clearance level verified ✓</p>
+  <p class="hidden">>>> retrieving personnel data...</p>
 </div>
 
-<script>
-// ==================== TEXT AWAL (sebelum data muncul) ====================
-const introLines = [
-  ">>> initializing connection...",
-  ">>> accessing database node...",
-  ">>> verifying security clearance...",
-  ">>> clearance level verified ✓",
-  ">>> retrieving personnel data..."
-];
+<!-- Bagian Utama: Jabatan Kosong -->
+<pre id="terminal" class="typing hidden"></pre>
 
-const textBefore = `
+<script>
+/* ================== EFEK LOADING TERMINAL ================== */
+const lines = document.querySelectorAll("#loading p");
+let delay = 800; // jeda antar baris loading
+lines.forEach((line, index) => {
+  setTimeout(() => {
+    line.classList.remove("hidden");
+    if (index === lines.length - 1) {
+      setTimeout(() => {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("terminal").classList.remove("hidden");
+        startTyping(); // lanjut ke bagian utama
+      }, 1000);
+    }
+  }, delay * (index + 1));
+});
+
+/* ================== BAGIAN UTAMA: DATA JABATAN ================== */
+async function startTyping() {
+  const textBefore = `
 ====================================
 | FILE: PERSONEL PUSLAT KODIKLATAU |
 | CLASSIFICATION: `;
-const rahasiaWord = "RAHASIA";
-const textAfterTop = `
+  const rahasiaWord = "RAHASIA";
+  const textAfterTop = `
 ====================================
 
 `;
-
-const terminal = document.getElementById("terminal");
-let i = 0, step = 0, rahasiaSpan;
-
-// ==================== AMBIL DATA DARI GOOGLE SHEET ====================
-async function fetchData() {
-  const url = "https://script.google.com/macros/s/AKfycbxE_NDRvpmEDW2-Fs_aC-9vQYBkkvbnONi7WtJ7084jMw48XPFoR7N-G6-PGgbd8AlZ/exec";
-  const res = await fetch(url);
-  return res.json();
-}
-
-// ==================== SIMULASI TERMINAL LOADING ====================
-async function showIntro() {
-  for (let line of introLines) {
-    terminal.textContent += line + "\n";
-    await new Promise(r => setTimeout(r, 500));
-  }
-  terminal.textContent += "\n";
-  setTimeout(startTyping, 500);
-}
-
-// ==================== EFEK KETIK DAN TAMPIL DATA ====================
-async function startTyping() {
-  if (step === 0) {
-    if (i < textBefore.length) {
-      terminal.textContent += textBefore.charAt(i);
-      i++;
-      setTimeout(startTyping, 1);
-    } else {
-      step = 1; i = 0;
-      rahasiaSpan = document.createElement("span");
-      rahasiaSpan.id = "rahasia";
-      terminal.appendChild(rahasiaSpan);
-      startTyping();
-    }
-  } else if (step === 1) {
-    if (i < rahasiaWord.length) {
-      rahasiaSpan.textContent += rahasiaWord.charAt(i);
-      if (i === 0) rahasiaSpan.classList.add("blink-red");
-      i++;
-      setTimeout(startTyping, 100);
-    } else {
-      step = 2; i = 0;
-      startTyping();
-    }
-  } else if (step === 2) {
-    if (i < textAfterTop.length) {
-      terminal.innerHTML += textAfterTop.charAt(i);
-      i++;
-      setTimeout(startTyping, 1);
-    } else {
-      step = 3;
-      i = 0;
-      loadTable();
-    }
-  }
-}
-
-// ==================== TAMPILKAN DATA ====================
-async function loadTable() {
-  const data = await fetchData();
-
-  // Ambil 2 baris pertama sebagai judul
-  const headerTitle = data[0].judul || "DAFTAR JABATAN KOSONG";
-  const headerSubtitle = data[0].subjudul || "PUSLAT KODIKLATAU PERIODE OKTOBER 2025";
-  
-  terminal.innerHTML += `<span class="yellow">[   ${headerTitle.toUpperCase()}   ]</span>\n${headerSubtitle}\n\n`;
-
+  const titleLine = `<span class="yellow">[   DAFTAR JABATAN KOSONG   ]</span>\n\n`;
   const tableHeader = `
 ------------------------------------------------------------------------------------
 NO    JABATAN KOSONG               GOL.JAB   PANGKAT                  KORPS
 ------------------------------------------------------------------------------------
 `;
-  terminal.innerHTML += tableHeader;
-
-  data.forEach((row) => {
-    if (!row.no) return; // skip header baris
-    const line = `${row.no.toString().padEnd(5)}${row.jabatan.padEnd(30)}${row.golongan.padEnd(10)}${row.pangkat.padEnd(25)}${row.korps}\n`;
-    if (line.toUpperCase().includes("PNS")) {
-      terminal.innerHTML += `<span class="yellow">${line}</span>`;
-    } else {
-      terminal.innerHTML += line;
-    }
-  });
-
   const footerText = `
 ------------------------------------------------------------------------------------
 * Data jabatan kosong diperbarui otomatis dari Spreadsheet.
 * Informasi hanya untuk lingkungan PUSLAT KODIKLATAU.
 ------------------------------------------------------------------------------------
 `;
-  terminal.innerHTML += footerText;
-  document.getElementById("menu").style.display = "block";
-}
 
-showIntro();
+  const terminal = document.getElementById("terminal");
+  let i = 0, step = 0, rahasiaSpan;
+
+  async function fetchData() {
+    const url = "https://script.google.com/macros/s/AKfycbyexzcrZz-eiXwvoYrhpqncUTvN8H1ri-yr3zmmhVcHa4nIFd7p--bfvZY4ZJb9zkqb/exec"; 
+    const res = await fetch(url);
+    return res.json();
+  }
+
+  async function type() {
+    if (step === 0) {
+      if (i < textBefore.length) {
+        terminal.textContent += textBefore.charAt(i);
+        i++;
+        setTimeout(type, 1);
+      } else {
+        step = 1;
+        i = 0;
+        rahasiaSpan = document.createElement("span");
+        rahasiaSpan.id = "rahasia";
+        terminal.appendChild(rahasiaSpan);
+        type();
+      }
+    } else if (step === 1) {
+      if (i < rahasiaWord.length) {
+        rahasiaSpan.textContent += rahasiaWord.charAt(i);
+        if (i === 0) rahasiaSpan.classList.add("blink-red");
+        i++;
+        setTimeout(type, 1);
+      } else {
+        step = 2;
+        i = 0;
+        type();
+      }
+    } else if (step === 2) {
+      if (i < textAfterTop.length) {
+        terminal.innerHTML += textAfterTop.charAt(i);
+        i++;
+        setTimeout(type, 1);
+      } else {
+        terminal.innerHTML += titleLine;
+        step = 3;
+        i = 0;
+        type();
+      }
+    } else if (step === 3) {
+      terminal.innerHTML += tableHeader;
+      step = 4;
+      const data = await fetchData();
+      data.forEach((row) => {
+        const line = `${row.no.toString().padEnd(5)}${row.jabatan.padEnd(30)}${row.golongan.padEnd(10)}${row.pangkat.padEnd(25)}${row.korps}\n`;
+        if (line.toUpperCase().includes("PNS")) {
+          terminal.innerHTML += `<span class="yellow">${line}</span>`;
+        } else {
+          terminal.innerHTML += line;
+        }
+      });
+      terminal.innerHTML += footerText;
+      terminal.classList.remove("typing");
+    }
+  }
+
+  type();
+}
 </script>
 </body>
 </html>
