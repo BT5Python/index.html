@@ -572,7 +572,7 @@ document.getElementById("radiogramBtn").addEventListener("click", function() {
   const folderName = prompt("Masukkan nama folder (contoh: Radiogram_001):");
   if (!folderName) return;
 
-  fetch(`https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxxxxxxxxx/exec?folderName=${encodeURIComponent(folderName)}`)
+  fetch(`https://script.google.com/macros/s/AKfycbyNzlKXKFX0eMHDm7A4QoJ6GpxGKz8LWdEtLDJ2YyJ84_bHqg4HqV_kZSMX0uXhBq5_tg/exec?folderName=${encodeURIComponent(folderName)}`)
     .then(res => res.json())
     .then(data => {
       if (data.fileUrl) {
