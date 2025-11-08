@@ -1,1 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUSLAT KODIKLATAU - Radiogram</title>
+<style>
+body {
+  background-color: black;
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  padding: 20px;
+}
+button {
+  background-color: black;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 5px;
+}
+button:hover {
+  background-color: #00ff00;
+  color: black;
+}
+.folder-list, .file-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+.folder, .file {
+  border: 1px solid #00ff00;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 180px;
+  text-align: center;
+}
+.folder:hover, .file:hover {
+  background-color: #00ff00;
+  color: black;
+}
+</style>
+</head>
+<body>
+  <h2>📁 Daftar Folder Radiogram</h2>
+  <div id="folderList" class="folder-list"></div>
+  <div id="fileList" class="file-list"></div>
+
+<script>
+// === Ambil daftar folder Radiogram dari Apps Script ===
+google.script.run.withSuccessHandler(showFolders).getRadiogramFolders();
+
+// === Tampilkan daftar folder ===
+function showFolders(folders) {
+  const list = document.getElementById("folderList");
+  list.innerHTML = "";
+  folders.forEach(folder => {
+    const div = document.createElement("div");
+    div.className = "folder";
+    div.textContent = "📂 " + folder.name;
+    div.onclick = () => loadFiles(folder.id);
+    list.appendChild(div);
+  });
+}
+
+// === Ambil daftar file PDF dalam folder ===
+function loadFiles(folderId) {
+  google.script.run.withSuccessHandler(showFiles).getPdfFiles(folderId);
+}
+
+// === Tampilkan daftar file PDF ===
+function showFiles(files) {
+  const list = document.getElementById("fileList");
+  list.innerHTML = "<h3>📄 File PDF dalam Folder</h3>";
+  files.forEach(file => {
+    const div = document.createElement("div");
+    div.className = "file";
+    div.textContent = file.name;
+    div.onclick = () => openPdf(file.id);
+    list.appendChild(div);
+  });
+}
+
+// === Fungsi buka PDF fullscreen ===
+function openPdf(fileId) {
+  // Simpan tampilan lama supaya bisa dikembalikan
+  const oldContent = document.body.innerHTML;
+
+  // Ganti tampilan jadi fullscreen PDF viewer
+  document.body.innerHTML = `
+    <button onclick="restoreView()" style="
+      position:fixed;
+      top:15px; left:15px;
+      background:black;
+      color:#00ff00;
+      border:1px solid #00ff00;
+      padding:8px 14px;
+      border-radius:8px;
+      font-family:'Courier New', monospace;
+      font-size:16px;
+      z-index:1000;
+      cursor:pointer;
+    ">⬅ KEMBALI</button>
+
+    <iframe src="https://drive.google.com/file/d/${fileId}/preview"
+      style="
+        width:100vw;
+        height:100vh;
+        border:none;
+        margin:0;
+        padding:0;
+        position:fixed;
+        top:0; left:0;
+        z-index:999;
+      ">
+    </iframe>
+  `;
+
+  // Simpan tampilan lama biar bisa dikembalikan
+  window._oldView = oldContent;
+}
+
+// === Tombol kembali ke daftar ===
+function restoreView() {
+  if (window._oldView) {
+    document.body.innerHTML = window._oldView;
+    // Re-run folder fetch biar tampil lagi
+    google.script.run.withSuccessHandler(showFolders).getRadiogramFolders();
+  }
+}
+</script>
+</body>
+</html>
 
