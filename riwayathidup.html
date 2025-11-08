@@ -498,7 +498,7 @@ NAMA LENGKAP        : ${agent.nama_lengkap || "-"}
 PANGKAT             : ${agent.pangkat || "-"}
 NRP/NIP             : ${agent.nrp_nip || "-"}
 TEMPAT/TGL LAHIR    : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
-Gol DARAH           : ${agent.gol_darah || "-"}
+GOL DARAH           : ${agent.gol_darah || "-"}
 AGAMA               : ${agent.agama || "-"}
 DIKUMTI             : ${agent.dikumti || "-"}
 TMT DIKUMTI         : ${agent.tmt_dikumti || "-"}
@@ -514,11 +514,11 @@ TMT JABATAN         : ${agent.tmt_jabatan_saat_ini || "-"}
 JABATAN YG LALU     : ${agent.jabatan_yg_lalu || "-"}
 TMT JABATAN         : ${agent.tmt_jabatan_yg_lalu || "-"}
 
-[DATA PENDIDIKAN UMUM]
+[TANDA JASA/KEHORMATAN]
 --------------------------------------------------
-SD/ASAL/TH KELUAR   : ${agent.sd || "-"}, ${formatTanggalIndonesia(agent.tahun_keluar_sd)}
-SMP/ASAL/TH KELUAR  : ${agent.smp || "-"}, ${formatTanggalIndonesia(agent.tahun_keluar_smp)}
-SMA/ASAL/TH KELUAR  : ${agent.sma || "-"}, ${formatTanggalIndonesia(agent.tahun_keluar_sma)}
+1. ${agent.sd || "-"}, ${formatTanggalIndonesia(agent.tahun_keluar_sd)}
+2. ${agent.smp || "-"}, ${formatTanggalIndonesia(agent.tahun_keluar_smp)}
+3. ${agent.sma || "-"}, ${formatTanggalIndonesia(agent.tahun_keluar_sma)}
 
 [SECURITY FOOTNOTE]
 --------------------------------------------------
