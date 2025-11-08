@@ -494,27 +494,29 @@ function displayAgent(agent) {
 
 [DATA IDENTITAS]
 --------------------------------------------------
-NAMA LENGKAP       : ${agent.nama_lengkap || "-"}
-PANGKAT            : ${agent.pangkat || "-"}
-NRP/NIP            : ${agent.nrp_nip || "-"}
-JABATAN            : ${agent.jabatan || "-"}
-SATKER             : ${agent.satker || "-"}
-KORPS/SPESIALISASI : ${agent.korp_fung_spes || "-"}
-TEMPAT/TGL LAHIR   : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
-AGAMA              : ${agent.agama || "-"}
-USIA               : ${usia} Tahun
-
-[DATA KGB]
---------------------------------------------------
-KGB TERAKHIR       : ${agent.kgb_terakhir || "-"}
-TMT KGB            : ${formatTanggalIndonesia(agent.tmt_kgb)}
-KGB AKAN DATANG    : ${masaKGB}
+NAMA LENGKAP        : ${agent.nama_lengkap || "-"}
+PANGKAT             : ${agent.pangkat || "-"}
+NRP/NIP             : ${agent.nrp_nip || "-"}
+TEMPAT/TGL LAHIR    : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
+AGAMA               : ${agent.agama || "-"}
+DIKUMTI             : ${agent.dikumti || "-"}
+TMT DIKUMTI         : ${agent.tmt_dikumti || "-"}
+DIKMILTI            : ${agent.dikmilti || "-"}
+TMT DIKMILTI        : ${agent.tmt_dikmilti || "-"}
+USIA                : ${usia} Tahun
 
 [DATA JABATAN]
 --------------------------------------------------
-NOMOR SKEP         : ${agent.nomer_skep || "-"}
-TMT JABATAN        : ${formatTanggalIndonesia(agent.tmt_jabatan)}
-MASA JABATAN       : ${masaKerja}
+JABATAN SAAT INI    : ${agent.jab_saat_ini || "-"}
+TMT JABATAN         : ${agent.tmt_jabatan_saat_ini || "-"}
+JABATAN YG LALU     : ${agent.jabatan_yg_lalu || "-"}
+TMT JABATAN         : ${agent.tmt_jabatan_yg_lalu || "-"}
+
+[DATA PENDIDIKAN UMUM]
+--------------------------------------------------
+SD/ASAL/TH KELUAR   : ${agent.sd || "-"}, ${formatTanggalIndonesia(agent.tahun_keluar_sd)}
+SMP/ASAL/TH KELUAR  : ${agent.smp || "-"}, ${formatTanggalIndonesia(agent.tahun_keluar_smp)}
+SMA/ASAL/TH KELUAR  : ${agent.sma || "-"}, ${formatTanggalIndonesia(agent.tahun_keluar_sma)}
 
 [SECURITY FOOTNOTE]
 --------------------------------------------------
