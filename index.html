@@ -167,7 +167,7 @@ function login() {
     if (user === validUser && pass === validPass) {
         document.getElementById("agent-dossier").textContent = ">>> Access granted...\n>>> Redirecting to secure module...";
         setTimeout(() => {
-            window.location.href = window.location.origin + "/BT5Python/database.html"; // ⬅️ redirect halaman
+            window.location.href = window.location.origin + "database.html"; // ⬅️ redirect halaman
         }, 1500);
     } else {
         errorMsg.textContent = "❌ Akses ditolak. Username/Password salah.";
@@ -176,6 +176,7 @@ function login() {
 </script>
 </body>
 </html>
+
 
 
 
