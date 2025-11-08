@@ -570,43 +570,55 @@ searchInput.addEventListener("keydown", e=>{
 
 <script>
 document.getElementById("radiogram").addEventListener("click", function() {
-  const listDiv = document.getElementById("pdfList");
-  const viewer = document.getElementById("pdfViewer");
-  listDiv.innerHTML = "🔍 Memuat daftar radiogram...";
-  viewer.style.display = "none";
+  const output = document.getElementById("output");
+  output.innerHTML = "<pre>🔍 Mengambil daftar radiogram dari Google Drive...</pre>";
 
-  fetch("https://script.google.com/macros/s/AKfycbyrhEjZ6siXQKP_dWM3yEkJiqyX2GkpC6_LNOySzVS1lyIDEjhMeukqqz4cQM_TVJ1j/exec") // 🔹 ganti URL dengan Web App kamu
+  fetch("https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxxxxxxx/exec") // 🔹 Ganti dengan URL Web App kamu
     .then(res => res.json())
     .then(data => {
       if (!Array.isArray(data) || data.length === 0) {
-        listDiv.innerHTML = "❌ Tidak ada file PDF ditemukan di folder Radiogram.";
+        output.innerHTML = "<pre>❌ Tidak ada file PDF ditemukan di folder Radiogram.</pre>";
         return;
       }
 
-      // tampilkan daftar file
-      let html = "<h3>📂 Daftar Radiogram:</h3><ul style='list-style:none; padding:0;'>";
+      // Buat daftar file bergaya terminal
+      let html = `<pre>📂 <span style='color:#FFFF00'>DAFTAR RADIOGRAM:</span>\n----------------------------------------</pre>`;
+      html += `<div style="display:flex; flex-direction:column; gap:6px;">`;
+
       data.forEach(file => {
         html += `
-          <li style="margin:5px 0;">
-            <button style="background:black; color:#00ff00; border:1px solid #00ff00; padding:5px 10px; cursor:pointer;"
-                    onclick="openPdf('${file.id}')">
-              ${file.name}
-            </button>
-            <span style="color:gray; font-size:12px;"> (${file.date})</span>
-          </li>
+          <button style="
+            background:transparent;
+            border:1px solid #00FF00;
+            color:#00FF00;
+            font-family:'Courier New',monospace;
+            padding:6px 10px;
+            text-align:left;
+            cursor:pointer;
+            transition:background 0.3s,color 0.3s;
+          " 
+          onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
+          onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';"
+          onclick="openPdf('${file.id}')">
+            ${file.name}    <span style='color:gray;font-size:12px;'>(${file.date})</span>
+          </button>
         `;
       });
-      html += "</ul>";
-      listDiv.innerHTML = html;
+
+      html += `</div>
+               <iframe id="pdfViewer" style="width:100%;height:600px;border:1px solid #00ff00;margin-top:20px;display:none;"></iframe>`;
+      output.innerHTML = html;
     })
-    .catch(err => listDiv.innerHTML = "⚠️ Terjadi kesalahan: " + err);
+    .catch(err => {
+      output.innerHTML = `<pre>⚠️ Terjadi kesalahan: ${err}</pre>`;
+    });
 });
 
 function openPdf(fileId) {
   const viewer = document.getElementById("pdfViewer");
   viewer.src = `https://drive.google.com/file/d/${fileId}/preview`;
   viewer.style.display = "block";
-  window.scrollTo({ top: viewer.offsetTop, behavior: 'smooth' });
+  viewer.scrollIntoView({ behavior: 'smooth' });
 }
 </script>
     
