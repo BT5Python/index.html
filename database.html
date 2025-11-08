@@ -571,7 +571,7 @@ searchInput.addEventListener("keydown", e=>{
 <script>
 document.getElementById("radiogram").addEventListener("click", function() {
   const q = document.getElementById("keyword").value.trim();
-  fetch(`https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxxxxxxx/exec?q=${encodeURIComponent(q)}`)
+  fetch(`https://script.google.com/macros/s/AKfycbyDZOQYLDA36B4-P6D2r0niXxLWNy0UxgavBOjzYv6o4oIKY547KB_tc1x5L7QoBjIsfg/exec?q=${encodeURIComponent(q)}`)
     .then(res => res.json())
     .then(data => {
       if (data.fileUrl) {
