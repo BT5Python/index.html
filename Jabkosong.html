@@ -26,100 +26,129 @@ pre { white-space: pre-wrap; word-wrap: break-word; letter-spacing: 1px; line-he
   0%, 100% { color: #ff0000; }
   50% { color: #330000; }
 }
-.yellow { color: #ffff00; font-weight: ; }
+.yellow { color: #ffff00; font-weight: bold; }
+.hidden { display: none; }
 </style>
 </head>
 <body>
-<pre id="terminal" class="typing"></pre>
+
+<!-- Bagian Loading Terminal -->
+<div id="loading">
+  <p>>> initializing connection...</p>
+  <p class="hidden">>>> accessing database node...</p>
+  <p class="hidden">>>> verifying security clearance...</p>
+  <p class="hidden">>>> clearance level verified ✓</p>
+  <p class="hidden">>>> retrieving personnel data...</p>
+</div>
+
+<!-- Bagian Utama: Jabatan Kosong -->
+<pre id="terminal" class="typing hidden"></pre>
 
 <script>
-const textBefore = `
+/* ================== EFEK LOADING TERMINAL ================== */
+const lines = document.querySelectorAll("#loading p");
+let delay = 800; // jeda antar baris loading
+lines.forEach((line, index) => {
+  setTimeout(() => {
+    line.classList.remove("hidden");
+    if (index === lines.length - 1) {
+      setTimeout(() => {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("terminal").classList.remove("hidden");
+        startTyping(); // lanjut ke bagian utama
+      }, 1000);
+    }
+  }, delay * (index + 1));
+});
+
+/* ================== BAGIAN UTAMA: DATA JABATAN ================== */
+async function startTyping() {
+  const textBefore = `
 ====================================
 | FILE: PERSONEL PUSLAT KODIKLATAU |
 | CLASSIFICATION: `;
-const rahasiaWord = "RAHASIA";
-const textAfterTop = `
+  const rahasiaWord = "RAHASIA";
+  const textAfterTop = `
 ====================================
 
 `;
-const titleLine = `<span class="yellow">[   DAFTAR JABATAN KOSONG   ]</span>\n\n`;
-const tableHeader = `
+  const titleLine = `<span class="yellow">[   DAFTAR JABATAN KOSONG   ]</span>\n\n`;
+  const tableHeader = `
 ------------------------------------------------------------------------------------
 NO    JABATAN KOSONG               GOL.JAB   PANGKAT                  KORPS
 ------------------------------------------------------------------------------------
 `;
-const footerText = `
+  const footerText = `
 ------------------------------------------------------------------------------------
 * Data jabatan kosong diperbarui otomatis dari Spreadsheet.
 * Informasi hanya untuk lingkungan PUSLAT KODIKLATAU.
 ------------------------------------------------------------------------------------
 `;
 
-const terminal = document.getElementById("terminal");
-let i = 0, step = 0, rahasiaSpan;
+  const terminal = document.getElementById("terminal");
+  let i = 0, step = 0, rahasiaSpan;
 
-async function fetchData() {
-  const url = "https://script.google.com/macros/s/AKfycbyexzcrZz-eiXwvoYrhpqncUTvN8H1ri-yr3zmmhVcHa4nIFd7p--bfvZY4ZJb9zkqb/exec"; 
-  const res = await fetch(url);
-  return res.json();
-}
-
-async function type() {
-  if (step === 0) {
-    if (i < textBefore.length) {
-      terminal.textContent += textBefore.charAt(i);
-      i++;
-      setTimeout(type, 1);
-    } else {
-      step = 1;
-      i = 0;
-      rahasiaSpan = document.createElement("span");
-      rahasiaSpan.id = "rahasia";
-      terminal.appendChild(rahasiaSpan);
-      type();
-    }
-  } else if (step === 1) {
-    if (i < rahasiaWord.length) {
-      rahasiaSpan.textContent += rahasiaWord.charAt(i);
-      if (i === 0) rahasiaSpan.classList.add("blink-red");
-      i++;
-      setTimeout(type, 1);
-    } else {
-      step = 2;
-      i = 0;
-      type();
-    }
-  } else if (step === 2) {
-    if (i < textAfterTop.length) {
-      terminal.innerHTML += textAfterTop.charAt(i);
-      i++;
-      setTimeout(type, 1);
-    } else {
-      terminal.innerHTML += titleLine;
-      step = 3;
-      i = 0;
-      type();
-    }
-  } else if (step === 3) {
-    terminal.innerHTML += tableHeader;
-    step = 4;
-    const data = await fetchData();
-    data.forEach((row, idx) => {
-      const line = `${row.no.toString().padEnd(5)}${row.jabatan.padEnd(30)}${row.golongan.padEnd(10)}${row.pangkat.padEnd(25)}${row.korps}\n`;
-      
-      // 🔹 Tambahan: Jika baris mengandung "PNS", ubah warnanya jadi kuning
-      if (line.toUpperCase().includes("PNS")) {
-        terminal.innerHTML += `<span class="yellow">${line}</span>`;
-      } else {
-        terminal.innerHTML += line;
-      }
-    });
-    terminal.innerHTML += footerText;
-    terminal.classList.remove("typing");
+  async function fetchData() {
+    const url = "https://script.google.com/macros/s/AKfycbyexzcrZz-eiXwvoYrhpqncUTvN8H1ri-yr3zmmhVcHa4nIFd7p--bfvZY4ZJb9zkqb/exec"; 
+    const res = await fetch(url);
+    return res.json();
   }
-}
 
-type();
+  async function type() {
+    if (step === 0) {
+      if (i < textBefore.length) {
+        terminal.textContent += textBefore.charAt(i);
+        i++;
+        setTimeout(type, 1);
+      } else {
+        step = 1;
+        i = 0;
+        rahasiaSpan = document.createElement("span");
+        rahasiaSpan.id = "rahasia";
+        terminal.appendChild(rahasiaSpan);
+        type();
+      }
+    } else if (step === 1) {
+      if (i < rahasiaWord.length) {
+        rahasiaSpan.textContent += rahasiaWord.charAt(i);
+        if (i === 0) rahasiaSpan.classList.add("blink-red");
+        i++;
+        setTimeout(type, 1);
+      } else {
+        step = 2;
+        i = 0;
+        type();
+      }
+    } else if (step === 2) {
+      if (i < textAfterTop.length) {
+        terminal.innerHTML += textAfterTop.charAt(i);
+        i++;
+        setTimeout(type, 1);
+      } else {
+        terminal.innerHTML += titleLine;
+        step = 3;
+        i = 0;
+        type();
+      }
+    } else if (step === 3) {
+      terminal.innerHTML += tableHeader;
+      step = 4;
+      const data = await fetchData();
+      data.forEach((row) => {
+        const line = `${row.no.toString().padEnd(5)}${row.jabatan.padEnd(30)}${row.golongan.padEnd(10)}${row.pangkat.padEnd(25)}${row.korps}\n`;
+        if (line.toUpperCase().includes("PNS")) {
+          terminal.innerHTML += `<span class="yellow">${line}</span>`;
+        } else {
+          terminal.innerHTML += line;
+        }
+      });
+      terminal.innerHTML += footerText;
+      terminal.classList.remove("typing");
+    }
+  }
+
+  type();
+}
 </script>
 </body>
 </html>
