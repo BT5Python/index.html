@@ -530,22 +530,40 @@ Unauthorized access or duplication is punishable under applicable law.
 Retrieved on: ${new Date().toLocaleString()}
         `;
 
-        // ======== EFEK KETIK TEKS ========
+        // Ketik animasi biodata
         typeWriter(dossierEl, dossier, agent, () => {
-            // ======== TAMBAHKAN TOMBOL DOKUMEN ========
             const docContainer = document.createElement("div");
             docContainer.className = "doc-buttons";
 
+            // Ambil link dari kolom spreadsheet
+            const mergedLink = agent["Merged Doc URL - PEMUKTAHIRAN DATA"];
+            let pdfLink = "#";
+            if (mergedLink) {
+                if (mergedLink.includes("drive.google.com")) {
+                    const match = mergedLink.match(/[-\w]{25,}/);
+                    if (match) pdfLink = `https://drive.google.com/file/d/${match[0]}/preview`;
+                } else {
+                    pdfLink = mergedLink;
+                }
+            }
+
+            // Tombol di bawah biodata
             const docs = [
-                { label: "KOSONG", url: "" },
-                { label: "Riwayat Hidup", url: "https://example.com/riwayat-hidup" },
-                { label: "KOSONG", url: "" }
+                { label: "Pemuktahiran Data", url: pdfLink },
+                { label: "Riwayat Hidup", url: "#" },
+                { label: "KU-1", url: "#" }
             ];
 
             docs.forEach(d => {
                 const btn = document.createElement("button");
                 btn.textContent = d.label;
-                btn.onclick = () => window.open(d.url, "_blank");
+                btn.onclick = () => {
+                    if (d.url === "#" || !d.url) {
+                        alert("❌ File belum tersedia untuk personel ini.");
+                        return;
+                    }
+                    window.open(d.url, "_blank");
+                };
                 docContainer.appendChild(btn);
             });
 
