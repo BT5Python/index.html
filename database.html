@@ -561,30 +561,6 @@ searchInput.addEventListener("keydown", e=>{
         if(query) showMemberButtons(query);
     }
 });
-</script>
-
-<button id="radiogramBtn">RADIOGRAM</button>
-
-<iframe id="pdfViewer" style="width:100%; height:600px; border:1px solid #00ff00; display:none;"></iframe>
-
-<script>
-document.getElementById("radiogramBtn").addEventListener("click", function() {
-  const folderName = prompt("Masukkan nama folder (contoh: Radiogram_001):");
-  if (!folderName) return;
-
-  fetch(`https://script.google.com/macros/s/AKfycbyNzlKXKFX0eMHDm7A4QoJ6GpxGKz8LWdEtLDJ2YyJ84_bHqg4HqV_kZSMX0uXhBq5_tg/exec?folderName=${encodeURIComponent(folderName)}`)
-    .then(res => res.json())
-    .then(data => {
-      if (data.fileUrl) {
-        const viewer = document.getElementById("pdfViewer");
-        viewer.src = `https://drive.google.com/file/d/${data.fileUrl}/preview`;
-        viewer.style.display = "block";
-      } else {
-        alert("File PDF tidak ditemukan di folder tersebut.");
-      }
-    })
-    .catch(err => alert("Terjadi kesalahan: " + err));
-});
     
 </script>
     
