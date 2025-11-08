@@ -573,7 +573,7 @@ document.getElementById("radiogram").addEventListener("click", function() {
   const output = document.getElementById("output");
   output.innerHTML = "<pre>🔍 Mengambil daftar radiogram dari Google Drive...</pre>";
 
-  fetch("https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxxxxxxx/exec") // 🔹 Ganti dengan URL Web App kamu
+  fetch("https://script.google.com/macros/s/AKfycbwyz5SOnUU6BkBmY-o1KsHaUiZ8TBWS-B8w_boZ8Hl0Wx-LnEkelEPYttpCkO0sk2fyaw/exec") // 🔹 Ganti dengan URL Web App kamu
     .then(res => res.json())
     .then(data => {
       if (!Array.isArray(data) || data.length === 0) {
