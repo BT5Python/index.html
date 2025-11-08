@@ -510,7 +510,7 @@ NO TELEPON          : ${agent.no_telepon || "-"}
 [DATA JABATAN]
 --------------------------------------------------
 JABATAN SAAT INI    : ${agent.jab_saat_ini || "-"}
-TMT JABATAN         : ${agent.tmt_jabatan_saat_ini || "-"}
+TMT JABATAN         : ${formatTanggalIndonesia(agent.tmt_jabatan_saat_ini)}
 JABATAN YG LALU     : ${agent.jabatan_yg_lalu || "-"}
 TMT JABATAN         : ${agent.tmt_jabatan_yg_lalu || "-"}
 
