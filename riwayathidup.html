@@ -167,10 +167,10 @@ fetch("https://script.google.com/macros/s/AKfycbzRWVt8FF3kc_99AEtIZxhdF9L3J3aNbf
           if (match && match[1]) {
             photoURL = `https://drive.google.com/uc?export=view&id=${match[1]}`;
           }
-        }
-        // Jika hanya ID (tanpa link)
-        else if (/^[A-Za-z0-9_-]{25,}$/.test(photoURL)) {
-          photoURL = `https://drive.google.com/uc?export=view&id=${photoURL}`;
+        } 
+        else if (photoURL.includes("drive.google.com/open?id=")) {
+          const id = photoURL.split("id=")[1];
+          if (id) photoURL = `https://drive.google.com/uc?export=view&id=${id}`;
         }
       } else {
         // Foto default
