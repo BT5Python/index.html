@@ -140,7 +140,9 @@ header {
     <div id="login-box">
         <h2 style="color:#FFFF00;">LOGIN DATABASE</h2>
         <input type="text" id="username" placeholder="Username">
+        <input type="text" name="username" autocomplete="off" />
         <input type="password" id="password" placeholder="Password">
+        <input type="password" name="password" autocomplete="new-password" />
         <button onclick="login()">ACCESS</button>
         <div id="error-msg"></div>
     </div>
@@ -174,6 +176,7 @@ function login() {
     }
 }
 </script>
+
 
 
 
