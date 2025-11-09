@@ -134,26 +134,36 @@ header {
 
 <!-- ===== LOGIN LAYER ===== -->
 <div id="login-screen">
-    <!-- Add your image here -->
-    <img src="danpus pdh.jpg" alt="Logo">
-    
-    <div id="login-box">
-        <h2 style="color:#FFFF00;">LOGIN DATABASE</h2>
-        <form autocomplete="off">
-        <label>Username:</label><br>
-        <input type="text" name="username" autocomplete="off" />
-        <form autocomplete="off">
-        <label>Password:</label><br>
-        <input type="password" name="password" autocomplete="new-password" />        
-        <button onclick="login()">ACCESS</button>
-        <div id="error-msg"></div>
-    </div>
+  <!-- Add your image here -->
+  <img src="danpus pdh.jpg" alt="Logo">
+
+  <div id="login-box">
+    <h2 style="color:#FFFF00;">LOGIN DATABASE</h2>
+
+    <!-- Gunakan hanya satu form -->
+    <form autocomplete="off">
+      <label>Username:</label><br>
+      <input type="text" name="username" 
+             autocomplete="off" autocorrect="off" 
+             autocapitalize="off" spellcheck="false"><br><br>
+
+      <label>Password:</label><br>
+      <input type="password" name="password" 
+             autocomplete="new-password" autocorrect="off" 
+             autocapitalize="off" spellcheck="false"><br><br>
+
+      <button type="button" onclick="login()">ACCESS</button>
+    </form>
+
+    <div id="error-msg"></div>
+  </div>
 </div>
 
 <header>
-    <h1 class="text">DATABASE PUSLAT KODIKLATAU</h1>
-    <h1 class="text1">PORTAL MONITORING TERMINAL</h1>
+  <h1 class="text">DATABASE PUSLAT KODIKLATAU</h1>
+  <h1 class="text1">PORTAL MONITORING TERMINAL</h1>
 </header>
+
 
 <div class="agent-profile">
     <pre id="agent-dossier">Silakan login untuk mengakses sistem...</pre>
@@ -178,6 +188,7 @@ function login() {
     }
 }
 </script>
+
 
 
 
