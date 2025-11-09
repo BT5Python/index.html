@@ -347,7 +347,7 @@ function typeWriter(element, text, agent, callback, speed = 10) {
 
             // *** LOGIKA TAMPIL FOTO OTOMATIS DI SINI ***
             // Foto akan muncul saat string "NAMA LENGKAP" telah diketik.
-            if (!nameShown && element.textContent.includes("nama_lengkap")) {
+            if (!nameShown && element.textContent.includes("NAMA LENGKAP")) {
                 nameShown = true;
                 setTimeout(() => {
                     if (agent.photo) {
