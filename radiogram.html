@@ -26,23 +26,31 @@
     margin-bottom: 20px;
   }
 
-  #pdfList {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 800px;
-    margin: auto;
+  .folder {
+    border: 1px solid #00ff00;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    background: rgba(0, 255, 0, 0.05);
+  }
+
+  .folder-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #00ff00;
+    margin-bottom: 8px;
   }
 
   .pdf-item {
     border: 1px solid #00ff00;
     border-radius: 8px;
-    padding: 12px;
+    padding: 10px;
     background: rgba(0, 255, 0, 0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: 0.2s;
+    margin-bottom: 8px;
   }
 
   .pdf-item:hover {
@@ -58,11 +66,6 @@
   .pdf-info .name {
     font-weight: bold;
     color: #00ff00;
-  }
-
-  .pdf-info .folder {
-    color: #55ff55;
-    font-size: 12px;
   }
 
   .pdf-info .date {
@@ -141,13 +144,22 @@
 
   <script>
     const apiUrl = "https://script.google.com/macros/s/AKfycbw3vJKvqrevnvYTl1FonnLcUCV2FigZ_AE7wUKeTt_wqs-Yxw8yEMndMU5yLaqVwNByGQ/exec"; 
-    // ⬆️ Ganti dengan URL Web App kamu (hasil deploy "Web App" di Apps Script)
+    // ↑ ganti dengan URL Web App kamu
 
     function formatBytes(bytes) {
       if (bytes === 0) return "0 B";
       const sizes = ["B", "KB", "MB", "GB"];
       const i = Math.floor(Math.log(bytes) / Math.log(1024));
       return parseFloat((bytes / Math.pow(1024, i)).toFixed(1)) + " " + sizes[i];
+    }
+
+    function groupByFolder(list) {
+      const grouped = {};
+      list.forEach(file => {
+        if (!grouped[file.folderPath]) grouped[file.folderPath] = [];
+        grouped[file.folderPath].push(file);
+      });
+      return grouped;
     }
 
     function showList(list) {
@@ -160,35 +172,47 @@
         return;
       }
 
-      list.forEach(file => {
-        const div = document.createElement("div");
-        div.className = "pdf-item";
+      const grouped = groupByFolder(list);
+      Object.keys(grouped).forEach(folderName => {
+        const folderDiv = document.createElement("div");
+        folderDiv.className = "folder";
 
-        const info = document.createElement("div");
-        info.className = "pdf-info";
-        info.innerHTML = `
-          <div class="name">${file.name}</div>
-          <div class="folder">${file.folderPath}</div>
-          <div class="date">📅 ${file.modifiedText} | 💾 ${formatBytes(file.size)}</div>
-        `;
+        const title = document.createElement("div");
+        title.className = "folder-title";
+        title.textContent = "📁 " + folderName;
+        folderDiv.appendChild(title);
 
-        const actions = document.createElement("div");
-        actions.className = "pdf-actions";
+        grouped[folderName].forEach(file => {
+          const div = document.createElement("div");
+          div.className = "pdf-item";
 
-        const viewBtn = document.createElement("button");
-        viewBtn.textContent = "Lihat";
-        viewBtn.onclick = () => openPdf(file.viewUrl, file.name);
+          const info = document.createElement("div");
+          info.className = "pdf-info";
+          info.innerHTML = `
+            <div class="name">${file.name}</div>
+            <div class="date">📅 ${file.modifiedText} | 💾 ${formatBytes(file.size)}</div>
+          `;
 
-        const downloadBtn = document.createElement("button");
-        downloadBtn.textContent = "Unduh";
-        downloadBtn.onclick = () => window.open(file.downloadUrl, "_blank");
+          const actions = document.createElement("div");
+          actions.className = "pdf-actions";
 
-        actions.appendChild(viewBtn);
-        actions.appendChild(downloadBtn);
+          const viewBtn = document.createElement("button");
+          viewBtn.textContent = "Lihat";
+          viewBtn.onclick = () => openPdf(file.viewUrl, file.name);
 
-        div.appendChild(info);
-        div.appendChild(actions);
-        container.appendChild(div);
+          const downloadBtn = document.createElement("button");
+          downloadBtn.textContent = "Unduh";
+          downloadBtn.onclick = () => window.open(file.downloadUrl, "_blank");
+
+          actions.appendChild(viewBtn);
+          actions.appendChild(downloadBtn);
+
+          div.appendChild(info);
+          div.appendChild(actions);
+          folderDiv.appendChild(div);
+        });
+
+        container.appendChild(folderDiv);
       });
     }
 
