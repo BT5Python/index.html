@@ -557,23 +557,42 @@ Retrieved on: ${new Date().toLocaleString()}
             // Ambil link dari spreadsheet
 const pemuktahiranLink = agent["Merged Doc URL - PEMUKTAHIRAN DATA"];
 const riwayatHidupLink = agent["Merged Doc URL - RIWAYAT HIDUP PERSONEL PUSLAT"];
-const ku1Link = agent["Merged Doc URL - KU-1"]; // kalau kolom ini ada
+const ku1Link = agent["Merged Doc URL - KU-1"]; // kalau ada kolom KU-1 di spreadsheet
 
 function normalizeDriveLink(link) {
-    if (!link) return "#";
-    if (link.includes("drive.google.com")) {
-        const match = link.match(/[-\w]{25,}/);
-        if (match) return `https://drive.google.com/file/d/${match[0]}/preview`;
-    }
-    return link;
+  if (!link) return null;
+  link = link.trim();
+  if (link.includes("drive.google.com")) {
+    const match = link.match(/[-\w]{25,}/);
+    if (match) return `https://drive.google.com/file/d/${match[0]}/preview`;
+  }
+  return link || null;
 }
 
-// Tombol di bawah biodata
 const docs = [
-    { label: "Pemuktahiran Data", url: normalizeDriveLink(pemuktahiranLink) },
-    { label: "Riwayat Hidup", url: normalizeDriveLink(riwayatHidupLink) },
-    { label: "KU-1", url: normalizeDriveLink(ku1Link) }
+  { label: "Pemuktahiran Data", url: normalizeDriveLink(pemuktahiranLink) },
+  { label: "Riwayat Hidup", url: normalizeDriveLink(riwayatHidupLink) },
+  { label: "KU-1", url: normalizeDriveLink(ku1Link) }
 ];
+
+// Buat tombol-tombolnya
+const docContainer = document.createElement("div");
+docContainer.className = "doc-buttons";
+
+docs.forEach(d => {
+  const btn = document.createElement("button");
+  btn.textContent = d.label;
+  btn.onclick = () => {
+    if (!d.url) {
+      alert("❌ File belum tersedia untuk personel ini.");
+      return;
+    }
+    window.open(d.url, "_blank");
+  };
+  docContainer.appendChild(btn);
+});
+
+agentContainer.appendChild(docContainer);
 
 
             docs.forEach(d => {
