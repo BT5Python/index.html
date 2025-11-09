@@ -12,7 +12,6 @@ body {
   padding: 20px;
   font-size: 12px;
   text-align: left;
-  overflow-x: hidden;
 }
 pre { 
   white-space: pre-wrap; 
@@ -72,31 +71,22 @@ button.download-btn:hover {
   animation: none;
 }
 
-/* === RUNNING TEXT (tetap di atas, tidak ketiban) === */
+/* Running text di atas daftar jabatan */
 #runningText {
-  position: fixed;
-  top: 160px; /* jarak dari atas halaman, bisa disesuaikan */
-  left: 0;
-  width: 100%;
-  background: black;
   color: #00ff00;
-  font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
-  box-sizing: border-box;
-  z-index: 999; /* biar gak ketiban teks */
-  border-top: 1px solid #00ff00;
-  border-bottom: 1px solid #00ff00;
-  padding: 2px 0;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 #runningText span {
   display: inline-block;
   padding-left: 100%;
-  animation: runText 25s linear infinite;
+  animation: runText 15s linear infinite;
 }
 @keyframes runText {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
 }
 </style>
 </head>
@@ -112,11 +102,12 @@ button.download-btn:hover {
 </div>
 
 <!-- Bagian Utama -->
-<pre id="terminal" class="typing hidden"></pre>
-
-<!-- Running text di atas daftar jabatan -->
-<div id="runningText" class="hidden">
-  <span>⚡ DATA TERKINI JABATAN KOSONG PUSLAT KODIKLATAU | UPDATE OTOMATIS SETIAP HARI | HANYA UNTUK LINGKUNGAN INTERNAL ⚡</span>
+<div id="main" class="hidden">
+  <!-- Running text muncul di atas daftar jabatan -->
+  <div id="runningText">
+    <span>⚠ DATA INI BERSIFAT RAHASIA - HANYA UNTUK LINGKUNGAN PUSLAT KODIKLATAU ⚠ </span>
+  </div>
+  <pre id="terminal" class="typing"></pre>
 </div>
 
 <!-- Tombol di bawah -->
@@ -135,7 +126,7 @@ lines.forEach((line, index) => {
     if (index === lines.length - 1) {
       setTimeout(() => {
         document.getElementById("loading").style.display = "none";
-        document.getElementById("terminal").classList.remove("hidden");
+        document.getElementById("main").classList.remove("hidden");
         startTyping();
       }, 1000);
     }
@@ -153,7 +144,8 @@ async function startTyping() {
 ====================================
 `;
   const titleLine = `<span class="yellow"></span>\n\n`;
-  const tableHeader = ``;
+  const tableHeader = `
+`;
   const footerText = `
 --------------------------------------------------------------------------------------------------------------
 * Data jabatan kosong diperbarui otomatis dari Spreadsheet.
@@ -207,9 +199,6 @@ async function startTyping() {
         type();
       }
     } else if (step === 3) {
-      // ✅ tampilkan running text (tetap di atas)
-      document.getElementById("runningText").classList.remove("hidden");
-
       terminal.innerHTML += tableHeader;
       step = 4;
       const data = await fetchData();
@@ -224,7 +213,7 @@ async function startTyping() {
       terminal.innerHTML += footerText;
       terminal.classList.remove("typing");
 
-      // ✅ tampilkan tombol setelah selesai
+      // ✅ Tampilkan tombol setelah selesai
       document.getElementById("buttons").classList.remove("hidden");
     }
   }
