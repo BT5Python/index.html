@@ -157,33 +157,27 @@ fetch("https://script.google.com/macros/s/AKfycbzRWVt8FF3kc_99AEtIZxhdF9L3J3aNbf
   .then(res => res.json())
   .then(data => {
     personnelDB = data.map(person => {
-      // ✅ Gunakan kolom "FOTO" dari Google Sheet
-      let photoURL = person.FOTO?.trim() || "";
+      let foto = person.FOTO?.trim() || "";
 
-      if (photoURL) {
-        // Ubah link Google Drive ke format direct
-        if (photoURL.includes("drive.google.com/file/d/")) {
-          const match = photoURL.match(/\/d\/(.*?)\//);
-          if (match && match[1]) {
-            photoURL = `https://drive.google.com/uc?export=view&id=${match[1]}`;
-          }
-        } 
-        else if (photoURL.includes("drive.google.com/open?id=")) {
-          const id = photoURL.split("id=")[1];
-          if (id) photoURL = `https://drive.google.com/uc?export=view&id=${id}`;
-        }
-      } else {
-        // Gunakan foto default jika kosong
-        photoURL = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2";
+      if (foto.includes("drive.google.com/file/d/")) {
+        const id = foto.split("/d/")[1].split("/")[0];
+        foto = `https://drive.google.com/uc?export=view&id=${id}`;
+      } else if (foto.includes("open?id=")) {
+        const id = foto.split("id=")[1];
+        foto = `https://drive.google.com/uc?export=view&id=${id}`;
       }
 
-      return { ...person, photo: photoURL }; // Simpan hasil di properti 'photo'
+      if (!foto) {
+        foto = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2";
+      }
+
+      return { ...person, FOTO: foto };
     });
 
-    console.log("✅ Data loaded & photo links normalized", personnelDB);
     populateCategoryDropdown();
   })
-  .catch(err => console.error("❌ Gagal memuat data:", err));
+  .catch(err => console.error("Gagal memuat data:", err));
+
 </script>
 
 
