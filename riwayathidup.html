@@ -418,18 +418,20 @@ function showMemberButtons(keyword){
 }
     
 // ======== TAMPILKAN BIODATA DETAIL ========
+// ======== TAMPILKAN BIODATA DETAIL ========
 function displayAgent(agent) {
     // 1. Reset tampilan
     dossierEl.textContent = "Processing...";
     photoEl.style.display = "none";
     photoEl.style.opacity = 0; 
     
-    // 2. Set sumber foto
+    // **PINDAHKAN PENGATURAN SRC KE SINI (Di luar animasi)**
     if (agent.photo) {
         photoEl.src = agent.photo;
     } else {
         photoEl.src = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2"; // Default
     }
+    // **PENTING: JANGAN tampilkan di sini, biarkan JS di typeWriter yang menampilkan.**
 
     // 3. Hapus tombol dokumen sebelumnya
     const oldDocs = agentContainer.querySelector(".doc-buttons");
@@ -437,9 +439,14 @@ function displayAgent(agent) {
 
     // 4. Mulai simulasi loading
     simulateAccessSequence(dossierEl, () => {
-        const masaKerja = getMasaKerja(agent.tmt_jabatan_saat_ini);
-        const nextKGBInfo = getNextKGB(agent.tmt_kgb);
-        const usia = calculateAge(agent.tanggal_lahir);
+        // ... (Logika perhitungan) ...
+        
+        // Ketik animasi biodata
+        typeWriter(dossierEl, dossier, agent, () => {
+            // ... (Kode membuat tombol dokumen) ...
+        });
+    });
+}
 
         // ======== TEMPLATE DATA PERSONEL ========
         const dossier = `
