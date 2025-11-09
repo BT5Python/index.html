@@ -49,7 +49,14 @@ button:hover {
   <div id="content">Memuat struktur folder...</div>
 
   <script>
-  google.script.run.withSuccessHandler(displayStructure).getDriveStructure();
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-DmfVUlDMjyMQutcjmH-R-GYIDepg__bijPS3xlKhGWvzs1sWZtjVcHn2O9SEn1C8ww/exec'; // ganti URL kamu
+
+  fetch(SCRIPT_URL)
+    .then(r => r.json())
+    .then(data => displayStructure(data))
+    .catch(err => {
+      document.getElementById('content').innerHTML = `<b style="color:red">Gagal memuat data</b><br>${err}`;
+    });
 
   function displayStructure(data) {
     document.getElementById('content').innerHTML = renderFolder(data);
@@ -64,7 +71,7 @@ button:hover {
       } else {
         html += `
           <div class="file-item">
-            📄 ${item.name}  
+            📄 ${item.name}
             <button onclick="window.open('${item.url}', '_blank')">Lihat</button>
             <button onclick="downloadFile('${item.url}')">Unduh</button>
             <div style="font-size:11px; color:#66ff66;">${item.date} | ${item.size}</div>
