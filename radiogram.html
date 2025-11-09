@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PUSLAT KODIKLATAU - PDF VIEWER</title>
+<title>PUSLAT KODIKLATAU - PDF DATABASE</title>
 <style>
   body {
     background-color: black;
@@ -23,59 +23,41 @@
     text-align: center;
     font-size: 13px;
     color: #7fff7f;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
 
-  .folder {
+  .folder, .pdf-item {
     border: 1px solid #00ff00;
     border-radius: 8px;
     padding: 10px;
-    margin-bottom: 15px;
-    background: rgba(0, 255, 0, 0.05);
+    background: rgba(0,255,0,0.05);
+    margin-bottom: 8px;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+
+  .folder:hover, .pdf-item:hover {
+    background: rgba(0,255,0,0.15);
   }
 
   .folder-title {
     font-weight: bold;
-    font-size: 16px;
-    color: #00ff00;
-    margin-bottom: 8px;
+    font-size: 14px;
   }
 
   .pdf-item {
-    border: 1px solid #00ff00;
-    border-radius: 8px;
-    padding: 10px;
-    background: rgba(0, 255, 0, 0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: 0.2s;
-    margin-bottom: 8px;
-  }
-
-  .pdf-item:hover {
-    background: rgba(0, 255, 0, 0.15);
   }
 
   .pdf-info {
     flex: 1;
-    overflow-wrap: anywhere;
     font-size: 13px;
   }
 
   .pdf-info .name {
     font-weight: bold;
-    color: #00ff00;
-  }
-
-  .pdf-info .date {
-    font-size: 12px;
-    color: #88ff88;
-  }
-
-  .pdf-actions {
-    display: flex;
-    gap: 8px;
   }
 
   .pdf-actions button {
@@ -100,14 +82,13 @@
   }
 
   .back-btn {
-    display: inline-block;
-    margin-top: 10px;
     border: 1px solid #00ff00;
     color: #00ff00;
     background: none;
     padding: 5px 12px;
     border-radius: 8px;
     cursor: pointer;
+    margin-bottom: 15px;
   }
 
   .back-btn:hover {
@@ -119,8 +100,7 @@
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
-    box-sizing: border-box;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 
   .running-text span {
@@ -136,15 +116,118 @@
 </style>
 </head>
 <body>
-  <div class="running-text"><span>*** DATA PDF TERKINI PUSLAT KODIKLATAU - PEMINDAIAN OTOMATIS DARI FOLDER DAN SUBFOLDER DRIVE ***</span></div>
+  <div class="running-text">
+    <span>*** PUSLAT KODIKLATAU - PEMINDAIAN OTOMATIS PDF BERDASARKAN TAHUN / BULAN / TANGGAL DARI DRIVE ***</span>
+  </div>
 
   <h1>PUSLAT KODIKLATAU - PDF DATABASE</h1>
-  <div id="status">Sedang memuat data PDF dari Google Drive...</div>
+  <div id="status">Memuat data PDF dari Google Drive...</div>
   <div id="pdfList"></div>
 
   <script>
-    const apiUrl = "https://script.google.com/macros/s/AKfycbw3vJKvqrevnvYTl1FonnLcUCV2FigZ_AE7wUKeTt_wqs-Yxw8yEMndMU5yLaqVwNByGQ/exec"; 
-    // ↑ ganti dengan URL Web App kamu
+    const apiUrl = "https://script.google.com/macros/s/AKfycbw3vJKvqrevnvYTl1FonnLcUCV2FigZ_AE7wUKeTt_wqs-Yxw8yEMndMU5yLaqVwNByGQ/exec"; // Ganti dengan URL Web App kamu
+
+    let fullData = [];
+    let currentPath = { tahun: null, bulan: null, tanggal: null };
+
+    async function loadData() {
+      document.getElementById("status").textContent = "Mengambil data dari server...";
+      try {
+        const res = await fetch(apiUrl);
+        fullData = await res.json();
+        document.getElementById("status").textContent = `Ditemukan ${fullData.length} file PDF dari semua folder.`;
+        showTahun();
+      } catch (err) {
+        document.getElementById("status").textContent = "Gagal memuat data: " + err.message;
+      }
+    }
+
+    function groupBy(arr, key) {
+      return arr.reduce((acc, item) => {
+        const val = item[key];
+        if (!acc[val]) acc[val] = [];
+        acc[val].push(item);
+        return acc;
+      }, {});
+    }
+
+    function showTahun() {
+      const container = document.getElementById("pdfList");
+      container.innerHTML = "";
+      const grouped = groupBy(fullData, "tahun");
+      for (const tahun in grouped) {
+        const div = document.createElement("div");
+        div.className = "folder";
+        div.textContent = "📁 " + tahun;
+        div.onclick = () => showBulan(tahun);
+        container.appendChild(div);
+      }
+    }
+
+    function showBulan(tahun) {
+      currentPath.tahun = tahun;
+      const container = document.getElementById("pdfList");
+      container.innerHTML = `<button class="back-btn" onclick="showTahun()">← Kembali ke Tahun</button>`;
+      const filtered = fullData.filter(f => f.tahun === tahun);
+      const grouped = groupBy(filtered, "bulan");
+      for (const bulan in grouped) {
+        const div = document.createElement("div");
+        div.className = "folder";
+        div.textContent = "📁 " + bulan;
+        div.onclick = () => showTanggal(tahun, bulan);
+        container.appendChild(div);
+      }
+    }
+
+    function showTanggal(tahun, bulan) {
+      currentPath.bulan = bulan;
+      const container = document.getElementById("pdfList");
+      container.innerHTML = `<button class="back-btn" onclick="showBulan('${tahun}')">← Kembali ke Bulan</button>`;
+      const filtered = fullData.filter(f => f.tahun === tahun && f.bulan === bulan);
+      const grouped = groupBy(filtered, "tanggal");
+      for (const tanggal in grouped) {
+        const div = document.createElement("div");
+        div.className = "folder";
+        div.textContent = "📁 " + tanggal;
+        div.onclick = () => showFiles(tahun, bulan, tanggal);
+        container.appendChild(div);
+      }
+    }
+
+    function showFiles(tahun, bulan, tanggal) {
+      currentPath.tanggal = tanggal;
+      const container = document.getElementById("pdfList");
+      container.innerHTML = `<button class="back-btn" onclick="showTanggal('${tahun}','${bulan}')">← Kembali ke Tanggal</button>`;
+      const files = fullData.filter(f => f.tahun === tahun && f.bulan === bulan && f.tanggal === tanggal);
+
+      files.forEach(file => {
+        const div = document.createElement("div");
+        div.className = "pdf-item";
+
+        const info = document.createElement("div");
+        info.className = "pdf-info";
+        info.innerHTML = `<div class="name">${file.name}</div>
+                          <div>📅 ${file.modifiedText} | 💾 ${formatBytes(file.size)}</div>`;
+
+        const actions = document.createElement("div");
+        actions.className = "pdf-actions";
+
+        const viewBtn = document.createElement("button");
+        viewBtn.textContent = "Lihat";
+        viewBtn.onclick = () => openPdf(file.viewUrl, file.name);
+
+        const downloadBtn = document.createElement("button");
+        downloadBtn.textContent = "Unduh";
+        downloadBtn.onclick = () => window.open(file.downloadUrl, "_blank");
+
+        actions.appendChild(viewBtn);
+        actions.appendChild(downloadBtn);
+
+        div.appendChild(info);
+        div.appendChild(actions);
+        container.appendChild(div);
+      });
+    }
 
     function formatBytes(bytes) {
       if (bytes === 0) return "0 B";
@@ -153,91 +236,15 @@
       return parseFloat((bytes / Math.pow(1024, i)).toFixed(1)) + " " + sizes[i];
     }
 
-    function groupByFolder(list) {
-      const grouped = {};
-      list.forEach(file => {
-        if (!grouped[file.folderPath]) grouped[file.folderPath] = [];
-        grouped[file.folderPath].push(file);
-      });
-      return grouped;
-    }
-
-    function showList(list) {
-      const container = document.getElementById("pdfList");
-      container.innerHTML = "";
-      document.getElementById("status").textContent = `Ditemukan ${list.length} file PDF dari semua folder.`;
-
-      if (list.length === 0) {
-        container.innerHTML = "<div style='text-align:center;color:#7fff7f;'>Tidak ada file PDF ditemukan.</div>";
-        return;
-      }
-
-      const grouped = groupByFolder(list);
-      Object.keys(grouped).forEach(folderName => {
-        const folderDiv = document.createElement("div");
-        folderDiv.className = "folder";
-
-        const title = document.createElement("div");
-        title.className = "folder-title";
-        title.textContent = "📁 " + folderName;
-        folderDiv.appendChild(title);
-
-        grouped[folderName].forEach(file => {
-          const div = document.createElement("div");
-          div.className = "pdf-item";
-
-          const info = document.createElement("div");
-          info.className = "pdf-info";
-          info.innerHTML = `
-            <div class="name">${file.name}</div>
-            <div class="date">📅 ${file.modifiedText} | 💾 ${formatBytes(file.size)}</div>
-          `;
-
-          const actions = document.createElement("div");
-          actions.className = "pdf-actions";
-
-          const viewBtn = document.createElement("button");
-          viewBtn.textContent = "Lihat";
-          viewBtn.onclick = () => openPdf(file.viewUrl, file.name);
-
-          const downloadBtn = document.createElement("button");
-          downloadBtn.textContent = "Unduh";
-          downloadBtn.onclick = () => window.open(file.downloadUrl, "_blank");
-
-          actions.appendChild(viewBtn);
-          actions.appendChild(downloadBtn);
-
-          div.appendChild(info);
-          div.appendChild(actions);
-          folderDiv.appendChild(div);
-        });
-
-        container.appendChild(folderDiv);
-      });
-    }
-
     function openPdf(url, name) {
       document.body.innerHTML = `
         <h1>${name}</h1>
         <button class="back-btn" onclick="location.reload()">← Kembali</button>
-        <iframe src="${url}" allow="autoplay"></iframe>
+        <iframe src="${url}"></iframe>
       `;
     }
 
-    function showError(err) {
-      document.getElementById("status").textContent = "Gagal memuat data: " + err.message;
-    }
-
-    window.onload = async function() {
-      document.getElementById("status").textContent = "Mengambil data dari server...";
-      try {
-        const res = await fetch(apiUrl);
-        const data = await res.json();
-        showList(data);
-      } catch (err) {
-        showError(err);
-      }
-    };
+    window.onload = loadData;
   </script>
 </body>
 </html>
