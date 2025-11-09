@@ -156,18 +156,18 @@ let personnelDB = [];
 fetch("https://script.google.com/macros/s/AKfycbzRWVt8FF3kc_99AEtIZxhdF9L3J3aNbfdN31LN_9i58KEvtE2TDaod8eqffzmI6cO7ig/exec")
   .then(res => res.json())
   .then(data => {
-    // ✅ Bersihkan dan konversi link foto agar bisa langsung tampil
-    personnelDB = data.map(person => {
-      let photoURL = person.FOTO?.trim() || person.photoid?.trim() || "";
+       // ✅ Bersihkan dan konversi link foto agar bisa langsung tampil
+       const dataWithPhoto = data.map(person => {
+       // ambil foto dari kolom FOTO (kalau ada)
+       let fotoURL = person.FOTO || "";
 
-      if (photoURL) {
-        // Jika link Google Drive berformat /file/d/ID/view → ubah ke format direct
-        if (photoURL.includes("drive.google.com/file/d/")) {
-          const match = photoURL.match(/\/d\/(.*?)\//);
-          if (match && match[1]) {
-            photoURL = `https://drive.google.com/uc?export=view&id=${match[1]}`;
-          }
-        }
+       if (fotoURL.includes("drive.google.com/file/d/")) {
+       const id = fotoURL.split("/d/")[1].split("/")[0];
+       <img src="${person.fotoURL}" alt="Foto Personel" style="width:150px; border-radius:10px;">
+
+      }
+      return { ...person, fotoURL };
+    });
         // Jika hanya ID (tanpa link)
         else if (/^[A-Za-z0-9_-]{25,}$/.test(photoURL)) {
           photoURL = `https://drive.google.com/uc?export=view&id=${photoURL}`;
