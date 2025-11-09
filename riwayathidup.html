@@ -351,7 +351,7 @@ function typeWriter(element, text, agent, callback, speed = 10) {
                 nameShown = true;
                 setTimeout(() => {
                     if (agent.photo) {
-                        photoEl.src = agent.photo;
+                        photoEl.src = agent.photo; 
                         photoEl.style.display = "block";
                         setTimeout(() => (photoEl.style.opacity = 1), 100); // Efek Fade In
                     }
@@ -418,20 +418,18 @@ function showMemberButtons(keyword){
 }
     
 // ======== TAMPILKAN BIODATA DETAIL ========
-// ======== TAMPILKAN BIODATA DETAIL ========
 function displayAgent(agent) {
     // 1. Reset tampilan
     dossierEl.textContent = "Processing...";
     photoEl.style.display = "none";
     photoEl.style.opacity = 0; 
     
-    // **PINDAHKAN PENGATURAN SRC KE SINI (Di luar animasi)**
+    // 2. Set sumber foto
     if (agent.photo) {
         photoEl.src = agent.photo;
     } else {
         photoEl.src = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2"; // Default
     }
-    // **PENTING: JANGAN tampilkan di sini, biarkan JS di typeWriter yang menampilkan.**
 
     // 3. Hapus tombol dokumen sebelumnya
     const oldDocs = agentContainer.querySelector(".doc-buttons");
@@ -439,14 +437,9 @@ function displayAgent(agent) {
 
     // 4. Mulai simulasi loading
     simulateAccessSequence(dossierEl, () => {
-        // ... (Logika perhitungan) ...
-        
-        // Ketik animasi biodata
-        typeWriter(dossierEl, dossier, agent, () => {
-            // ... (Kode membuat tombol dokumen) ...
-        });
-    });
-}
+        const masaKerja = getMasaKerja(agent.tmt_jabatan_saat_ini);
+        const nextKGBInfo = getNextKGB(agent.tmt_kgb);
+        const usia = calculateAge(agent.tanggal_lahir);
 
         // ======== TEMPLATE DATA PERSONEL ========
         const dossier = `
