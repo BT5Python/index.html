@@ -12,15 +12,13 @@ body {
   padding: 20px;
   font-size: 12px;
   text-align: left;
-  position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 pre { 
   white-space: pre-wrap; 
   word-wrap: break-word; 
   letter-spacing: 1px; 
   line-height: 1.5; 
-  margin: 0;
 }
 .typing {
   border-right: 2px solid #00ff00;
@@ -74,23 +72,31 @@ button.download-btn:hover {
   animation: none;
 }
 
-/* ================== RUNNING TEXT ================== */
-#runningTextContainer {
-  width: 100%;
-  overflow: hidden;
-  height: 18px;
-  position: absolute;
-  top: 118px; /* posisi tetap di bawah RAHASIA */
-  left: 0;
-}
+/* === RUNNING TEXT (tetap di atas, tidak ketiban) === */
 #runningText {
-  position: absolute;
+  position: fixed;
+  top: 160px; /* jarak dari atas halaman, bisa disesuaikan */
+  left: 0;
+  width: 100%;
+  background: black;
+  color: #00ff00;
+  font-size: 12px;
   white-space: nowrap;
-  animation: runText 15s linear infinite;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 999; /* biar gak ketiban teks */
+  border-top: 1px solid #00ff00;
+  border-bottom: 1px solid #00ff00;
+  padding: 2px 0;
+}
+#runningText span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: runText 25s linear infinite;
 }
 @keyframes runText {
-  0% { left: 100%; }
-  100% { left: -100%; }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
 </style>
 </head>
@@ -108,9 +114,9 @@ button.download-btn:hover {
 <!-- Bagian Utama -->
 <pre id="terminal" class="typing hidden"></pre>
 
-<!-- RUNNING TEXT (selalu di bawah RAHASIA, tidak bergeser) -->
-<div id="runningTextContainer" class="hidden">
-  <div id="runningText">[ INFO ] Sistem berjalan normal • Data Jabatan Kosong sedang diperbarui • PUSLAT KODIKLATAU •</div>
+<!-- Running text di atas daftar jabatan -->
+<div id="runningText" class="hidden">
+  <span>⚡ DATA TERKINI JABATAN KOSONG PUSLAT KODIKLATAU | UPDATE OTOMATIS SETIAP HARI | HANYA UNTUK LINGKUNGAN INTERNAL ⚡</span>
 </div>
 
 <!-- Tombol di bawah -->
@@ -147,8 +153,7 @@ async function startTyping() {
 ====================================
 `;
   const titleLine = `<span class="yellow"></span>\n\n`;
-  const tableHeader = `
-`;
+  const tableHeader = ``;
   const footerText = `
 --------------------------------------------------------------------------------------------------------------
 * Data jabatan kosong diperbarui otomatis dari Spreadsheet.
@@ -188,8 +193,6 @@ async function startTyping() {
       } else {
         step = 2;
         i = 0;
-        // ✅ Setelah teks RAHASIA selesai, tampilkan running text
-        document.getElementById("runningTextContainer").classList.remove("hidden");
         type();
       }
     } else if (step === 2) {
@@ -204,6 +207,9 @@ async function startTyping() {
         type();
       }
     } else if (step === 3) {
+      // ✅ tampilkan running text (tetap di atas)
+      document.getElementById("runningText").classList.remove("hidden");
+
       terminal.innerHTML += tableHeader;
       step = 4;
       const data = await fetchData();
@@ -218,7 +224,7 @@ async function startTyping() {
       terminal.innerHTML += footerText;
       terminal.classList.remove("typing");
 
-      // ✅ Tampilkan tombol setelah selesai
+      // ✅ tampilkan tombol setelah selesai
       document.getElementById("buttons").classList.remove("hidden");
     }
   }
