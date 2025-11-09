@@ -158,7 +158,7 @@ fetch("https://script.google.com/macros/s/AKfycbzRWVt8FF3kc_99AEtIZxhdF9L3J3aNbf
   .then(data => {
     // ✅ Bersihkan dan konversi link foto agar bisa langsung tampil
     personnelDB = data.map(person => {
-      let photoURL = person.photo?.trim() || "";
+      let photoURL = person.FOTO?.trim() || person.photoid?.trim() || "";
 
       if (photoURL) {
         // Jika link Google Drive berformat /file/d/ID/view → ubah ke format direct
