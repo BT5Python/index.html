@@ -575,9 +575,13 @@ let previousFolderId = null;
 
 // 🔸 Tombol Radiogram diklik
 document.getElementById("radiogram").addEventListener("click", () => {
-  currentFolderId = null;
-  loadFolders();
+ // 🔹 buka halaman radiogram.html di tab yang sama
+ window.location.href = "radiogram.html";
+
+ // 🔸 jika ingin buka di tab baru, pakai baris ini saja:
+ // window.open("radiogram.html", "_blank");
 });
+
 
 // 🔸 Ambil daftar folder dari root Radiogram
 function loadFolders() {
