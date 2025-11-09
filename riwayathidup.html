@@ -128,7 +128,7 @@ button:hover { background-color: #00FF00; color: black; }
         <h2>Puslat Kodiklatau</h2>
         <label for="category-filter">Filter By Category:</label>
         <select id="category-filter">
-          <option value=""></option>
+          <option value="">-- All Categories --</option>
         </select>
 
         <label for="search">Enter the Unit Keyword / Full Name</label>
@@ -156,29 +156,34 @@ let personnelDB = [];
 fetch("https://script.google.com/macros/s/AKfycbzRWVt8FF3kc_99AEtIZxhdF9L3J3aNbfdN31LN_9i58KEvtE2TDaod8eqffzmI6cO7ig/exec")
   .then(res => res.json())
   .then(data => {
+    // ✅ Bersihkan dan konversi link foto agar bisa langsung tampil
     personnelDB = data.map(person => {
-      let foto = person.FOTO?.trim() || "";
+      let photoURL = person.photo?.trim() || "";
 
-      if (foto.includes("drive.google.com/file/d/")) {
-        const id = foto.split("/d/")[1].split("/")[0];
-        foto = `https://drive.google.com/uc?export=view&id=${id}`;
-      } else if (foto.includes("open?id=")) {
-        const id = foto.split("id=")[1];
-        foto = `https://drive.google.com/uc?export=view&id=${id}`;
+      if (photoURL) {
+        // Jika link Google Drive berformat /file/d/ID/view → ubah ke format direct
+        if (photoURL.includes("drive.google.com/file/d/")) {
+          const match = photoURL.match(/\/d\/(.*?)\//);
+          if (match && match[1]) {
+            photoURL = `https://drive.google.com/uc?export=view&id=${match[1]}`;
+          }
+        }
+        // Jika hanya ID (tanpa link)
+        else if (/^[A-Za-z0-9_-]{25,}$/.test(photoURL)) {
+          photoURL = `https://drive.google.com/uc?export=view&id=${photoURL}`;
+        }
+      } else {
+        // Foto default
+        photoURL = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2";
       }
 
-      if (!foto) {
-        foto = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2";
-      }
-
-      return { ...person, FOTO: foto };
+      return { ...person, photo: photoURL };
     });
 
+    console.log("✅ Data loaded & photo links normalized", personnelDB);
     populateCategoryDropdown();
   })
-  .catch(err => console.error("Gagal memuat data:", err));
-
-</script>
+  .catch(err => console.error("❌ Gagal memuat data:", err));
 
 
 function populateCategoryDropdown() {
