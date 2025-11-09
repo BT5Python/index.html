@@ -12,12 +12,15 @@ body {
   padding: 20px;
   font-size: 12px;
   text-align: left;
+  position: relative;
+  overflow: hidden;
 }
 pre { 
   white-space: pre-wrap; 
   word-wrap: break-word; 
   letter-spacing: 1px; 
   line-height: 1.5; 
+  margin: 0;
 }
 .typing {
   border-right: 2px solid #00ff00;
@@ -70,6 +73,25 @@ button.download-btn:hover {
   color: black;
   animation: none;
 }
+
+/* ================== RUNNING TEXT ================== */
+#runningTextContainer {
+  width: 100%;
+  overflow: hidden;
+  height: 18px;
+  position: absolute;
+  top: 118px; /* posisi tetap di bawah RAHASIA */
+  left: 0;
+}
+#runningText {
+  position: absolute;
+  white-space: nowrap;
+  animation: runText 15s linear infinite;
+}
+@keyframes runText {
+  0% { left: 100%; }
+  100% { left: -100%; }
+}
 </style>
 </head>
 <body>
@@ -85,6 +107,11 @@ button.download-btn:hover {
 
 <!-- Bagian Utama -->
 <pre id="terminal" class="typing hidden"></pre>
+
+<!-- RUNNING TEXT (selalu di bawah RAHASIA, tidak bergeser) -->
+<div id="runningTextContainer" class="hidden">
+  <div id="runningText">[ INFO ] Sistem berjalan normal • Data Jabatan Kosong sedang diperbarui • PUSLAT KODIKLATAU •</div>
+</div>
 
 <!-- Tombol di bawah -->
 <div class="button-container hidden" id="buttons">
@@ -161,6 +188,8 @@ async function startTyping() {
       } else {
         step = 2;
         i = 0;
+        // ✅ Setelah teks RAHASIA selesai, tampilkan running text
+        document.getElementById("runningTextContainer").classList.remove("hidden");
         type();
       }
     } else if (step === 2) {
@@ -199,7 +228,6 @@ async function startTyping() {
 
 /* ================== FUNGSI DOWNLOAD ================== */
 function downloadFile() {
-  // Ganti URL file download kamu di sini (misal PDF di Google Drive)
   const fileUrl = "https://drive.google.com/uc?export=download&id=1GAPWqs98GSMypnKYeow_oWzSYtAgzK6h";
   window.open(fileUrl, "_blank");
 }
