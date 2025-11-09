@@ -419,17 +419,24 @@ function showMemberButtons(keyword){
     
 // ======== TAMPILKAN BIODATA DETAIL ========
 function displayAgent(agent) {
-    // 1. Reset tampilan
     dossierEl.textContent = "Processing...";
     photoEl.style.display = "none";
-    photoEl.style.opacity = 0; 
-    
-    // 2. Set sumber foto
+    photoEl.style.opacity = 0;
+
+    // Langsung tampilkan foto
     if (agent.photo) {
         photoEl.src = agent.photo;
     } else {
-        photoEl.src = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2"; // Default
+        photoEl.src = "https://drive.google.com/uc?export=view&id=13KgFyUzOSIUhfK8qw0skSLOEq5Yj0xp2";
     }
+
+    // Langsung tampilkan tanpa nunggu animasi
+    photoEl.style.display = "block";
+    setTimeout(() => (photoEl.style.opacity = 1), 100);
+    
+    // ...lanjut kode simulateAccessSequence(dossierEl, () => { ... })
+}
+
 
     // 3. Hapus tombol dokumen sebelumnya
     const oldDocs = agentContainer.querySelector(".doc-buttons");
