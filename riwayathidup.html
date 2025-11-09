@@ -350,7 +350,8 @@ function typeWriter(element, text, agent, callback, speed = 10) {
             if (!nameShown && element.textContent.includes("NAMA LENGKAP")) {
                 nameShown = true;
                 setTimeout(() => {
-                    if (agent.photo) {                         
+                    if (agent.photo) {
+                        photoEl.src = agent.photo;
                         photoEl.style.display = "block";
                         setTimeout(() => (photoEl.style.opacity = 1), 100); // Efek Fade In
                     }
