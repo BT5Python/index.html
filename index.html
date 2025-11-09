@@ -122,14 +122,17 @@ header {
 
 /* NEW STYLES FOR IMAGE ABOVE LOGIN */
 #login-screen img {
-    width: 150px; /* Adjust as needed */
-    margin-bottom: 20px; /* Space between the image and the login form */
+    width: 150px;
+    margin-bottom: 20px;
     border-radius: 0px;
 }
 </style>
 </head>
 <body>
 <div class="recording-indicator">● RECORDING</div>
+
+<!-- 🔊 BACKGROUND MUSIK -->
+<audio id="bgmusic" src="musik.mp3" autoplay loop hidden></audio>
 
 <!-- ===== LOGIN LAYER ===== -->
 <div id="login-screen">
@@ -138,8 +141,8 @@ header {
     
     <div id="login-box">
         <h2 style="color:#FFFF00;">LOGIN DATABASE</h2>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
+        <input type="text" id="username" placeholder="Username" autocomplete="off">
+        <input type="password" id="password" placeholder="Password" autocomplete="off">
         <button onclick="login()">ACCESS</button>
         <div id="error-msg"></div>
     </div>
@@ -155,6 +158,17 @@ header {
 </div>
 
 <script>
+// ====== AUTOPLAY FIX (untuk HP & browser modern) ======
+document.addEventListener("DOMContentLoaded", function() {
+    const audio = document.getElementById("bgmusic");
+    const playAudio = () => {
+        audio.play().catch(() => {
+            document.body.addEventListener("click", () => audio.play(), { once: true });
+        });
+    };
+    playAudio();
+});
+
 function login() {
     const user = document.getElementById("username").value.trim();
     const pass = document.getElementById("password").value.trim();
@@ -167,7 +181,7 @@ function login() {
     if (user === validUser && pass === validPass) {
         document.getElementById("agent-dossier").textContent = ">>> Access granted...\n>>> Redirecting to secure module...";
         setTimeout(() => {
-            window.location.href = "database.html"; // ⬅️ redirect halaman
+            window.location.href = "database.html";
         }, 1500);
     } else {
         errorMsg.textContent = "❌ Akses ditolak. Username/Password salah.";
@@ -176,7 +190,3 @@ function login() {
 </script>
 </body>
 </html>
-
-
-
-
