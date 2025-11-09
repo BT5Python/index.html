@@ -1,104 +1,143 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PUSLAT KODIKLATAU - PDF VIEWER</title>
-  <style>
-    body {
-      background-color: black;
-      color: #00ff00;
-      font-family: "Courier New", monospace;
-      padding: 20px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUSLAT KODIKLATAU - PDF VIEWER</title>
+<style>
+  body {
+    background-color: black;
+    color: #00ff00;
+    font-family: "Courier New", monospace;
+    padding: 20px;
+  }
 
-    h1 {
-      text-align: center;
-      color: #00ff00;
-      margin-bottom: 10px;
-    }
+  h1 {
+    text-align: center;
+    color: #00ff00;
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
 
-    #status {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #7fff7f;
-      font-size: 14px;
-    }
+  #status {
+    text-align: center;
+    font-size: 13px;
+    color: #7fff7f;
+    margin-bottom: 20px;
+  }
 
-    #pdfList {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: stretch;
-      justify-content: center;
-      max-width: 700px;
-      margin: 0 auto;
-    }
+  #pdfList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 800px;
+    margin: auto;
+  }
 
-    .pdf-item {
-      background-color: rgba(0, 255, 0, 0.1);
-      border: 1px solid #00ff00;
-      border-radius: 8px;
-      padding: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.2s;
-    }
+  .pdf-item {
+    border: 1px solid #00ff00;
+    border-radius: 8px;
+    padding: 12px;
+    background: rgba(0, 255, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+  }
 
-    .pdf-item:hover {
-      background-color: rgba(0, 255, 0, 0.2);
-    }
+  .pdf-item:hover {
+    background: rgba(0, 255, 0, 0.15);
+  }
 
-    .pdf-name {
-      flex: 1;
-      text-align: left;
-      overflow-wrap: anywhere;
-      font-size: 13px;
-    }
+  .pdf-info {
+    flex: 1;
+    overflow-wrap: anywhere;
+    font-size: 13px;
+  }
 
-    .pdf-actions button {
-      background-color: #00ff00;
-      color: black;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.2s;
-    }
+  .pdf-info .name {
+    font-weight: bold;
+    color: #00ff00;
+  }
 
-    .pdf-actions button:hover {
-      background-color: #aaffaa;
-    }
+  .pdf-info .folder {
+    color: #55ff55;
+    font-size: 12px;
+  }
 
-    iframe {
-      width: 100%;
-      height: 90vh;
-      border: none;
-      margin-top: 20px;
-    }
+  .pdf-info .date {
+    font-size: 12px;
+    color: #88ff88;
+  }
 
-    .back-btn {
-      display: inline-block;
-      margin-top: 10px;
-      background: none;
-      border: 1px solid #00ff00;
-      color: #00ff00;
-      padding: 6px 12px;
-      cursor: pointer;
-      border-radius: 8px;
-    }
+  .pdf-actions {
+    display: flex;
+    gap: 8px;
+  }
 
-    .back-btn:hover {
-      background-color: #00ff00;
-      color: black;
-    }
-  </style>
+  .pdf-actions button {
+    background-color: #00ff00;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: black;
+    font-weight: bold;
+  }
+
+  .pdf-actions button:hover {
+    background-color: #aaffaa;
+  }
+
+  iframe {
+    width: 100%;
+    height: 90vh;
+    border: none;
+    margin-top: 10px;
+  }
+
+  .back-btn {
+    display: inline-block;
+    margin-top: 10px;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    background: none;
+    padding: 5px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .back-btn:hover {
+    background-color: #00ff00;
+    color: black;
+  }
+
+  .running-text {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+  }
+
+  .running-text span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll 15s linear infinite;
+  }
+
+  @keyframes scroll {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+  }
+
+</style>
 </head>
 <body>
-  <h1>PUSLAT KODIKLATAU</h1>
-  <div id="status">Memuat daftar file PDF dari Google Drive...</div>
+  <div class="running-text"><span>*** DATA PDF TERKINI PUSLAT KODIKLATAU - PEMINDAIAN OTOMATIS DARI FOLDER DAN SUBFOLDER DRIVE ***</span></div>
+
+  <h1>PUSLAT KODIKLATAU - PDF DATABASE</h1>
+  <div id="status">Sedang memuat data PDF dari Google Drive...</div>
   <div id="pdfList"></div>
 
   <script>
@@ -112,15 +151,24 @@
     function showList(list) {
       const container = document.getElementById("pdfList");
       container.innerHTML = "";
-      document.getElementById("status").textContent = `Ditemukan ${list.length} file PDF`;
+      document.getElementById("status").textContent = `Ditemukan ${list.length} file PDF dari semua folder.`;
+
+      if (list.length === 0) {
+        container.innerHTML = "<div style='text-align:center;color:#7fff7f;'>Tidak ada file PDF ditemukan.</div>";
+        return;
+      }
 
       list.forEach(file => {
         const div = document.createElement("div");
         div.className = "pdf-item";
 
-        const name = document.createElement("div");
-        name.className = "pdf-name";
-        name.textContent = `${file.name} (${formatBytes(file.size)})`;
+        const info = document.createElement("div");
+        info.className = "pdf-info";
+        info.innerHTML = `
+          <div class="name">${file.name}</div>
+          <div class="folder">${file.folderPath}</div>
+          <div class="date">📅 ${file.modifiedText} | 💾 ${formatBytes(file.size)}</div>
+        `;
 
         const actions = document.createElement("div");
         actions.className = "pdf-actions";
@@ -135,15 +183,15 @@
 
         actions.appendChild(viewBtn);
         actions.appendChild(downloadBtn);
-        div.appendChild(name);
+
+        div.appendChild(info);
         div.appendChild(actions);
         container.appendChild(div);
       });
     }
 
     function openPdf(url, name) {
-      const body = document.body;
-      body.innerHTML = `
+      document.body.innerHTML = `
         <h1>${name}</h1>
         <button class="back-btn" onclick="location.reload()">← Kembali</button>
         <iframe src="${url}" allow="autoplay"></iframe>
@@ -155,7 +203,7 @@
     }
 
     window.onload = function() {
-      google.script.run.withSuccessHandler(showList).withFailureHandler(showError).getPdfList();
+      google.script.run.withSuccessHandler(showList).withFailureHandler(showError).getAllPdfs();
     };
   </script>
 </body>
