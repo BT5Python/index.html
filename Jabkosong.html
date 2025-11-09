@@ -183,7 +183,7 @@ NO    JABATAN KOSONG               GOL.JAB   PANGKAT                  KORPS     
       step = 4;
       const data = await fetchData();
       data.forEach((row) => {
-        const line = `${row.no.toString().padEnd(5)}${row.jabatan.padEnd(30)}${row.golongan.padEnd(10)}${row.pangkat.padEnd(25)}${row.korps}\n`;
+        const line = `${row.no.toString().padEnd(5)}${row.jabatan.padEnd(30)}${row.golongan.padEnd(10)}${row.pangkat.padEnd(25)}${row.korps}${row.keterangan}\n`;
         if (line.toUpperCase().includes("PNS")) {
           terminal.innerHTML += `<span class="yellow">${line}</span>`;
         } else {
