@@ -130,7 +130,6 @@
     0% { transform: translateX(0%); }
     100% { transform: translateX(-100%); }
   }
-
 </style>
 </head>
 <body>
@@ -141,6 +140,9 @@
   <div id="pdfList"></div>
 
   <script>
+    const apiUrl = "https://script.google.com/macros/s/AKfycbw3vJKvqrevnvYTl1FonnLcUCV2FigZ_AE7wUKeTt_wqs-Yxw8yEMndMU5yLaqVwNByGQ/exec"; 
+    // ⬆️ Ganti dengan URL Web App kamu (hasil deploy "Web App" di Apps Script)
+
     function formatBytes(bytes) {
       if (bytes === 0) return "0 B";
       const sizes = ["B", "KB", "MB", "GB"];
@@ -202,8 +204,15 @@
       document.getElementById("status").textContent = "Gagal memuat data: " + err.message;
     }
 
-    window.onload = function() {
-      google.script.run.withSuccessHandler(showList).withFailureHandler(showError).getAllPdfs();
+    window.onload = async function() {
+      document.getElementById("status").textContent = "Mengambil data dari server...";
+      try {
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+        showList(data);
+      } catch (err) {
+        showError(err);
+      }
     };
   </script>
 </body>
