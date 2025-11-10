@@ -5,21 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PUSLAT KODIKLATAU - Login Portal</title>
 <style>
-/* === DASAR === */
 body {
     font-family: 'Courier New', monospace;
     background-color: black;
+    color: #00FF00;
     margin: 0;
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-    position: relative;
-    z-index: 1;
+    overflow: hidden;
 }
 
-/* === VIDEO BACKGROUND === */
+/* ===== VIDEO BACKGROUND ===== */
 #bg-video {
     position: fixed;
     top: 0;
@@ -27,35 +24,42 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -9999;
-    filter: brightness(0.4); /* biar teks di atas tetap jelas */
+    z-index: -1; /* supaya di belakang tulisan */
+    filter: brightness(0.3); /* redup biar teks terlihat jelas */
 }
 
-/* === HEADER === */
+/* ===== HEADER ===== */
 header {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0,0,0,0.8);
     padding: 20px 0 10px 0;
     text-align: center;
     line-height: 1.1;
     border-bottom: 1px solid #00FF00;
+    z-index: 2;
+    position: relative;
 }
+
 .text {
     font-size: 75px;
     margin-bottom: 0;
     color: #FFFF00;
+    text-shadow: 0 0 10px yellow;
 }
+
 .text1 {
     font-size: 30px;
     margin-top: 0;
     color: #FF0000;
     animation: blinkText 1s infinite;
+    text-shadow: 0 0 10px red;
 }
+
 @keyframes blinkText {
     0%, 50%, 100% { opacity: 1; }
     25%, 75% { opacity: 0; }
 }
 
-/* === RECORDING INDICATOR === */
+/* ===== RECORDING ===== */
 .recording-indicator {
     position: fixed;
     top: 10px;
@@ -68,30 +72,34 @@ header {
     z-index: 9999;
     user-select: none;
 }
+
 @keyframes blinkRecording {
     0%, 50%, 100% { opacity: 1; }
     25%, 75% { opacity: 0; }
 }
 
-/* === LOGIN BOX === */
+/* ===== LOGIN BOX ===== */
 #login-screen {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.9);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 10000;
 }
+
 #login-box {
     border: 2px solid #00FF00;
     padding: 30px;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: black;
     text-align: center;
     width: 320px;
+    z-index: 10001;
 }
+
 #login-box input {
     display: block;
     width: 90%;
@@ -104,6 +112,7 @@ header {
     border-radius: 4px;
     text-align: center;
 }
+
 #login-box button {
     margin-top: 10px;
     width: 95%;
@@ -119,60 +128,44 @@ header {
     background-color: #00FF00;
     color: black;
 }
+
 #error-msg {
     color: #FF0000;
     font-weight: bold;
 }
+
+/* ===== AGENT PROFILE ===== */
 .agent-profile pre {
     white-space: pre-wrap;
     line-height: 1.4;
     text-align: center;
     margin-top: 100px;
-    color: #00FF00;
+    z-index: 2;
+    position: relative;
 }
+
+/* ===== IMAGE DI LOGIN ===== */
 #login-screen img {
     width: 150px;
     margin-bottom: 20px;
-}
-
-/* === TOMBOL FALLBACK AUDIO === */
-#play-audio {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(0, 255, 0, 0.2);
-    border: 1px solid #00FF00;
-    color: #00FF00;
-    font-family: 'Courier New', monospace;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    z-index: 20000;
-}
-#play-audio:hover {
-    background: #00FF00;
-    color: black;
+    border-radius: 0px;
 }
 </style>
 </head>
 <body>
 
-<!-- 🎥 VIDEO BACKGROUND -->
-<video id="bg-video" autoplay muted loop playsinline>
-  <source src="background.webm" type="video/webm">
-  <source src="background.mp4" type="video/mp4">
-  Browser kamu tidak mendukung video HTML5.
-</video>
-
 <!-- 🔴 RECORDING -->
 <div class="recording-indicator">● RECORDING</div>
 
-<!-- 🔊 BACKGROUND MUSIK -->
-<audio id="bgmusic" src="3 lagu.aac" loop></audio>
-<button id="play-audio" onclick="playAudio()">▶️ Putar Musik</button>
+<!-- 🎥 VIDEO BACKGROUND -->
+<video id="bg-video" autoplay muted loop>
+    <source src="background.mp4" type="video/mp4">
+</video>
 
-<!-- ===== LOGIN LAYER ===== -->
+<!-- 🔊 BACKGROUND MUSIK -->
+<audio id="bgmusic" src="3 lagu.aac" autoplay loop hidden></audio>
+
+<!-- ===== LOGIN ===== -->
 <div id="login-screen">
     <img src="danpus pdh.jpg" alt="Logo">
     <div id="login-box">
@@ -184,29 +177,28 @@ header {
     </div>
 </div>
 
+<!-- ===== HEADER ===== -->
 <header>
-    <h1 class="text">DATABASE  PUSLAT  KODIKLATAU</h1>
+    <h1 class="text">DATABASE PUSLAT KODIKLATAU</h1>
     <h1 class="text1">PORTAL MONITORING TERMINAL</h1>
 </header>
 
+<!-- ===== INFO ===== -->
 <div class="agent-profile">
     <pre id="agent-dossier">Silakan login untuk mengakses sistem...</pre>
 </div>
 
 <script>
-// ====== COBA PUTAR AUDIO LANGSUNG ======
-const bgmusic = document.getElementById("bgmusic");
-bgmusic.volume = 0.7;
-
-bgmusic.play().catch(() => {
-    // Kalau autoplay gagal (biasanya di HP)
-    document.getElementById("play-audio").style.display = "block";
+// ====== AUDIO AUTOPLAY FIX ======
+document.addEventListener("DOMContentLoaded", function() {
+    const audio = document.getElementById("bgmusic");
+    const playAudio = () => {
+        audio.play().catch(() => {
+            document.body.addEventListener("click", () => audio.play(), { once: true });
+        });
+    };
+    playAudio();
 });
-
-function playAudio() {
-    bgmusic.play();
-    document.getElementById("play-audio").style.display = "none";
-}
 
 // ====== LOGIN FUNCTION ======
 function login() {
@@ -218,8 +210,8 @@ function login() {
     const validPass = "kodiklatau";
 
     if (user === validUser && pass === validPass) {
-        document.getElementById("agent-dossier").textContent =
-            ">>> Access granted...\n>>> Redirecting to secure module...";
+        document.getElementById("agent-dossier").textContent = 
+        ">>> Access granted...\n>>> Redirecting to secure module...";
         setTimeout(() => {
             window.location.href = "database.html";
         }, 1500);
@@ -228,6 +220,5 @@ function login() {
     }
 }
 </script>
-
 </body>
 </html>
