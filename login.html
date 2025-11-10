@@ -5,70 +5,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PUSLAT KODIKLATAU - Login Portal</title>
 <style>
-/* Reset dasar */
 * {
   margin: 0;
-  padding: 30;
+  padding: 0;
   box-sizing: border-box;
 }
 
-/* Video sebagai background */
+/* Video background */
 video#bg-video {
   position: fixed;
   top: 0;
   left: 0;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -1;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  z-index: -1;
 }
 
-/* Overlay gelap agar teks jelas */
+/* Lapisan gelap */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.55);
   z-index: 0;
 }
 
-/* Konten utama */
+/* Konten utama: di tengah layar */
 .content {
-  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1;
   color: white;
   text-align: center;
-  top: 45%;
-  transform: translateY(-45%);
   font-family: 'Courier New', monospace;
+  width: 90%;
+  max-width: 450px;
 }
 
 h1 {
-  font-size: 2.5em;
-  margin-bottom: 15px;
+  font-size: 2em;
+  margin-bottom: 25px;
+  text-shadow: 0 0 8px #00ff00;
 }
 
-/* Form login transparan */
+/* Form login */
 form {
-  margin-top: 25px;
-  display: inline-block;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
 input {
-  display: block;
-  width: 260px;
-  padding: 10px;
-  margin: 8px 0;
-  font-size: 1em;
+  width: 100%;
+  padding: 12px;
   border: 1px solid #00ff00;
-  border-radius: 5px;
-  background: transparent;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.3);
   color: #ffffff;
+  font-size: 1em;
+  text-align: center;
   outline: none;
 }
 
@@ -76,21 +77,22 @@ input::placeholder {
   color: #cccccc;
 }
 
+/* Tombol login */
 button {
-  margin-top: 10px;
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   background-color: #00ff00;
-  border: none;
-  border-radius: 5px;
-  font-size: 1em;
   color: black;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: 0.3s;
 }
 
 button:hover {
   background-color: #00cc00;
+  box-shadow: 0 0 12px #00ff00;
 }
 </style>
 </head>
@@ -105,7 +107,7 @@ button:hover {
 <!-- Lapisan gelap -->
 <div class="overlay"></div>
 
-<!-- Konten -->
+<!-- Konten di tengah layar -->
 <div class="content">
   <h1>Login Portal PUSLAT KODIKLATAU</h1>
   <form action="home.html" method="post">
