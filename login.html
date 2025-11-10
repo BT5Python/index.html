@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Halaman Web dengan Background Video</title>
+<title>Halaman Web dengan Background Video Hijau</title>
 <style>
 /* Reset dasar */
 * {
@@ -12,7 +12,7 @@
   box-sizing: border-box;
 }
 
-/* Video sebagai background */
+/* Video sebagai background dengan efek hijau */
 video#bg-video {
   position: fixed;
   top: 0;
@@ -23,16 +23,19 @@ video#bg-video {
   height: auto;
   z-index: -1;
   object-fit: cover;
+
+  /* 💚 Efek hijau */
+  filter: hue-rotate(90deg) saturate(3) brightness(0.8) contrast(1.2);
 }
 
-/* Overlay gelap agar teks jelas */
+/* Overlay gelap kehijauan */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 20, 0, 0.6);
   z-index: 0;
 }
 
@@ -40,7 +43,7 @@ video#bg-video {
 .content {
   position: relative;
   z-index: 1;
-  color: white;
+  color: #00ff00;
   text-align: center;
   top: 40%;
   transform: translateY(-40%);
@@ -50,10 +53,12 @@ video#bg-video {
 h1 {
   font-size: 3em;
   margin-bottom: 20px;
+  text-shadow: 0 0 15px #00ff00;
 }
 
 p {
   font-size: 1.2em;
+  text-shadow: 0 0 10px #00ff00;
 }
 
 button {
@@ -65,11 +70,12 @@ button {
   font-size: 1em;
   color: black;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
 }
 
 button:hover {
   background-color: #00cc00;
+  box-shadow: 0 0 20px #00ff00;
 }
 </style>
 </head>
@@ -81,7 +87,7 @@ button:hover {
   Browser Anda tidak mendukung video.
 </video>
 
-<!-- Lapisan gelap -->
+<!-- Lapisan gelap kehijauan -->
 <div class="overlay"></div>
 
 <!-- Konten -->
