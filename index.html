@@ -18,7 +18,6 @@ body{
     flex-direction: column;
     height: 100vh;
 }
-
 header {
     background-color: black;
     padding: 20px 0 10px 0;
@@ -26,25 +25,21 @@ header {
     line-height: 1.1;
     border-bottom: 1px solid #00FF00;
 }
-
 .text {
     font-size: 75px;
     margin-bottom: 0;
     color: #FFFF00;
 }
-
 .text1 {
     font-size: 30px;
     margin-top: 0;
     color: #FF0000;
     animation: blinkText 1s infinite;
 }
-
 @keyframes blinkText {
     0%, 50%, 100% { opacity: 1; }
     25%, 75% { opacity: 0; }
 }
-
 .recording-indicator {
     position: fixed;
     top: 10px;
@@ -57,12 +52,10 @@ header {
     z-index: 9999;
     user-select: none;
 }
-
 @keyframes blinkRecording {
     0%, 50%, 100% { opacity: 1; }
     25%, 75% { opacity: 0; }
 }
-
 /* ===== LOGIN BOX ===== */
 #login-screen {
     position: fixed;
@@ -75,16 +68,13 @@ header {
     align-items: center;
     z-index: 10000;
 }
-
 #login-box {
     border: 2px solid #00FF00;
     padding: 30px;
     background-color: black;
-    border-radius: px;
     text-align: center;
     width: 320px;
 }
-
 #login-box input {
     display: block;
     width: 90%;
@@ -97,29 +87,37 @@ header {
     border-radius: 4px;
     text-align: center;
 }
-
 #login-box button {
     margin-top: 10px;
-    width: 95%;
     background: transparent;
     border: 1px solid #00FF00;
     color: #00FF00;
     font-family: 'Courier New', monospace;
-    padding: 10px;
+    padding: 10px 15px;
     cursor: pointer;
     border-radius: 4px;
 }
-#login-box button:hover { background-color: #00FF00; color: black; }
-
-#error-msg { color: #FF0000; font-weight: bold; }
-
+#login-box button:hover {
+    background-color: #00FF00;
+    color: black;
+}
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin: 0 auto;
+}
+#error-msg {
+    color: #FF0000;
+    font-weight: bold;
+    margin-top: 5px;
+}
 .agent-profile pre {
     white-space: pre-wrap;
     line-height: 1.4;
     text-align: center;
     margin-top: 100px;
 }
-
 /* NEW STYLES FOR IMAGE ABOVE LOGIN */
 #login-screen img {
     width: 150px;
@@ -136,14 +134,17 @@ header {
 
 <!-- ===== LOGIN LAYER ===== -->
 <div id="login-screen">
-    <freecompress-helloween-forever-and-one-neverland_QjrRtyyE.mp3>
     <img src="danpus pdh.jpg" alt="Logo">
-    
+
     <div id="login-box">
         <h2 style="color:#FFFF00;">LOGIN DATABASE</h2>
         <input type="text" id="username" placeholder="Username" autocomplete="off">
         <input type="password" id="password" placeholder="Password" autocomplete="off">
-        <button onclick="login()">ACCESS</button>
+        
+        <div class="button-group">
+            <button onclick="login()">ACCESS</button>
+            <button onclick="logout()">LOGOUT</button>
+        </div>
         <div id="error-msg"></div>
     </div>
 </div>
@@ -179,7 +180,8 @@ function login() {
     const validPass = "kodiklatau";
 
     if (user === validUser && pass === validPass) {
-        document.getElementById("agent-dossier").textContent = ">>> Access granted...\n>>> Redirecting to secure module...";
+        document.getElementById("agent-dossier").textContent =
+            ">>> Access granted...\n>>> Redirecting to secure module...";
         setTimeout(() => {
             window.location.href = "database.html";
         }, 1500);
@@ -187,10 +189,19 @@ function login() {
         errorMsg.textContent = "❌ Akses ditolak. Username/Password salah.";
     }
 }
+
+// Tombol LOGOUT
+function logout() {
+    // jika ada session atau localStorage bisa dihapus di sini
+    // localStorage.removeItem('userSession');
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("error-msg").textContent = "";
+    document.getElementById("agent-dossier").textContent =
+        ">>> Logout berhasil.\n>>> Silakan login kembali...";
+    // kembali ke halaman login (jika logout ditekan dari halaman lain)
+    window.location.href = "login.html";
+}
 </script>
 </body>
 </html>
-
-
-
-
