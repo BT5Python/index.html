@@ -6,7 +6,9 @@
 <title>PUSLAT KODIKLATAU - Intelligence Database</title>
 <style>
 body{
-
+    <video>
+        <source src="Desain tanpa judul.mp4" type="video/mp4">
+    </video>
     font-family: 'Courier New', monospace;
     
     
@@ -93,11 +95,6 @@ button {
 }
 button:hover { background-color: #00FF00; color: black; }
 
-.Video1 {
-     position: absolute;
-     z-index: 0; /* paling belakang */
-    margin-top:-20px;
-}
 @media (max-width: 768px) {
     .main-container { flex-direction: column; }
     .search-panel, .output-panel { width: 100%; border: none; border-bottom: 1px solid #00FF00; }
@@ -178,9 +175,7 @@ Biodata will appear after clicking the member button
         </div>
     </div>
 </div>
-    <video>
-        <source src="Desain tanpa judul.mp4" type="video/mp4" class="Video1">
-    </video>
+
 <script>
 function goTo(url) { window.location.href = url; }
 
