@@ -93,6 +93,9 @@ button {
 }
 button:hover { background-color: #00FF00; color: black; }
 
+.Video1 {
+     z-index: 0; /* paling belakang */
+}
 @media (max-width: 768px) {
     .main-container { flex-direction: column; }
     .search-panel, .output-panel { width: 100%; border: none; border-bottom: 1px solid #00FF00; }
@@ -137,7 +140,9 @@ button:hover { background-color: #00FF00; color: black; }
 </head>
 <body>
 <div class="recording-indicator">● RECORDING</div>
-
+<video>
+<source src="Desain tanpa judul.mp4" type="video/mp4" class="Video">
+</video>
 <header>
     <h1 class="text">PEMUKTAHIRAN DATA PERSONEL</h1>
     <h1 class="text1">PORTAL MONITORING TERMINAL</h1>
