@@ -16,17 +16,10 @@ h1 {
   margin: 0;
   line-height: 1.1;
 }
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #00ff00;
-  padding-bottom: 8px;
-  margin-bottom: 10px;
-}
-.nav-left, .nav-right {
-  display: flex;
-  gap: 10px;
+.top-buttons {
+  text-align: right;
+  margin-top: 8px;
+  margin-bottom: 15px;
 }
 button {
   background: transparent;
@@ -36,6 +29,7 @@ button {
   cursor: pointer;
   border-radius: 4px;
   font-weight: bold;
+  margin-left: 5px;
 }
 button:hover {
   background: #00ff00;
@@ -62,20 +56,13 @@ button:hover {
 </style>
 </head>
 <body>
-  <div class="navbar">
-    <div class="nav-left">
-      <button onclick="window.location.href='riwayat.html'">RIWAYAT HIDUP</button>
-      <button onclick="window.location.href='ku1.html'">KU-1</button>
-      <button onclick="window.location.href='radiogram.html'">RADIOGRAM</button>
-    </div>
-    <div class="nav-right">
-      <button onclick="window.location.href='database.html'">BACK</button>
-      <button onclick="logout()">LOGOUT</button>
-    </div>
-  </div>
-
   <h1>REKAMAN DATA RADIOGRAM</h1>
   <h1>TAHUN 2025</h1>
+
+  <div class="top-buttons">
+    <button onclick="window.location.href='database.html'">BACK</button>
+    <button onclick="logout()">LOGOUT</button>
+  </div>
 
   <div id="content">Memuat struktur folder...</div>
 
