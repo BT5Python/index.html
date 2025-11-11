@@ -1,1 +1,102 @@
-1
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUSLAT KODIKLATAU - Login Portal</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Video background */
+video#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* Lapisan gelap */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  z-index: -1;
+}
+
+/* Konten utama */
+.content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: white;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  width: 90%;
+  max-width: 450px;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 25px;
+  text-shadow: 0 0 8px #00ff00;
+}
+  
+button:hover {
+  background-color: #00cc00;
+  box-shadow: 0 0 12px #00ff00;
+}
+</style>
+</head>
+<body>
+
+<!-- Video Background -->
+<video id="bg-video" autoplay muted loop playsinline>
+  <source src="VideoPlanet Earth.mp4" type="video/mp4">
+  Browser Anda tidak mendukung video.
+</video>
+
+<!-- Lapisan gelap -->
+<div class="overlay"></div>
+
+<!-- Lagu background -->
+<audio id="bg-music" autoplay loop>
+  <source src="Helloween-Forever-And-One-Neverland.aac" type="audio/mpeg">
+  Browser Anda tidak mendukung audio.
+</audio>
+
+<!-- Konten tengah -->
+<div class="content">
+  <h1>PUSLAT KODIKLATAU</h1>
+  <form onsubmit="return loginSuccess(event)">
+    <input type="text" name="admin" placeholder="Username" required autocomplete="off">
+    <input type="password" name="kodiklatau" placeholder="Password" required autocomplete="off">
+    <button type="submit">Login</button>
+  </form>
+</div>
+
+<script>
+function loginSuccess(event) {
+  event.preventDefault(); // Mencegah reload halaman
+  // Di sini bisa tambahkan validasi username/password jika diperlukan
+  window.location.href = "database.html"; // Arahkan ke halaman database
+}
+</script>
+
+</body>
+</html>
+
+
+
+
