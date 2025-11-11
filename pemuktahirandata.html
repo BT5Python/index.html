@@ -6,8 +6,22 @@
 <title>PUSLAT KODIKLATAU - Intelligence Database</title>
 <style>
 body{
+    font-family: 'Courier New', monospace;
+    background-color: black;
+    background-image: url('BT5.jpg'); /* GANTI dengan URL gambarmu */
+    background-size: cover; /* agar menyesuaikan layar */
+    background-position: center; /* posisi di tengah */
+    background-repeat: no-repeat;
+    color: #00FF00;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+
 header {
-    
+    background-color: black;
     padding: 20px 0 10px 0;
     text-align: center;
     line-height: 1.1;
@@ -122,21 +136,19 @@ button:hover { background-color: #00FF00; color: black; }
 </head>
 <body>
 <div class="recording-indicator">● RECORDING</div>
-<video id="bg-video" autoplay muted loop playsinline>
-<source src="Desain tanpa judul.mp4" type="video/mp4">
-  Browser Anda tidak mendukung video.
-</video>
+<header>
     <h1 class="text">PEMUKTAHIRAN DATA PERSONEL</h1>
     <h1 class="text1">PORTAL MONITORING TERMINAL</h1>
-    <div class="header-buttons">        
+    <div class="header-buttons">
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">HOME</button>
         <button onclick="goTo('Struktur Organisasi Puslat.pdf')">STRUKTUR ORGANISASI</button>
         <button onclick="goTo('Jabkosong.html')">JAB KOSONG</button>
          <button onclick="goTo('https://kodiklatau.tni-au.mil.id/radiogram')">PEMUKTAHIRAN DATA</button>
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">RIWAYAT HIDUP</button>
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">KU-1</button>
          <button onclick="goTo('https://kodiklatau.tni-au.mil.id/jab-kosong')">RADIOGRAM</button>
-        <button onclick="goTo('database.html')">BACK TO DATABASE</button>
-        <button onclick="goTo('index.html')">LOGOUT</button>        
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/juknis')">BACK</button>
+        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/orgas-puslat')">NEXT</button>
     </div>
 </header>
 
@@ -165,7 +177,6 @@ Biodata will appear after clicking the member button
 </div>
 
 <script>
-<header>
 function goTo(url) { window.location.href = url; }
 
 // ======== LOAD DATABASE DARI GOOGLE SHEET ========
