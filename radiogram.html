@@ -13,26 +13,33 @@ body {
 h1 {
   text-align: center;
   color: #00ff00; 
-  line-height: 1.1;
   margin: 0;
+  line-height: 1.1;
 }
-.top-bar {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #00ff00;
+  padding-bottom: 8px;
   margin-bottom: 10px;
 }
+.nav-left, .nav-right {
+  display: flex;
+  gap: 10px;
+}
 button {
-  background: #00ff00;
-  border: none;
+  background: transparent;
+  border: 1px solid #00ff00;
   padding: 5px 12px;
-  color: black;
+  color: #00ff00;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 4px;
   font-weight: bold;
 }
 button:hover {
-  background: #33ff33;
+  background: #00ff00;
+  color: black;
 }
 .folder, .file {
   margin-left: 15px;
@@ -55,12 +62,15 @@ button:hover {
 </style>
 </head>
 <body>
-  <div class="top-bar">
-    <div>
-      <button onclick="window.location.href='database.html'">⬅ Kembali ke Database</button>
+  <div class="navbar">
+    <div class="nav-left">
+      <button onclick="window.location.href='riwayat.html'">RIWAYAT HIDUP</button>
+      <button onclick="window.location.href='ku1.html'">KU-1</button>
+      <button onclick="window.location.href='radiogram.html'">RADIOGRAM</button>
     </div>
-    <div>
-      <button onclick="logout()">🚪 Logout</button>
+    <div class="nav-right">
+      <button onclick="window.location.href='database.html'">BACK</button>
+      <button onclick="logout()">LOGOUT</button>
     </div>
   </div>
 
