@@ -33,10 +33,10 @@ video#bg-video {
   z-index: -1;
 }
 
-/* Konten utama */
+/* Konten tengah (judul) */
 .content {
   position: fixed;
-  top: 50%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
@@ -49,13 +49,19 @@ video#bg-video {
 
 h1 {
   font-size: 2em;
-  margin-bottom: 30px;
   text-shadow: 0 0 8px #00ff00;
 }
 
-/* Tombol Masuk */
-button {
-  margin-top: 10px;
+/* Tombol di bawah */
+.footer-button {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.footer-button button {
   padding: 12px 28px;
   background-color: #00ff00;
   color: black;
@@ -66,7 +72,7 @@ button {
   transition: 0.3s;
 }
 
-button:hover {
+.footer-button button:hover {
   background-color: #00cc00;
   box-shadow: 0 0 12px #00ff00;
 }
@@ -89,9 +95,13 @@ button:hover {
   Browser Anda tidak mendukung audio.
 </audio>
 
-<!-- Konten tengah -->
+<!-- Teks tengah -->
 <div class="content">
   <h1>PUSLAT KODIKLATAU</h1>
+</div>
+
+<!-- Tombol paling bawah -->
+<div class="footer-button">
   <button onclick="window.location.href='database.html'">Masuk ke Database</button>
 </div>
 
