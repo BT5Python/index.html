@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kenaikan Gaji Berkala</title>
+    <title>Kenaikan Gaji Berkala Otomatis</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         table { border-collapse: collapse; width: 100%; margin-top: 20px; }
@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-    <h2>Form Kenaikan Gaji Berkala</h2>
+    <h2>Form Kenaikan Gaji Berkala Otomatis</h2>
     <form id="salaryForm">
         <table>
             <tr>
@@ -30,8 +30,8 @@
                 <td><input type="number" id="gajiLama" min="0" required /></td>
             </tr>
             <tr>
-                <td>Gaji Pokok Baru (Rp):</td>
-                <td><input type="number" id="gajiBaru" min="0" required /></td>
+                <td>Persentase Kenaikan (%):</td>
+                <td><input type="number" id="persenKenaikan" min="0" step="0.01" value="3" required /></td>
             </tr>
             <tr>
                 <td>Masa Kerja (Tahun):</td>
@@ -56,9 +56,9 @@
                 <th>No</th>
                 <th>Nama</th>
                 <th>Gaji Lama (Rp)</th>
+                <th>Persentase Kenaikan (%)</th>
                 <th>Gaji Baru (Rp)</th>
                 <th>Kenaikan (Rp)</th>
-                <th>Kenaikan (%)</th>
                 <th>Masa Kerja (Tahun)</th>
                 <th>TMT</th>
                 <th>Tanggal KGB YAD</th>
@@ -79,18 +79,19 @@
 
             const nama = document.getElementById("nama").value.trim();
             const gajiLama = Number(document.getElementById("gajiLama").value);
-            const gajiBaru = Number(document.getElementById("gajiBaru").value);
+            const persenKenaikan = Number(document.getElementById("persenKenaikan").value);
             const masaKerja = Number(document.getElementById("masaKerja").value);
             const tmt = document.getElementById("tmt").value;
             const tglKGB = document.getElementById("tglKGB").value;
 
-            if (gajiBaru < gajiLama) {
-                alert("Gaji baru harus lebih besar atau sama dengan gaji lama.");
+            if (persenKenaikan < 0) {
+                alert("Persentase kenaikan tidak boleh negatif.");
                 return;
             }
 
-            const kenaikan = gajiBaru - gajiLama;
-            const persenKenaikan = (kenaikan / gajiLama) * 100;
+            // Hitung gaji baru
+            const kenaikanNominal = gajiLama * (persenKenaikan / 100);
+            const gajiBaru = gajiLama + kenaikanNominal;
 
             count++;
 
@@ -100,9 +101,9 @@
                 <td>${count}</td>
                 <td>${nama}</td>
                 <td>${gajiLama.toLocaleString('id-ID')}</td>
-                <td>${gajiBaru.toLocaleString('id-ID')}</td>
-                <td>${kenaikan.toLocaleString('id-ID')}</td>
                 <td>${persenKenaikan.toFixed(2)}%</td>
+                <td>${gajiBaru.toLocaleString('id-ID')}</td>
+                <td>${kenaikanNominal.toLocaleString('id-ID')}</td>
                 <td>${masaKerja}</td>
                 <td>${tmt}</td>
                 <td>${tglKGB}</td>
@@ -110,7 +111,6 @@
 
             resultBody.appendChild(row);
 
-            // Reset form setelah submit
             form.reset();
         });
     </script>
