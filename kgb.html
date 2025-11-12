@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kenaikan Gaji Berkala Otomatis dengan Format Rupiah</title>
+    <title>Kenaikan Gaji Berkala Otomatis dengan Format Rupiah di Input</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         table { border-collapse: collapse; width: 100%; margin-top: 20px; }
         th, td { border: 1px solid #333; padding: 8px; text-align: center; }
         th { background-color: #f2f2f2; }
-        input[type="number"], input[type="text"], input[type="date"] {
+        input[type="text"], input[type="number"], input[type="date"] {
             width: 100%;
             box-sizing: border-box;
             padding: 6px;
@@ -27,7 +27,8 @@
             </tr>
             <tr>
                 <td>Gaji Pokok Lama (Rp):</td>
-                <td><input type="number" id="gajiLama" min="0" required /></td>
+                <!-- Ubah jadi text agar bisa format -->
+                <td><input type="text" id="gajiLama" required autocomplete="off" /></td>
             </tr>
             <tr>
                 <td>Persentase Kenaikan (%):</td>
@@ -70,12 +71,22 @@
     </table>
 
     <script>
-        // Fungsi format angka dengan titik sebagai pemisah ribuan
+        // Fungsi format angka dengan titik ribuan
         function formatRupiah(number) {
-            // Pastikan input angka bulat (tanpa desimal)
+            if (!number) return "";
             const numStr = Math.round(number).toString();
             return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
+
+        // Event format input Gaji Lama saat user mengetik
+        const inputGajiLama = document.getElementById("gajiLama");
+
+        inputGajiLama.addEventListener("input", function(e) {
+            // Hapus semua karakter kecuali angka
+            let angka = this.value.replace(/[^0-9]/g, "");
+            // Format dengan titik ribuan
+            this.value = formatRupiah(angka);
+        });
 
         const form = document.getElementById("salaryForm");
         const resultBody = document.getElementById("resultTable").querySelector("tbody");
@@ -85,11 +96,20 @@
             e.preventDefault();
 
             const nama = document.getElementById("nama").value.trim();
-            const gajiLama = Number(document.getElementById("gajiLama").value);
+
+            // Ambil gaji lama tanpa titik
+            const gajiLamaRaw = document.getElementById("gajiLama").value;
+            const gajiLama = Number(gajiLamaRaw.replace(/\./g, ""));
+
             const persenKenaikan = Number(document.getElementById("persenKenaikan").value);
             const masaKerja = Number(document.getElementById("masaKerja").value);
             const tmt = document.getElementById("tmt").value;
             const tglKGB = document.getElementById("tglKGB").value;
+
+            if (isNaN(gajiLama) || gajiLama <= 0) {
+                alert("Gaji Pokok Lama harus diisi dengan angka lebih dari 0.");
+                return;
+            }
 
             if (persenKenaikan < 0) {
                 alert("Persentase kenaikan tidak boleh negatif.");
