@@ -1,145 +1,102 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kenaikan Gaji Berkala Otomatis dengan Format Rupiah di Input</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #333; padding: 8px; text-align: center; }
-        th { background-color: #f2f2f2; }
-        input[type="text"], input[type="number"], input[type="date"] {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 6px;
-        }
-        button { padding: 10px 20px; margin-top: 10px; cursor: pointer; }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kenaikan Gaji Berkala Otomatis - Tampilan Tabel</title>
+<style>
+    body {
+        font-family: monospace, monospace;
+        background-color: #000;
+        color: #00ff00;
+        margin: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        color: #00ff00;
+        background-color: #000;
+    }
+    th, td {
+        border: 1px solid #00ff00;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #002200;
+    }
+</style>
 </head>
 <body>
-    <h2>Form Kenaikan Gaji Berkala Otomatis</h2>
-    <form id="salaryForm">
-        <table>
-            <tr>
-                <td>Nama:</td>
-                <td><input type="text" id="nama" required /></td>
-            </tr>
-            <tr>
-                <td>Gaji Pokok Lama (Rp):</td>
-                <!-- Ubah jadi text agar bisa format -->
-                <td><input type="text" id="gajiLama" required autocomplete="off" /></td>
-            </tr>
-            <tr>
-                <td>Persentase Kenaikan (%):</td>
-                <td><input type="number" id="persenKenaikan" min="0" step="0.01" value="3" required /></td>
-            </tr>
-            <tr>
-                <td>Masa Kerja (Tahun):</td>
-                <td><input type="number" id="masaKerja" min="0" required /></td>
-            </tr>
-            <tr>
-                <td>TMT (Tanggal Mulai KGB):</td>
-                <td><input type="date" id="tmt" required /></td>
-            </tr>
-            <tr>
-                <td>Tanggal KGB YAD:</td>
-                <td><input type="date" id="tglKGB" required /></td>
-            </tr>
-        </table>
-        <button type="submit">Tambah Data</button>
-    </form>
 
-    <h3>Daftar Kenaikan Gaji Berkala</h3>
-    <table id="resultTable">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Gaji Lama (Rp)</th>
-                <th>Persentase Kenaikan (%)</th>
-                <th>Gaji Baru (Rp)</th>
-                <th>Kenaikan (Rp)</th>
-                <th>Masa Kerja (Tahun)</th>
-                <th>TMT</th>
-                <th>Tanggal KGB YAD</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data akan masuk di sini -->
-        </tbody>
-    </table>
+<h2>Daftar Kenaikan Gaji Berkala</h2>
 
-    <script>
-        // Fungsi format angka dengan titik ribuan
-        function formatRupiah(number) {
-            if (!number) return "";
-            const numStr = Math.round(number).toString();
-            return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
+<table id="salaryTable">
+<thead>
+<tr>
+    <th>NO URUT</th>
+    <th>NAMA</th>
+    <th>PANGKAT/GOLONGAN</th>
+    <th>NRP/NIP</th>
+    <th>JABATAN/JAWATAN</th>
+    <th>GAJI POKOK LAMA (Rp)</th>
+    <th>MASA KERJA MENURUT SKALA GAJI</th>
+    <th>GAJI POKOK BARU (Rp)</th>
+    <th>TMT</th>
+    <th>TGL KGB YAD</th>
+</tr>
+</thead>
+<tbody id="tableBody">
+<!-- Data otomatis masuk di sini -->
+</tbody>
+</table>
 
-        // Event format input Gaji Lama saat user mengetik
-        const inputGajiLama = document.getElementById("gajiLama");
+<script>
+    // Fungsi format angka dengan titik ribuan
+    function formatRupiah(number) {
+        if (!number) return "";
+        const numStr = Math.round(number).toString();
+        return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
 
-        inputGajiLama.addEventListener("input", function(e) {
-            // Hapus semua karakter kecuali angka
-            let angka = this.value.replace(/[^0-9]/g, "");
-            // Format dengan titik ribuan
-            this.value = formatRupiah(angka);
-        });
+    // Data pegawai (isi sesuai kebutuhan)
+    const dataPegawai = [
+        {
+            nama: "Andi Darmawan, S.E",
+            pangkat: "Penata Tk.IIId",
+            nrp: "197905032009121000",
+            jabatan: "Kaur Evlap Progar Lanud ZAM",
+            gajiLama: 3272200,
+            masaKerja: 12,
+            persenKenaikan: 3,
+            tmt: "2021-12-01",
+            tglKGB: "2023-12-01"
+        },
+        // Tambahkan data lain jika perlu di sini
+    ];
 
-        const form = document.getElementById("salaryForm");
-        const resultBody = document.getElementById("resultTable").querySelector("tbody");
-        let count = 0;
+    const tbody = document.getElementById("tableBody");
 
-        form.addEventListener("submit", function(e) {
-            e.preventDefault();
+    dataPegawai.forEach((pegawai, index) => {
+        const kenaikan = pegawai.gajiLama * pegawai.persenKenaikan / 100;
+        const gajiBaru = pegawai.gajiLama + kenaikan;
 
-            const nama = document.getElementById("nama").value.trim();
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${pegawai.nama}</td>
+            <td>${pegawai.pangkat}</td>
+            <td>${pegawai.nrp}</td>
+            <td>${pegawai.jabatan}</td>
+            <td>${formatRupiah(pegawai.gajiLama)}</td>
+            <td>${pegawai.masaKerja} Thn</td>
+            <td>${formatRupiah(gajiBaru)}</td>
+            <td>${pegawai.tmt}</td>
+            <td>${pegawai.tglKGB}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+</script>
 
-            // Ambil gaji lama tanpa titik
-            const gajiLamaRaw = document.getElementById("gajiLama").value;
-            const gajiLama = Number(gajiLamaRaw.replace(/\./g, ""));
-
-            const persenKenaikan = Number(document.getElementById("persenKenaikan").value);
-            const masaKerja = Number(document.getElementById("masaKerja").value);
-            const tmt = document.getElementById("tmt").value;
-            const tglKGB = document.getElementById("tglKGB").value;
-
-            if (isNaN(gajiLama) || gajiLama <= 0) {
-                alert("Gaji Pokok Lama harus diisi dengan angka lebih dari 0.");
-                return;
-            }
-
-            if (persenKenaikan < 0) {
-                alert("Persentase kenaikan tidak boleh negatif.");
-                return;
-            }
-
-            // Hitung nominal kenaikan dan gaji baru
-            const kenaikanNominal = gajiLama * (persenKenaikan / 100);
-            const gajiBaru = gajiLama + kenaikanNominal;
-
-            count++;
-
-            const row = document.createElement("tr");
-
-            row.innerHTML = `
-                <td>${count}</td>
-                <td>${nama}</td>
-                <td>${formatRupiah(gajiLama)}</td>
-                <td>${persenKenaikan.toFixed(2)}%</td>
-                <td>${formatRupiah(gajiBaru)}</td>
-                <td>${formatRupiah(kenaikanNominal)}</td>
-                <td>${masaKerja}</td>
-                <td>${tmt}</td>
-                <td>${tglKGB}</td>
-            `;
-
-            resultBody.appendChild(row);
-
-            form.reset();
-        });
-    </script>
 </body>
 </html>
