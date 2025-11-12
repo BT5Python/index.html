@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kenaikan Gaji Berkala 3.15%</title>
+<title>Kenaikan Gaji Berkala 3.15% (Pembulatan Ratusan)</title>
 <style>
   body {
     font-family: monospace, monospace;
@@ -100,13 +100,14 @@
       tmt: "2022-06-01",
       tglKGB: "2024-06-01"
     }
-    // Tambahkan pegawai lain di sini
   ];
 
   const tbody = document.getElementById("tableBody");
 
   dataPegawai.forEach((pegawai, index) => {
-    const gajiBaru = pegawai.gajiLama * (1 + persenKenaikan/100);
+    const gajiHitung = pegawai.gajiLama * (1 + persenKenaikan/100);
+    // Pembulatan ke ratusan ke bawah
+    const gajiBaru = Math.floor(gajiHitung / 100) * 100;
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
