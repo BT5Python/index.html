@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kenaikan Gaji Berkala dengan Persen</title>
+<title>Kenaikan Gaji Berkala 3.15%</title>
 <style>
   body {
     font-family: monospace, monospace;
@@ -38,7 +38,7 @@
 </head>
 <body>
 
-<h3>Daftar Kenaikan Gaji Berkala</h3>
+<h3>Daftar Kenaikan Gaji Berkala (3,15%)</h3>
 
 <table id="salaryTable">
 <thead>
@@ -67,10 +67,7 @@
     return Math.round(number).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
-  function hitungPersen(lama, baru) {
-    if (!lama) return 0;
-    return ((baru - lama) / lama * 100).toFixed(2);
-  }
+  const persenKenaikan = 3.15;
 
   const dataPegawai = [
     {
@@ -78,8 +75,7 @@
       pangkat: "Penata Tk.IIId",
       nrp: "197905032009121000",
       jabatan: "Kaur Evlap Progar Lanud ZAM",
-      gajiLama: 3272300,
-      gajiBaru: 3375300,
+      gajiLama: 3172300,
       masaKerja: 12,
       tmt: "2021-12-01",
       tglKGB: "2023-12-01"
@@ -90,10 +86,19 @@
       nrp: "198010102010011234",
       jabatan: "Kepala Seksi Operasi",
       gajiLama: 4500000,
-      gajiBaru: 4725000,
       masaKerja: 24,
       tmt: "2022-01-01",
       tglKGB: "2024-01-01"
+    },
+    {
+      nama: "Citra Lestari",
+      pangkat: "Penata Tk.IIId",
+      nrp: "198505052011011122",
+      jabatan: "Staff Administrasi",
+      gajiLama: 3800000,
+      masaKerja: 18,
+      tmt: "2022-06-01",
+      tglKGB: "2024-06-01"
     }
     // Tambahkan pegawai lain di sini
   ];
@@ -101,7 +106,7 @@
   const tbody = document.getElementById("tableBody");
 
   dataPegawai.forEach((pegawai, index) => {
-    const persen = hitungPersen(pegawai.gajiLama, pegawai.gajiBaru);
+    const gajiBaru = pegawai.gajiLama * (1 + persenKenaikan/100);
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -111,8 +116,8 @@
       <td title="${pegawai.nrp}">${pegawai.nrp}</td>
       <td title="${pegawai.jabatan}">${pegawai.jabatan}</td>
       <td>${formatRupiah(pegawai.gajiLama)}</td>
-      <td>${formatRupiah(pegawai.gajiBaru)}</td>
-      <td>${persen}%</td>
+      <td>${formatRupiah(gajiBaru)}</td>
+      <td>${persenKenaikan}%</td>
       <td>${pegawai.masaKerja} Thn</td>
       <td>${pegawai.tmt}</td>
       <td>${pegawai.tglKGB}</td>
