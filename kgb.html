@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kenaikan Gaji Berkala Otomatis</title>
+    <title>Kenaikan Gaji Berkala Otomatis dengan Format Rupiah</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         table { border-collapse: collapse; width: 100%; margin-top: 20px; }
@@ -70,6 +70,13 @@
     </table>
 
     <script>
+        // Fungsi format angka dengan titik sebagai pemisah ribuan
+        function formatRupiah(number) {
+            // Pastikan input angka bulat (tanpa desimal)
+            const numStr = Math.round(number).toString();
+            return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
         const form = document.getElementById("salaryForm");
         const resultBody = document.getElementById("resultTable").querySelector("tbody");
         let count = 0;
@@ -89,7 +96,7 @@
                 return;
             }
 
-            // Hitung gaji baru
+            // Hitung nominal kenaikan dan gaji baru
             const kenaikanNominal = gajiLama * (persenKenaikan / 100);
             const gajiBaru = gajiLama + kenaikanNominal;
 
@@ -100,10 +107,10 @@
             row.innerHTML = `
                 <td>${count}</td>
                 <td>${nama}</td>
-                <td>${gajiLama.toLocaleString('id-ID')}</td>
+                <td>${formatRupiah(gajiLama)}</td>
                 <td>${persenKenaikan.toFixed(2)}%</td>
-                <td>${gajiBaru.toLocaleString('id-ID')}</td>
-                <td>${kenaikanNominal.toLocaleString('id-ID')}</td>
+                <td>${formatRupiah(gajiBaru)}</td>
+                <td>${formatRupiah(kenaikanNominal)}</td>
                 <td>${masaKerja}</td>
                 <td>${tmt}</td>
                 <td>${tglKGB}</td>
