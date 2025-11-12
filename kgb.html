@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kenaikan Gaji Berkala Lengkap</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kenaikan Gaji Berkala dengan Persen</title>
 <style>
   body {
     font-family: monospace, monospace;
     background-color: #000;
     color: #00ff00;
     margin: 10px;
-    font-size: 10px; /* font kecil */
+    font-size: 10px;
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed; /* supaya kolom bisa diatur */
+    table-layout: fixed;
   }
 
   th, td {
     border: 1px solid #00ff00;
-    padding: 2px 6px; /* jarak vertikal | horizontal */
-    height: 22px;     /* tinggi baris */
-    line-height: 22px; /* teks di tengah vertikal */
+    padding: 2px 6px;
+    height: 22px;
+    line-height: 22px;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
@@ -49,8 +49,9 @@
     <th>NRP/NIP</th>
     <th>JABATAN</th>
     <th>GAJI LAMA (Rp)</th>
-    <th>MASA KERJA</th>
     <th>GAJI BARU (Rp)</th>
+    <th>% KENAIKAN</th>
+    <th>MASA KERJA</th>
     <th>TMT</th>
     <th>TGL KGB</th>
 </tr>
@@ -61,22 +62,25 @@
 </table>
 
 <script>
-  // Format angka dengan titik sebagai ribuan
   function formatRupiah(number) {
     if (!number) return "";
     return Math.round(number).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
-  // Data pegawai
+  function hitungPersen(lama, baru) {
+    if (!lama) return 0;
+    return ((baru - lama) / lama * 100).toFixed(2);
+  }
+
   const dataPegawai = [
     {
       nama: "Andi Darmawan, S.E",
       pangkat: "Penata Tk.IIId",
       nrp: "197905032009121000",
       jabatan: "Kaur Evlap Progar Lanud ZAM",
-      gajiLama: 3272200,
+      gajiLama: 3272300,
+      gajiBaru: 3375300,
       masaKerja: 12,
-      persenKenaikan: 3,
       tmt: "2021-12-01",
       tglKGB: "2023-12-01"
     },
@@ -86,19 +90,18 @@
       nrp: "198010102010011234",
       jabatan: "Kepala Seksi Operasi",
       gajiLama: 4500000,
+      gajiBaru: 4725000,
       masaKerja: 24,
-      persenKenaikan: 5,
       tmt: "2022-01-01",
       tglKGB: "2024-01-01"
-    },
-    // Tambahkan data pegawai lain di sini
+    }
+    // Tambahkan pegawai lain di sini
   ];
 
   const tbody = document.getElementById("tableBody");
 
   dataPegawai.forEach((pegawai, index) => {
-    const kenaikan = pegawai.gajiLama * pegawai.persenKenaikan / 100;
-    const gajiBaru = pegawai.gajiLama + kenaikan;
+    const persen = hitungPersen(pegawai.gajiLama, pegawai.gajiBaru);
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -108,8 +111,9 @@
       <td title="${pegawai.nrp}">${pegawai.nrp}</td>
       <td title="${pegawai.jabatan}">${pegawai.jabatan}</td>
       <td>${formatRupiah(pegawai.gajiLama)}</td>
+      <td>${formatRupiah(pegawai.gajiBaru)}</td>
+      <td>${persen}%</td>
       <td>${pegawai.masaKerja} Thn</td>
-      <td>${formatRupiah(gajiBaru)}</td>
       <td>${pegawai.tmt}</td>
       <td>${pegawai.tglKGB}</td>
     `;
