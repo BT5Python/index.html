@@ -52,6 +52,26 @@ h1 {
   text-shadow: 0 0 8px #00ff00;
 }
 
+/* Tulisan atas berkedip */
+.update-text {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  font-size: 1.5em;
+  text-shadow: 0 0 10px #00ff00;
+  animation: blink 1s infinite;
+  display: none;
+  z-index: 2;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
 /* Tombol di bawah */
 .footer-button {
   position: fixed;
@@ -95,6 +115,9 @@ h1 {
   Browser Anda tidak mendukung audio.
 </audio>
 
+<!-- Tulisan atas -->
+<div class="update-text" id="updateText">DATA SEDANG DALAM PEMBAHARUAN</div>
+
 <!-- Teks tengah -->
 <div class="content">
   <h1></h1>
@@ -104,6 +127,13 @@ h1 {
 <div class="footer-button">
   <button onclick="window.location.href='database.html'">BACK TO DATABASE</button>
 </div>
+
+<script>
+  // Tampilkan teks setelah 5 detik
+  setTimeout(() => {
+    document.getElementById('updateText').style.display = 'block';
+  }, 5000);
+</script>
 
 </body>
 </html>
