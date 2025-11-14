@@ -54,7 +54,22 @@ header {
     color: #FFFF00; /* kuning terang */
     font-weight: bold;
 }
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-width: 850px;
+    margin: 20px auto;
+}
 
+.menu-container button {
+    flex: 1 1 30%; 
+    padding: 10px 15px;
+    background: black;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+}
 
 .header-buttons button:hover { background-color: #00FF00; color: black; }
 
@@ -131,23 +146,6 @@ button:hover { background-color: #00FF00; color: black; }
 }
 
     
-</style>
-.menu-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    max-width: 850px;
-    margin: 20px auto;
-}
-
-.menu-container button {
-    flex: 1 1 30%; 
-    padding: 10px 15px;
-    background: black;
-    border: 1px solid #00ff00;
-    color: #00ff00;
-}
 </style>
 </head>
 <body>
