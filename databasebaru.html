@@ -1,0 +1,263 @@
+Lewati ke konten
+Riwayat obrolan
+
+Anda bilang:
+Gambar yang diunggah
+hapus bagian ini
+ChatGPT bilang:
+Untuk menghapus bagian filter kategori + input keyword seperti pada gambar, kamu cukup hapus blok HTML berikut dari file kamu:
+
+<h3>Filter By Category:</h3>
+<select id="categoryFilter">
+    <option>-- All Categories --</option>
+</select>
+
+<h3>Enter the Unit Keyword / Full Name</h3>
+<input type="text" id="keywordInput">
+
+<p>Select a category and type a keyword, then press ENTER to display a list of members</p>
+Jika tampilannya tidak persis sama, cukup hapus bagian yang isinya:
+
+<h3>Filter By Category:</h3>
+
+<select ...></select>
+
+<h3>Enter the Unit Keyword / Full Name</h3>
+
+<input ...>
+
+teks penjelasan di bawahnya.
+
+Kalau kamu kirimkan kode HTML lengkapnya, saya bisa hapuskan langsung bagian yang tepat tanpa meleset.
+
+Anda bilang:
+Gambar yang diunggah
+buatkan script html sperti gambar
+ChatGPT bilang:
+Berikut HTML lengkap + CSS untuk membuat tampilan persis seperti gambar:
+• Background hitam
+• Tulisan kuning besar "DATABASE PUSLAT KODIKLATAU"
+• Subjudul merah
+• Deretan tombol hijau neon di bawahnya
+• Tulisan "● RECORDING" merah di kiri atas
+
+Kamu tinggal copy–paste ke file .html kamu.
+
+✅ SCRIPT HTML LENGKAP (FULL STYLE)
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DATABSE PUSLAT KODIKLATAU</title>
+
+<style>
+    body {
+        background: black;
+        font-family: 'Courier New', monospace;
+        text-align: center;
+        color: #00ff00;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* RECORDING TEXT */
+    .recording {
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        color: #8b0000;
+        font-size: 18px;
+    }
+
+    /* MAIN TITLE */
+    h1 {
+        color: yellow;
+        font-size: 60px;
+        margin-top: 60px;
+        letter-spacing: 3px;
+        font-weight: 700;
+    }
+
+    /* SUBTITLE */
+    h2 {
+        margin-top: -15px;
+        color: #8b0000;
+        font-size: 28px;
+        letter-spacing: 2px;
+    }
+
+    /* BUTTON STYLE */
+    .button-container {
+        margin-top: 40px;
+    }
+
+    .menu-btn {
+        display: inline-block;
+        padding: 7px 25px;
+        border: 2px solid #00ff00;
+        color: #00ff00;
+        text-decoration: none;
+        margin: 5px;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: 0.2s;
+    }
+
+    .menu-btn:hover {
+        background: #00ff00;
+        color: black;
+    }
+
+</style>
+</head>
+<body>
+
+    <div class="recording">● RECORDING</div>
+
+    <h1>DATABASE PUSLAT KODIKLATAU</h1>
+    <h2>PORTAL MONITORING TERMINAL</h2>
+
+    <div class="button-container">
+        <a href="#" class="menu-btn">HOME</a>
+        <a href="#" class="menu-btn">STRUKTUR ORGANISASI</a>
+        <a href="#" class="menu-btn">JAB KOSONG</a>
+        <a href="#" class="menu-btn">PEMUTAKHIRAN DATA</a>
+        <a href="#" class="menu-btn">RIWAYAT HIDUP</a>
+        <a href="#" class="menu-btn">KU-1</a>
+        <a href="#" class="menu-btn">RADIOGRAM</a>
+        <a href="#" class="menu-btn">BACK</a>
+        <a href="#" class="menu-btn">NEXT</a>
+    </div>
+
+</body>
+</html>
+Jika mau:
+✔ menambah background video
+✔ menjadikan tombol 2 baris
+✔ melebarkan tombol tertentu
+✔ menambah logo di atas
+
+Katakan saja, langsung saya editkan.
+
+Anda bilang:
+buat masing masing tombol dapat diarahkan ke halaman tertentu
+ChatGPT bilang:
+Siap!
+Agar setiap tombol bisa mengarah ke halaman tertentu, kamu cukup mengganti href="#" menjadi alamat file tujuan, contoh:
+
+<a href="home.html" class="menu-btn">HOME</a>
+Berikut versi lengkap yang sudah siap diarahkan — kamu tinggal mengganti nama filenya saja.
+
+✅ SCRIPT HTML DENGAN LINK HALAMAN
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DATABSE PUSLAT KODIKLATAU</title>
+
+<style>
+    body {
+        background: black;
+        font-family: 'Courier New', monospace;
+        text-align: center;
+        color: #00ff00;
+        margin: 0;
+        padding: 0;
+    }
+
+    .recording {
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        color: #8b0000;
+        font-size: 18px;
+    }
+
+    h1 {
+        color: yellow;
+        font-size: 60px;
+        margin-top: 60px;
+        letter-spacing: 3px;
+        font-weight: 700;
+    }
+
+    h2 {
+        margin-top: -15px;
+        color: #8b0000;
+        font-size: 28px;
+        letter-spacing: 2px;
+    }
+
+    .button-container {
+        margin-top: 40px;
+    }
+
+    .menu-btn {
+        display: inline-block;
+        padding: 7px 25px;
+        border: 2px solid #00ff00;
+        color: #00ff00;
+        text-decoration: none;
+        margin: 5px;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: 0.2s;
+    }
+
+    .menu-btn:hover {
+        background: #00ff00;
+        color: black;
+    }
+</style>
+</head>
+
+<body>
+
+    <div class="recording">● RECORDING</div>
+
+    <h1>DATABASE PUSLAT KODIKLATAU</h1>
+    <h2>PORTAL MONITORING TERMINAL</h2>
+
+    <div class="button-container">
+
+        <!-- Ganti halaman sesuai kebutuhan -->
+        <a href="home.html" class="menu-btn">HOME</a>
+        <a href="struktur.html" class="menu-btn">STRUKTUR ORGANISASI</a>
+        <a href="jab-kosong.html" class="menu-btn">JAB KOSONG</a>
+        <a href="pemutakhiran.html" class="menu-btn">PEMUTAKHIRAN DATA</a>
+        <a href="riwayat-hidup.html" class="menu-btn">RIWAYAT HIDUP</a>
+        <a href="ku1.html" class="menu-btn">KU-1</a>
+        <a href="radiogram.html" class="menu-btn">RADIOGRAM</a>
+        <a href="back.html" class="menu-btn">BACK</a>
+        <a href="next.html" class="menu-btn">NEXT</a>
+    </div>
+
+</body>
+</html>
+🔧 Cara Menggunakannya
+Buat file HTML baru untuk tiap halaman, misalnya:
+
+home.html
+
+struktur.html
+
+jab-kosong.html
+
+pemutakhiran.html
+
+dst.
+
+Upload semua file tersebut ke GitHub Pages atau folder hosting kamu.
+
+Tombol otomatis akan membuka halaman yang kamu tentukan.
+
+Kalau kamu ingin saya buatkan semua halaman kosong (template) biar siap pakai, tinggal bilang:
+➡ “Buatkan semua halaman kosongnya”
+
+
+
+
+No file chosenNo file chosen
+ChatGPT dapat membuat kesalahan. Periksa info penting. Lihat Preferensi Cookie.
