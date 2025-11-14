@@ -1,88 +1,42 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PUSLAT KODIKLATAU - Menu Utama</title>
-
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        background-color: black;
-        font-family: 'Courier New', monospace;
-        color: #00ff00;
-        text-align: center;
-    }
-
-    /* Judul */
-    h1 {
-        font-size: 20px;
-        margin-top: 30px;
-        margin-bottom: 25px;
-        letter-spacing: 1px;
-    }
-
-    /* Container tombol 2 baris */
-    .button-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px;                        /* jarak antar tombol */
-        width: 100%;
-        max-width: 320px;                /* kecilkan area */
-        margin: 0 auto;
-    }
-
-    /* Tombol utama (2 baris) */
-    .btn {
-        flex: 1 1 calc(50% - 8px);       /* tetap 2 kolom */
-        padding: 8px;
-        font-size: 12px;                 /* kecilkan teks */
-        background: #00ff00;
-        color: black;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    .btn:hover {
-        background: #00cc00;
-    }
-
-    /* Tombol tambahan bawah */
-    .btn-bottom {
-        display: block;
-        margin: 15px auto 0;
-        padding: 8px 20px;
-        font-size: 12px;
-        background: #00ff00;
-        color: black;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    .btn-bottom:hover {
-        background: #00cc00;
-    }
-</style>
-
-</head>
-<body>
-
-<h1>MENU UTAMA</h1>
-
-<div class="button-container">
+<!-- BARIS PERTAMA (6 tombol) -->
+<div class="button-row">
     <button class="btn">Tombol 1</button>
     <button class="btn">Tombol 2</button>
     <button class="btn">Tombol 3</button>
     <button class="btn">Tombol 4</button>
+    <button class="btn">Tombol 5</button>
+    <button class="btn">Tombol 6</button>
 </div>
 
-<button class="btn-bottom">Tombol Tambahan</button>
+<!-- BARIS KEDUA (4 tombol) -->
+<div class="button-row">
+    <button class="btn">Tombol 7</button>
+    <button class="btn">Tombol 8</button>
+    <button class="btn">Tombol 9</button>
+    <button class="btn">Tombol 10</button>
+</div>
 
-</body>
-</html>
+<style>
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;               /* jarak antar tombol */
+    margin-bottom: 15px;     /* jarak antar baris */
+}
+
+/* ukuran tombol sedang (seperti semula) */
+.btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    background: #00ff00;
+    border: none;
+    color: black;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #00cc00;
+}
+</style>
