@@ -4,70 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PUSLAT KODIKLATAU - Intelligence Database</title>
-<style>
-body{
-    font-family: 'Courier New', monospace;
-    background: 
-        linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
-        url('BT5.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: #00FF00;
-    margin: 0;
+.main-container {
     display: flex;
-    flex-direction: column;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    margin-top: 20px;
 }
 
-header {
-    padding: 20px 0 15px 0;
-    text-align: center;
-    line-height: 1.1;
-    border-bottom: 2px solid #00FF00; /* GARIS FULL */
+/* Kolom kiri 30% */
+.left-panel {
+    width: 30%;
+    padding: 10px;
 }
 
-.text {
-    font-size: 75px;
-    margin-bottom: 0;
-    color: #00FF00;
+/* Kolom kanan 70% */
+.right-panel {
+    width: 70%;
+    padding: 10px;
 }
 
-.text1 {
-    font-size: 30px;
-    margin-top: 0;
-    color: #FF0000;
-    animation: blinkText 1s infinite;
+/* Garis pemisah vertikal */
+.main-container::after {
+    content: "";
+    position: absolute;
+    left: 30%; /* posisi garis tepat di antara 30/70 */
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: #00FF00; /* hijau */
 }
-
-.header-buttons {
-    margin-top: 10px;
-}
-
-.header-buttons button {
-    background: transparent;
-    border: 1px solid #00FF00;
-    color: #00FF00;
-    padding: 8px 15px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    transition: background 0.3s, color 0.3s;
-}
-
-.recording-indicator {
-    position: fixed;
-    top: 10px;
-    left: 15px;
-    font-family: 'Courier New', monospace;
-    font-size: 20px;
-    font-weight: bold;
-    color: #FF0000;
-    animation: blinkRecording 1s infinite;
-    z-index: 9999;
-    user-select: none;
-}
-</style>
 </head>
 <body>
 <div class="recording-indicator">● RECORDING</div>
@@ -84,7 +50,16 @@ header {
         <button onclick="goTo('comingsoon.html')">BACK</button>
         <button onclick="goTo('index.html')">LOGOUT</button>
     </div>
-</header>           
+</header>
+    <div class="main-container">
+    <div class="left-panel">
+        <!-- isi kolom kiri -->
+    </div>
+
+    <div class="right-panel">
+        <!-- isi kolom kanan -->
+    </div>
+</div>
 
 </script>
 </body>
