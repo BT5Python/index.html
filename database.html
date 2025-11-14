@@ -132,26 +132,14 @@ button:hover { background-color: #00FF00; color: black; }
 
     
 </style>
-<style>
-.typing-loop {
-  display: inline-block;
+.typingText {
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  font-size: 24px; /* sesuaikan */
+  border-right: 2px solid #00ff00;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 2px solid #00ff00;
-  font-size: 24px; /* sesuaikan jika perlu */
-  animation: typing 3s steps(18) infinite, blink .7s infinite step-end alternate;
-}
-/* Efek ketik */
-@keyframes typing {
-  0% { width: 0; }
-  40% { width: 18ch; }
-  60% { width: 18ch; }
-  100% { width: 0; }
-}
-
-/* Efek kursor */
-@keyframes blink {
-  50% { border-color: transparent; }
+  display: inline-block;
 }
 </style>
 </head>
@@ -159,7 +147,7 @@ button:hover { background-color: #00FF00; color: black; }
 <div class="recording-indicator">● RECORDING</div>
 <header>
     <h1 class="text">PORTAL MONITORING TERMINAL</h1>
-    <h1 class="typing-loop">PUSLAT KODIKLATAU</h1>
+    <h1 class="PUSLAT KODIKLATAU" id="DATABASE PERSONEL"></h1>
     <div class="header-buttons">
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">HOME</button>
         <button onclick="goTo('Struktur Organisasi Puslat.pdf')">STRUKTUR ORGANISASI</button>
