@@ -318,6 +318,7 @@ function typeWriter(element, text, agent, callback, speed = 10) {
                 .map(line => {
                     // Warna kuning untuk bagian data
                     if (line.includes("[DATA IDENTITAS]") ||
+                        line.includes("[DATA DIKUMTI & DIKMILTI]") ||
                         line.includes("[DATA KGB]") ||
                         line.includes("[SECURITY FOOTNOTE]") ||
                         line.includes("[DATA JABATAN]")) {
