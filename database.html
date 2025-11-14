@@ -7,11 +7,12 @@
 <style>
 body{
     font-family: 'Courier New', monospace;
-    background-color: black;
-    background-image: url('BT5.jpg'); /* GANTI dengan URL gambarmu */
-    background-size: cover; /* agar menyesuaikan layar */
-    background-position: center; /* posisi di tengah */
-    background-repeat: no-repeat;
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+        url('BT5.jpg'); /* Gambar latar belakang */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: #00FF00;
     margin: 0;
     display: flex;
@@ -19,7 +20,20 @@ body{
     height: 100vh;
 }
 
+/* ======= VIDEO BACKGROUND ======= */
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* selalu di belakang */
+    opacity: 0.6; /* ubah sesuai kebutuhan */
+}
+
 header {
+    
     padding: 20px 0 10px 0;
     text-align: center;
     line-height: 1.1;
@@ -29,7 +43,7 @@ header {
 .text {
     font-size: 75px;
     margin-bottom: 0;
-    color: #FFFF00; /* 🔴 hanya judul utama merah */
+    color: #00FF00; /* 🔴 hanya judul utama merah */
 }
 
 .text1 {
@@ -53,6 +67,7 @@ header {
     color: #FFFF00; /* kuning terang */
     font-weight: bold;
 }
+
 
 .header-buttons button:hover { background-color: #00FF00; color: black; }
 
@@ -127,34 +142,28 @@ button:hover { background-color: #00FF00; color: black; }
     0%, 50%, 100% { opacity: 1; }
     25%, 75% { opacity: 0; }
 }
+
     
 </style>
-.typingText {
-  color: #00ff00;
-  font-family: 'Courier New', monospace;
-  font-size: 24px; /* sesuaikan */
-  border-right: 2px solid #00ff00;
-  white-space: nowrap;
-  overflow: hidden;
-  display: inline-block;
-}
-</style>
-</head>  
+</head>
 <body>
+<video autoplay muted loop id="bg-video">
+  <source src="" type="video/mp4">
+  Browser Anda tidak mendukung video tag.
+</video>
 <div class="recording-indicator">● RECORDING</div>
 <header>
-    <h1 class="text">PORTAL MONITORING TERMINAL</h1>
-    <h1 class="typingText" id="typing"></h1>   
-    <div class="header-buttons">
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">HOME</button>
+    <h1 class="text">PEMUKTAHIRAN DATA PERSONEL</h1>
+    <h1 class="text1">PORTAL MONITORING TERMINAL</h1>
+    <div class="header-buttons">        
         <button onclick="goTo('Struktur Organisasi Puslat.pdf')">STRUKTUR ORGANISASI</button>
         <button onclick="goTo('Jabkosong.html')">JAB KOSONG</button>
-        <button onclick="goTo('pemuktahirandata.html')">PEMUKTAHIRAN DATA</button>
+         <button onclick="goTo('database.html')">DATABASE</button>
         <button onclick="goTo('riwayathidup.html')">RIWAYAT HIDUP</button>
-        <button onclick="goTo('ku1.html')">KU-1</button>
-        <button id="radiogram">RADIOGRAM</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/juknis')">BACK</button>
-        <button onclick="goTo('https://kodiklatau.tni-au.mil.id/orgas-puslat')">NEXT</button>
+        <button onclick="goTo('ku-1.html')">KU-1</button>
+         <button onclick="goTo('radiogram.html')">RADIOGRAM</button>
+        <button onclick="goTo('comingsoon.html')">BACK</button>
+        <button onclick="goTo('index.html')">LOGOUT</button>
     </div>
 </header>
 
@@ -530,8 +539,8 @@ Retrieved on: ${new Date().toLocaleString()}
             // Tombol di bawah biodata
             const docs = [
                 { label: "Pemuktahiran Data", url: pdfLink },
-                { label: "Riwayat Hidup", url: "#" },
-                { label: "KU-1", url: "#" }
+                { label: "Riwayat Hidup", url: "coomingsoon.html" },
+                { label: "KU-1", url: "coomingsoon.html" }
             ];
 
             docs.forEach(d => {
@@ -567,198 +576,7 @@ searchInput.addEventListener("keydown", e=>{
         if(query) showMemberButtons(query);
     }
 });
-    
-    
 </script>
-
-<div id="pdfList" style="margin-top:20px; color:#00ff00; font-family:'Courier New', monospace;"></div>
-<iframe id="pdfViewer" style="width:100%; height:600px; border:1px solid #00ff00; display:none; margin-top:20px;"></iframe>
-
-<script>
-const webAppUrl = "https://script.google.com/macros/s/AKfycbzIOdFF2D9Yu6xw0WtTv_HrxO8DuGYR2FX0nMccT7gu8ouDoZwaJlBwxyq_WCehcbodbg/exec"; // 🔹 Ganti dengan URL kamu
-let currentFolderId = null;
-let previousFolderId = null;
-
-// 🔸 Tombol Radiogram diklik
-document.getElementById("radiogram").addEventListener("click", () => {
-  currentFolderId = null;
-  loadFolders();
-});
-
-// 🔸 Ambil daftar folder dari root Radiogram
-function loadFolders() {
-  const output = document.getElementById("output");
-  output.innerHTML = `<pre>🔍 Memuat daftar folder Radiogram...</pre>`;
-
-  fetch(webAppUrl)
-    .then(res => res.json())
-    .then(data => {
-      let html = `<pre><span style='color:#FFFF00'>📁 DAFTAR FOLDER RADIOGRAM:</span>\n----------------------------------------</pre>`;
-      html += `<div id="folderList" style="display:flex;flex-direction:column;gap:6px;">`;
-
-      if (data.folders.length === 0) {
-        html += `<pre>Tidak ada folder ditemukan.</pre>`;
-      } else {
-        data.folders.forEach(f => {
-          html += `
-            <button style="
-              background:transparent;
-              border:1px solid #00FF00;
-              color:#00FF00;
-              font-family:'Courier New',monospace;
-              padding:6px 10px;
-              text-align:left;
-              cursor:pointer;
-            "
-            onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
-            onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';"
-            onclick="openFolder('${f.id}', '${f.name}')">
-              📁 ${f.name}
-            </button>
-          `;
-        });
-      }
-
-      html += `</div>
-      <div id="navButtons" style="margin-top:20px;display:flex;gap:10px;">
-        <button onclick="goBack()" style="background:transparent;border:1px solid #00FF00;color:#00FF00;font-family:'Courier New',monospace;padding:6px 12px;cursor:pointer;"
-          onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
-          onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';">⬅️ BACK</button>
-
-        <button onclick="goNext()" style="background:transparent;border:1px solid #00FF00;color:#00FF00;font-family:'Courier New',monospace;padding:6px 12px;cursor:pointer;"
-          onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
-          onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';">➡️ NEXT</button>
-      </div>`;
-
-      output.innerHTML = html;
-    })
-    .catch(err => {
-      output.innerHTML = `<pre>⚠️ Gagal memuat folder: ${err}</pre>`;
-    });
-}
-
-// 🔸 Buka folder dan tampilkan file PDF-nya
-function openFolder(folderId, folderName) {
-  previousFolderId = currentFolderId;
-  currentFolderId = folderId;
-
-  const output = document.getElementById("output");
-  output.innerHTML = `<pre>📂 Membuka folder: ${folderName}...</pre>`;
-
-  fetch(`${webAppUrl}?folderId=${folderId}`)
-    .then(res => res.json())
-    .then(data => {
-      let html = `<pre><span style='color:#FFFF00'>📂 ${folderName}</span>\n----------------------------------------</pre>`;
-      html += `<div id="pdfList" style="display:flex;flex-direction:column;gap:6px;">`;
-
-      if (data.files.length === 0) {
-        html += `<pre>Tidak ada file PDF dalam folder ini.</pre>`;
-      } else {
-        data.files.forEach(file => {
-          html += `
-            <button style="
-              background:transparent;
-              border:1px solid #00FF00;
-              color:#00FF00;
-              font-family:'Courier New',monospace;
-              padding:6px 10px;
-              text-align:left;
-              cursor:pointer;
-            "
-            onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
-            onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';"
-            onclick="openPdf('${file.id}')">
-              📄 ${file.name} <span style='color:gray;font-size:12px;'>(${file.date})</span>
-            </button>
-          `;
-        });
-      }
-
-      html += `</div>
-      <div id="navButtons" style="margin-top:20px;display:flex;gap:10px;">
-        <button onclick="goBack()" style="background:transparent;border:1px solid #00FF00;color:#00FF00;font-family:'Courier New',monospace;padding:6px 12px;cursor:pointer;"
-          onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
-          onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';">⬅️ BACK</button>
-
-        <button onclick="goNext()" style="background:transparent;border:1px solid #00FF00;color:#00FF00;font-family:'Courier New',monospace;padding:6px 12px;cursor:pointer;"
-          onmouseover="this.style.backgroundColor='#00FF00';this.style.color='black';"
-          onmouseout="this.style.backgroundColor='transparent';this.style.color='#00FF00';">➡️ NEXT</button>
-      </div>`;
-
-      output.innerHTML = html;
-    })
-    .catch(err => {
-      output.innerHTML = `<pre>⚠️ Gagal membuka folder: ${err}</pre>`;
-    });
-}
-
-// 🔸 Kembali ke daftar folder utama
-function goBack() {
-  currentFolderId = null;
-  loadFolders();
-}
-
-// 🔸 Placeholder tombol Next (belum dipakai)
-function goNext() {
-  alert("Fungsi NEXT belum diaktifkan, nanti bisa diarahkan ke folder berikutnya 👌");
-}
-
-// 🔸 Buka file PDF
-function openPdf(fileId) {
-  let viewer = document.getElementById("pdfViewer");
-  if (!viewer) {
-    const output = document.getElementById("output");
-    output.insertAdjacentHTML(
-      "beforeend",
-      `<iframe id="pdfViewer" style="width:100%;height:600px;border:1px solid #00ff00;margin-top:20px;"></iframe>`
-    );
-    viewer = document.getElementById("pdfViewer");
-  }
-
-  // Gunakan URL embed Google Drive viewer
-  viewer.src = `https://drive.google.com/file/d/${fileId}/preview`;
-  viewer.style.display = "block";
-  viewer.scrollIntoView({ behavior: 'smooth' });
-}
-    
-<script>
-const texts = [
-  "PUSLAT KODIKLATAU",
-  "INTELLIGENCE DATABASE",
-  "TNI ANGKATAN UDARA"
-];
-
-let index = 0;
-let charIndex = 0;
-let isDeleting = false;
-const speed = 120;
-const delay = 1500;
-const target = document.getElementById("typing");
-
-function typeEffect() {
-  const current = texts[index];
-
-  if (!isDeleting) {
-    target.textContent = current.slice(0, charIndex++);
-    if (charIndex > current.length) {
-      isDeleting = true;
-      setTimeout(typeEffect, delay);
-      return;
-    }
-  } else {
-    target.textContent = current.slice(0, charIndex--);
-    if (charIndex < 0) {
-      isDeleting = false;
-      index = (index + 1) % texts.length; // pindah ke teks berikutnya
-    }
-  }
-
-  setTimeout(typeEffect, speed);
-}
-
-typeEffect();
-</script>
-    
 </body>
 </html>
 evolutionismyrevolution/BT5Python
