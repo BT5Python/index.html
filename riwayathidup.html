@@ -128,25 +128,25 @@ button:hover { background-color: #00FF00; color: black; }
     .search-panel, .output-panel { width: 100%; border: none; border-bottom: 1px solid #00FF00; }
     .agent-profile { flex-direction: column; align-items: center; }
 }
-.security-footnote {
+.security-footnote-line {
     display: flex;
     align-items: center;
-    gap: 10px; /* jarak antara teks dan tombol */
-    margin-top: 20px;
-    font-size: 18px;
+    gap: 10px; /* jarak tombol */
+    font-weight: bold;
+    color: #00FF00;
+    margin-top: 25px;
+    margin-bottom: 5px;
 }
 
-/* Tombol kotak biru */
 .note-btn {
-    background: #007BFF;        /* biru */
-    border: 1px solid #005FCC;  /* garis biru lebih gelap */
+    background: #007BFF;
+    border: 1px solid #005FCC;
     color: white;
-    padding: 4px 10px;
-    font-size: 12px;
+    padding: 2px 8px;
+    font-size: 11px;
     cursor: pointer;
     border-radius: 4px;
     font-family: 'Courier New', monospace;
-    transition: 0.3s;
 }
 
 .note-btn:hover {
@@ -530,8 +530,12 @@ KGB BERIKUTNYA      : ${nextKGBInfo}
 --------------------------------------------------
 ${agent.tanda_jasa || "Tidak ada data"}
 
-[SECURITY FOOTNOTE]
---------------------------------------------------
+<div class="security-footnote-line">
+    <span>[SECURITY FOOTNOTE]</span>
+    <button class="note-btn" onclick="goTo('catatan.html')">CATATAN</button>
+</div>
+-----------------------------------------------------
+
 This dossier is property of PUSLAT KODIKLATAU.
 Unauthorized access or duplication is punishable under applicable law.
 
