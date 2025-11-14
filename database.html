@@ -21,7 +21,6 @@ body{
 
 
 header {
-    background-color: black;
     padding: 20px 0 10px 0;
     text-align: center;
     line-height: 1.1;
@@ -133,12 +132,29 @@ button:hover { background-color: #00FF00; color: black; }
 
     
 </style>
+    <style>
+.typing {
+  width: 18ch;
+  overflow: hidden;
+  border-right: 2px solid #00ff00;
+  white-space: nowrap;
+  animation: typing 3s steps(18), blink .7s infinite step-end alternate;
+}
+
+@keyframes typing {
+  from { width: 0; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+</style>
 </head>
 <body>
 <div class="recording-indicator">● RECORDING</div>
 <header>
-    <h1 class="text">DATABASE PUSLAT KODIKLATAU</h1>
-    <h1 class="text1">PORTAL MONITORING TERMINAL</h1>
+    <h1 class="text">PORTAL MONITORING TERMINAL</h1>
+    <h1 class="text1 typing">PUSLAT KODIKLATAU</h1>
     <div class="header-buttons">
         <button onclick="goTo('https://kodiklatau.tni-au.mil.id/struktur-organisasi')">HOME</button>
         <button onclick="goTo('Struktur Organisasi Puslat.pdf')">STRUKTUR ORGANISASI</button>
