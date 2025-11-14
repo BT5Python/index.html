@@ -134,10 +134,6 @@ button:hover { background-color: #00FF00; color: black; }
     gap: 10px; /* jarak antara teks dan tombol */
     margin-top: 20px;
     font-size: 18px;
-<div class="security-footnote">
-    <span>SECURITY FOOTNOTE</span>
-    <button class="note-btn" onclick="goTo('catatan.html')">CATATAN</button>
-</div>
 }
 
 /* Tombol kotak biru */
@@ -190,13 +186,22 @@ button:hover { background-color: #00FF00; color: black; }
     </div>
 
     <div class="output-panel" id="output">
-        <div class="agent-profile" id="agent-container">
-            <pre id="agent-dossier">
+
+    <div class="agent-profile" id="agent-container">
+        <pre id="agent-dossier">
 Biodata will appear after clicking the member button
-            </pre>
-            <img id="agent-photo" src="" alt="Foto Personel">
-        </div>
+        </pre>
+        <img id="agent-photo" src="" alt="Foto Personel">
     </div>
+
+    <!-- TOMBOL CATATAN ADA DI SINI -->
+    <div class="security-footnote">
+        <span>SECURITY FOOTNOTE</span>
+        <button class="note-btn" onclick="goTo('catatan.html')">CATATAN</button>
+    </div>
+
+</div>
+
 </div>
 
 <script>
