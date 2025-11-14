@@ -56,19 +56,27 @@ header {
 }
 .menu-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap;               /* AGAR BISA 2 BARIS */
     justify-content: center;
-    gap: 10px;
-    max-width: 850px;
-    margin: 20px auto;
+    gap: 12px;                     /* Jarak antar tombol */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .menu-container button {
-    flex: 1 1 30%; 
-    padding: 10px 15px;
-    background: black;
+    padding: 10px 20px;
+    background: transparent;
     border: 1px solid #00ff00;
     color: #00ff00;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;           /* AGAR TIDAK MUNCUL BARIS BARU DALAM TOMBOL */
+    transition: 0.2s;
+}
+    .menu-container button:hover {
+    background: #00ff00;
+    color: black;
 }
 
 .header-buttons button:hover { background-color: #00FF00; color: black; }
