@@ -132,13 +132,30 @@ button:hover { background-color: #00FF00; color: black; }
 
     
 </style>
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-width: 850px;
+    margin: 20px auto;
+}
+
+.menu-container button {
+    flex: 1 1 30%; 
+    padding: 10px 15px;
+    background: black;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+}
+</style>
 </head>
 <body>
 <div class="recording-indicator">● RECORDING</div>
 <header>
     <h1 class="text">DATABASE PUSLAT KODIKLATAU</h1>
     <h1 class="text1">PORTAL MONITORING TERMINAL</h1>
-    <div class="header-buttons">
+    <div class="menu-container">
         <button onclick="goTo('radiogram.html')">RADIOGRAM</button>
         <button onclick="goTo('comingsoon.html')">BANK DOKUMEN</button>
         <button onclick="goTo('Struktur Organisasi Puslat.pdf')">STRUKTUR ORGANISASI</button>
@@ -147,7 +164,6 @@ button:hover { background-color: #00FF00; color: black; }
         <button onclick="goTo('riwayathidup.html')">RIWAYAT HIDUP</button> 
         <button onclick="goTo('ukp.html')">USUL KENAIKAN PANGKAT</button>
         <button onclick="goTo('kgb.html')">KENAIKAN GAJI BERKALA</button>
-    </div>
         <button onclick="goTo('index.html')">LOGOUT</button>
     </div>    
     
