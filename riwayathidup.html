@@ -517,11 +517,10 @@ TMT DIKMILTI        : ${formatTanggalIndonesia(agent.tmt_dikmilti)}
 
 [DATA JABATAN]
 --------------------------------------------------
+JABATAN YG LALU     : ${agent.jabatan_yg_lalu || "-"}
 JABATAN SAAT INI    : ${agent.jab_saat_ini || "-"}
 TMT JABATAN         : ${formatTanggalIndonesia(agent.tmt_jabatan_saat_ini)}
 MASA KERJA JABATAN  : ${masaKerja}
-JABATAN YG LALU     : ${agent.jabatan_yg_lalu || "-"}
-TMT JABATAN LALU    : ${formatTanggalIndonesia(agent.tmt_jabatan_yg_lalu)}
 
 [DATA KGB]
 --------------------------------------------------
