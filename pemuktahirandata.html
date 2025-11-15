@@ -513,9 +513,6 @@ MASA DINAS           : ${hitungMasaDinas(agent.tmt_pengangkatan)}
 TEMPAT/TGL LAHIR     : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
 AGAMA                : ${agent.agama || "-"}
 USIA                 : ${usia} Tahun
-NO KTA TNI/PNS       : ${agent["no_kta_tni/pns"] || "-"}
-DI KELUARKAN TGL     : ${formatTanggalIndonesia(agent["di_keluarkan_tgl"]) }
-NO NIK               : ${agent["no_nik"] || "-"}
 
 [DATA JABATAN]
 --------------------------------------------------
@@ -525,6 +522,9 @@ MASA JABATAN         : ${masaKerja}
 
 [DATA KELENGKAPAN BERKENDARA]
 --------------------------------------------------
+NO KTA TNI/PNS       : ${agent["no_kta_tni/pns"] || "-"}
+DI KELUARKAN TGL     : ${formatTanggalIndonesia(agent["di_keluarkan_tgl"]) }
+NO NIK               : ${agent["no_nik"] || "-"}
 NO SIM A UMUM        : ${agent["no_sim_a_umum"] || "-"}
 NO SIM C UMUM        : ${agent["no_sim_c_umum"] || "-"}
 NO SIM A TNI         : ${agent["no_sim_a_tni"] || "-"}
