@@ -68,9 +68,15 @@ header {
     font-weight: bold;
 }        
 
-.Excel1 {
-    margin-top: 50px;
+#excel-btn {
+    position: fixed;
+    bottom: 20px;   /* jarak dari bawah */
+    left: 20px;     /* posisi kiri (bisa diganti right:20px jika mau kanan) */
+    width: 60px;
+    cursor: pointer;
+    z-index: 9999;  /* supaya di atas semua elemen lain */
 }
+
 
 .header-buttons button:hover { background-color: #00FF00; color: black; }
 
@@ -150,7 +156,7 @@ button:hover { background-color: #00FF00; color: black; }
 </style>
 </head>
 <body>
-<a href="halaman_excel.html" class="Excel1">
+<a href="halaman_excel.html">
 <img src="excel.png" alt="Excel Button" style="width:60px; height:auto; cursor:pointer;">
 </a>
 <video autoplay muted loop id="bg-video">
