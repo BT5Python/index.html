@@ -440,6 +440,30 @@ function getMasaKerja(tmtStr) {
     return `${years} Tahun ${months} Bulan ${days} Hari`;
 }
 
+function hitungMasaDinas(tmt) {
+    const start = new Date(tmt);       // tanggal TMT
+    const now = new Date();            // tanggal hari ini
+
+    let tahun = now.getFullYear() - start.getFullYear();
+    let bulan = now.getMonth() - start.getMonth();
+    let hari = now.getDate() - start.getDate();
+
+    // Koreksi jika hari negatif
+    if (hari < 0) {
+        bulan -= 1;
+        const bulanSebelumnya = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+        hari += bulanSebelumnya;
+    }
+
+    // Koreksi jika bulan negatif
+    if (bulan < 0) {
+        tahun -= 1;
+        bulan += 12;
+    }
+
+    return `${tahun} Tahun ${bulan} Bulan ${hari} Hari`;
+}
+
 // ======== TAMPILKAN BIODATA DETAIL ========
 function displayAgent(agent) {
     // Ambil dan atur foto
