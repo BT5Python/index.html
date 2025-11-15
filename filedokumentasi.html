@@ -6,79 +6,45 @@
 <title>Direktori</title>
 
 <style>
-body {
-    background: black;
-    font-family: Arial, sans-serif;
-    color: white;
-    padding: 20px;
-}
-
-.folder {
-    display: inline-block;
-    text-align: center;
-    margin: 20px;
-    cursor: pointer;
-}
-
-.folder img {
-    width: 90px;
-}
-.folder p {
-    margin-top: 10px;
-    font-size: 18px;
-}
-    <style>
 .folder-box {
     position: relative;
     display: inline-block;
-    margin: 20px;
+    width: 140px;
+    margin: 30px;
     cursor: pointer;
+    text-align: center;
 }
 
+/* Gambar folder */
 .folder-box img {
-    width: 130px;
+    width: 140px;
     height: auto;
 }
 
-/* TEKS DI DALAM FOLDER */
-.folder-text {
+/* TEKS MENEMPEL DI DEPAN FOLDER */
+.folder-box .label {
     position: absolute;
-    top: 58%;              /* posisi vertikal */
+    top: 55%;                        /* posisinya di badan folder */
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 14px;
     font-weight: bold;
-    color: #1a1a1a;        /* warna tulisan */
-    pointer-events: none;
-    width: 120px;
-    text-align: center;
+    color: black;                    /* warna tulisan */
+    pointer-events: none;            /* supaya klik tetap kena folder */
 }
-
 </style>
-</head>
-<body>
 
-<!-- VALIDASI ORGANISASI -->
+<!-- CONTOH FOLDER JUKNIS UKP -->
 <div class="folder-box">
-    <img src="https://img.icons8.com/?size=200&id=48133&format=png&color=000000">
-    <div class="folder-text">JUKNIS UKP</div>
+    <img src="https://img.icons8.com/?size=200&id=48133&format=png">
+    <div class="label">JUKNIS UKP</div>
 </div>
 
-<!-- JUKNIS KENAIKAN PANGKAT -->
-<a href="filedokumentasi.html">
-<div class="folder">
-    <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png">
-    <p>JUKNIS UKP</p>
+<!-- CONTOH FOLDER JUKNIS KGB -->
+<div class="folder-box">
+    <img src="https://img.icons8.com/?size=200&id=48133&format=png">
+    <div class="label">JUKNIS KGB</div>
 </div>
-</a>
-
-<!-- JUKNIS KENAIKAN GAJI BERKALA -->
-<a href="filedokumentasi.html">
-<div class="folder">
-    <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png">
-    <p>JUKNIS KGB</p>
-</div>
-</a>
 
 </body>
 </html>
