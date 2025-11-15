@@ -1,1 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUSLAT KODIKLATAU - Portal</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+/* Video background */
+video#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* Lapisan gelap */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  z-index: -1;
+}
+
+/* Konten tengah (judul) */
+.content {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: white;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  width: 90%;
+  max-width: 450px;
+}
+
+h1 {
+  font-size: 2em;
+  text-shadow: 0 0 8px #00ff00;
+}
+
+/* Tulisan atas berkedip */
+.update-text {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  font-size: 1.5em;
+  text-shadow: 0 0 10px #00ff00;
+  animation: blink 1s infinite;
+  display: none;
+  z-index: 2;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+/* Tombol di bawah */
+.footer-button {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.footer-button button {
+  padding: 12px 28px;
+  background-color: #00ff00;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.footer-button button:hover {
+  background-color: #00cc00;
+  box-shadow: 0 0 12px #00ff00;
+}
+</style>
+</head>
+<body>
+ 
+  <!-- Suara notifikasi -->
+<audio id="notif-sound">
+  <source src="notif.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Lapisan gelap -->
+<div class="overlay"></div>
+
+<!-- Lagu background -->
+<audio id="bg-music" autoplay loop>
+  <source src="" type="audio/mpeg">
+  Browser Anda tidak mendukung audio.
+</audio>
+
+<!-- Tulisan atas -->
+<div class="update-text" id="updateText">DATA SEDANG DALAM PEMBAHARUAN</div>
+
+<!-- Teks tengah -->
+<div class="content">
+  <h1></h1>
+</div>
+
+<!-- Tombol paling bawah -->
+<div class="footer-button">
+  <button onclick="window.location.href='database.html'">BACK TO DATABASE</button>
+</div>
+
+<script>
+  // Tampilkan teks setelah 5 detik + mainkan suara notifikasi
+  setTimeout(() => {
+    document.getElementById('updateText').style.display = 'block';
+    document.getElementById('notif-sound').play(); // Mainkan suara notifikasi
+  }, 5000);
+</script>
+
+</body>
+</html>
