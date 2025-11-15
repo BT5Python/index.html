@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Rekaman Data Radiogram</title>
+<title>Radiogram</title>
 <style>
     body {
         background: black;
@@ -10,120 +10,136 @@
         font-family: 'Courier New', monospace;
         padding: 20px;
     }
-    .folder {
+
+    /* Container folder */
+    .tree {
         margin-left: 20px;
+        position: relative;
     }
-    .folder span {
-        font-size: 18px;
+
+    .tree:before {
+        content: "";
+        border-left: 2px solid #00ff00;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 8px;
+    }
+
+    /* Item folder */
+    details {
+        margin-left: 20px;
+        position: relative;
+    }
+
+    details summary {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        list-style: none;
         color: #00ff00;
+        font-size: 18px;
+    }
+
+    details summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .folder-icon {
+        margin-right: 6px;
+        filter: hue-rotate(90deg) brightness(1.8);
+    }
+
+    /* Garis kecil cabang */
+    .branch:before {
+        content: "";
+        border-left: 2px solid #00ff00;
+        position: absolute;
+        top: -10px;
+        bottom: -10px;
+        left: -12px;
+    }
+
+    /* Tanggal */
+    .day {
+        margin-left: 40px;
+        position: relative;
+    }
+
+    .day:before {
+        content: "";
+        border-left: 2px solid #00ff00;
+        position: absolute;
+        top: -10px;
+        bottom: -10px;
+        left: -12px;
     }
 </style>
 </head>
 <body>
 
-<h1 style="text-align:center; color:#00ff00;">
-    REKAMAN DATA RADIOGRAM<br>
-    TAHUN 2025
+<h1 style="text-align:center; color:#00ff00; margin-bottom:30px;">
+    REKAMAN DATA RADIOGRAM<br>TAHUN 2025
 </h1>
 
-<!-- 7 Folder Radiogram -->
-<div class="folder"><span>📁 Radiogram 1</span>
-    <div class="folder"><span>📁 Tahun 2025</span>
-        <div class="folder"><span>📁 Januari</span>
-            <div class="folder"><span>📁 1</span></div>
-            <div class="folder"><span>📁 2</span></div>
-            <div class="folder"><span>📁 3</span></div>
-            <div class="folder"><span>📁 4</span></div>
-            <div class="folder"><span>📁 5</span></div>
-            <div class="folder"><span>📁 6</span></div>
-            <div class="folder"><span>📁 7</span></div>
-        </div>
-    </div>
-</div>
+<div id="radiogramContainer" class="tree"></div>
 
-<div class="folder"><span>📁 Radiogram 2</span>
-    <div class="folder"><span>📁 Tahun 2025</span>
-        <div class="folder"><span>📁 Januari</span>
-            <div class="folder"><span>📁 1</span></div>
-            <div class="folder"><span>📁 2</span></div>
-            <div class="folder"><span>📁 3</span></div>
-            <div class="folder"><span>📁 4</span></div>
-            <div class="folder"><span>📁 5</span></div>
-            <div class="folder"><span>📁 6</span></div>
-            <div class="folder"><span>📁 7</span></div>
-        </div>
-    </div>
-</div>
+<script>
+// =============================
+// AUTO GENERATE 7 RADIROGRAM
+// =============================
+const container = document.getElementById("radiogramContainer");
 
-<div class="folder"><span>📁 Radiogram 3</span>
-    <div class="folder"><span>📁 Tahun 2025</span>
-        <div class="folder"><span>📁 Januari</span>
-            <div class="folder"><span>📁 1</span></div>
-            <div class="folder"><span>📁 2</span></div>
-            <div class="folder"><span>📁 3</span></div>
-            <div class="folder"><span>📁 4</span></div>
-            <div class="folder"><span>📁 5</span></div>
-            <div class="folder"><span>📁 6</span></div>
-            <div class="folder"><span>📁 7</span></div>
-        </div>
-    </div>
-</div>
+const months = [
+    "Januari", "Februari", "Maret", "April",
+    "Mei", "Juni", "Juli", "Agustus",
+    "September", "Oktober", "November", "Desember"
+];
 
-<div class="folder"><span>📁 Radiogram 4</span>
-    <div class="folder"><span>📁 Tahun 2025</span>
-        <div class="folder"><span>📁 Januari</span>
-            <div class="folder"><span>📁 1</span></div>
-            <div class="folder"><span>📁 2</span></div>
-            <div class="folder"><span>📁 3</span></div>
-            <div class="folder"><span>📁 4</span></div>
-            <div class="folder"><span>📁 5</span></div>
-            <div class="folder"><span>📁 6</span></div>
-            <div class="folder"><span>📁 7</span></div>
-        </div>
-    </div>
-</div>
+for (let r = 1; r <= 7; r++) {
 
-<div class="folder"><span>📁 Radiogram 5</span>
-    <div class="folder"><span>📁 Tahun 2025</span>
-        <div class="folder"><span>📁 Januari</span>
-            <div class="folder"><span>📁 1</span></div>
-            <div class="folder"><span>📁 2</span></div>
-            <div class="folder"><span>📁 3</span></div>
-            <div class="folder"><span>📁 4</span></div>
-            <div class="folder"><span>📁 5</span></div>
-            <div class="folder"><span>📁 6</span></div>
-            <div class="folder"><span>📁 7</span></div>
-        </div>
-    </div>
-</div>
+    const radiogram = document.createElement("details");
+    radiogram.innerHTML = `
+        <summary class="branch">
+            <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png" width="18" class="folder-icon">
+            Radiogram ${r}
+        </summary>
+    `;
 
-<div class="folder"><span>📁 Radiogram 6</span>
-    <div class="folder"><span>📁 Tahun 2025</span>
-        <div class="folder"><span>📁 Januari</span>
-            <div class="folder"><span>📁 1</span></div>
-            <div class="folder"><span>📁 2</span></div>
-            <div class="folder"><span>📁 3</span></div>
-            <div class="folder"><span>📁 4</span></div>
-            <div class="folder"><span>📁 5</span></div>
-            <div class="folder"><span>📁 6</span></div>
-            <div class="folder"><span>📁 7</span></div>
-        </div>
-    </div>
-</div>
+    // Tahun 2025
+    const tahun = document.createElement("details");
+    tahun.innerHTML = `
+        <summary class="branch">
+            <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png" width="18" class="folder-icon">
+            Tahun 2025
+        </summary>
+    `;
 
-<div class="folder"><span>📁 Radiogram 7</span>
-    <div class="folder"><span>📁 Tahun 2025</span>
-        <div class="folder"><span>📁 Januari</span>
-            <div class="folder"><span>📁 1</span></div>
-            <div class="folder"><span>📁 2</span></div>
-            <div class="folder"><span>📁 3</span></div>
-            <div class="folder"><span>📁 4</span></div>
-            <div class="folder"><span>📁 5</span></div>
-            <div class="folder"><span>📁 6</span></div>
-            <div class="folder"><span>📁 7</span></div>
-        </div>
-    </div>
-</div>
+    // Bulan + tanggal
+    months.forEach(bulan => {
+        const monthDetails = document.createElement("details");
+        monthDetails.innerHTML = `
+            <summary class="branch">
+                <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png" width="18" class="folder-icon">
+                ${bulan}
+            </summary>
+        `;
+
+        // Tanggal 1–31
+        for (let d = 1; d <= 31; d++) {
+            const day = document.createElement("div");
+            day.className = "day";
+            day.innerHTML = `📄 ${d}`;
+            monthDetails.appendChild(day);
+        }
+
+        tahun.appendChild(monthDetails);
+    });
+
+    radiogram.appendChild(tahun);
+    container.appendChild(radiogram);
+}
+</script>
 
 </body>
 </html>
