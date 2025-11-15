@@ -555,17 +555,21 @@ Retrieved on: ${new Date().toLocaleString()}
             docContainer.className = "doc-buttons";
 
             // Ambil link dari kolom spreadsheet
-            const mergedLink = agent["Merged Doc URL"];
-            let pdfLink = "#";
-            if (mergedLink) {
-                // Pastikan link Google Drive dikonversi ke format pratinjau yang aman
-                if (mergedLink.includes("drive.google.com")) {
-                    const match = mergedLink.match(/[-\w]{25,}/);
-                    if (match) pdfLink = `https://drive.google.com/file/d/${match[0]}/preview`;
-                } else {
-                    pdfLink = mergedLink;
-                }
-            }
+            // Ambil link riwayat hidup dari Google Sheet
+const mergedLink = agent.merged_doc_url_riwayat_hidup_personel_puslat;
+let pdfLink = "#";
+
+if (mergedLink) {
+    if (mergedLink.includes("drive.google.com")) {
+        const match = mergedLink.match(/[-\w]{25,}/);
+        if (match) {
+            pdfLink = `https://drive.google.com/file/d/${match[0]}/preview`;
+        }
+    } else {
+        pdfLink = mergedLink;
+    }
+}
+
 
             // Tombol di bawah biodata
             const docs = [
