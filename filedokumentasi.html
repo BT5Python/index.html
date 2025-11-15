@@ -27,6 +27,33 @@ body {
     margin-top: 10px;
     font-size: 18px;
 }
+    <style>
+.folder-box {
+    position: relative;
+    display: inline-block;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.folder-box img {
+    width: 130px;
+    height: auto;
+}
+
+/* TEKS DI DALAM FOLDER */
+.folder-text {
+    position: absolute;
+    top: 58%;              /* posisi vertikal */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    font-weight: bold;
+    color: #1a1a1a;        /* warna tulisan */
+    pointer-events: none;
+    width: 120px;
+    text-align: center;
+}
+
 </style>
 </head>
 <body>
