@@ -4,50 +4,46 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Direktori</title>
-
+<body style="background:black; margin:0; padding:40px;">
 <style>
-body {
-    background: black;
-    font-family: Arial, sans-serif;
-    color: white;
-    padding: 20px;
-}
-
-.folder {
+.folder-box {
+    position: relative;
     display: inline-block;
-    text-align: center;
-    margin: 20px;
+    width: 150px;
+    margin: 30px;
     cursor: pointer;
 }
 
-.folder img {
-    width: 90px;
+/* gambar folder */
+.folder-box img {
+    width: 150px;
+    height: auto;
 }
-.folder p {
-    margin-top: 10px;
-    font-size: 18px;
+
+/* teks di dalam folder */
+.folder-box .label {
+    position: absolute;
+    top: 60%;                 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    width: 120px;
+    pointer-events: none;
 }
 </style>
-</head>
-<body>
 
-<h2>📁 Folder Utama</h2>
-
-<!-- RADIROGRAM -->
-<a href="radiogram.html">
-<div class="folder">
-    <img src="folder2.png">
-    <p>RADIROGRAM</p>
+<div class="folder-box">
+    <img src="folder.png">
+    <div class="label">JUKNIS UKP</div>
 </div>
-</a>
 
-<!-- BANK DATA -->
-<a href="filedokumentasi.html">
-<div class="folder">
-    <img src="folder2.png">
-    <p>BANK DATA</p>
+<div class="folder-box">
+    <img src="folder.png">
+    <div class="label">JUKNIS KGB</div>
 </div>
-</a>
 
 </body>
 </html>
