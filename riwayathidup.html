@@ -200,7 +200,14 @@ Biodata will appear after clicking the member button
 </div>
 
 <script>
-function goTo(url) { window.location.href = url; }
+function goTo(url) {
+    if (!url || url.trim() === "" || url === "-") {
+        alert("❌ File belum tersedia untuk personel ini.");
+        return;
+    }
+    window.open(url, "_blank");
+}
+
 
 // ======== LOAD DATABASE DARI GOOGLE SHEET ========
 let personnelDB = [];
