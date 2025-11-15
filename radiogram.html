@@ -1,122 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>PUSLAT KODIKLATAU - PDF DATABASE</title>
+<title>Rekaman Data Radiogram</title>
 <style>
-body {
-  background-color: black;
-  color: #00ff00;
-  font-family: "Times New Roman", monospace;
-  padding: 15px;
-}
-h1 {
-  text-align: center;
-  color: #00ff00; 
-  margin: 0;
-  line-height: 1.1;
-}
-.top-buttons {
-  text-align: right;
-  margin-top: 8px;
-  margin-bottom: 15px;
-}
-button {
-  background: transparent;
-  border: 1px solid #00ff00;
-  padding: 5px 12px;
-  color: #00ff00;
-  cursor: pointer;
-  border-radius: 4px;
-  font-weight: bold;
-  margin-left: 5px;
-}
-button:hover {
-  background: #00ff00;
-  color: black;
-}
-.folder, .file {
-  margin-left: 15px;
-  border-left: 1px solid #00ff00;
-  padding-left: 25px;
-}
-.folder-name {
-  cursor: pointer;
-  color: #00ff00;
-  font-size: 15px;
-  font-weight: normal;
-  margin-bottom: 25px; /* ✅ tambahkan jarak antar folder */
-}
-.folder-name:hover {
-  color: #33ff33;
-}
-.file-item {
-  margin: 4px 0;
-  font-size: 13px;
-}
+    body {
+        background: black;
+        color: #00ff00;
+        font-family: 'Courier New', monospace;
+        padding: 20px;
+    }
+    .folder {
+        margin-left: 20px;
+    }
+    .folder span {
+        font-size: 18px;
+        color: #00ff00;
+    }
 </style>
 </head>
 <body>
-  <h1>REKAMAN DATA RADIOGRAM</h1>
-  <h1>TAHUN 2025</h1>
 
-  <div class="top-buttons">
-    <button onclick="window.location.href='database.html'">BACK TO DATABASE</button>
-    <button onclick="logout()">LOGOUT</button>
-  </div>
+<h1 style="text-align:center; color:#00ff00;">
+    REKAMAN DATA RADIOGRAM<br>
+    TAHUN 2025
+</h1>
 
-  <div id="content">Memuat struktur folder...</div>
+<!-- 7 Folder Radiogram -->
+<div class="folder"><span>📁 Radiogram 1</span>
+    <div class="folder"><span>📁 Tahun 2025</span>
+        <div class="folder"><span>📁 Januari</span>
+            <div class="folder"><span>📁 1</span></div>
+            <div class="folder"><span>📁 2</span></div>
+            <div class="folder"><span>📁 3</span></div>
+            <div class="folder"><span>📁 4</span></div>
+            <div class="folder"><span>📁 5</span></div>
+            <div class="folder"><span>📁 6</span></div>
+            <div class="folder"><span>📁 7</span></div>
+        </div>
+    </div>
+</div>
 
-  <script>
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5lPPY276MQ7fJPLnpE4h-FsIWdmDB2f6p2rlySsEWfzxf1d1xMHQL0F0Qw53L_bZvnw/exec'; // Ganti URL kamu
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5lPPY276MQ7fJPLnpE4h-FsIWdmDB2f6p2rlySsEWfzxf1d1xMHQL0F0Qw53L_bZvnw/exec'; // Ganti URL kamu
-  
-  fetch(SCRIPT_URL)
-    .then(r => r.json())
-    .then(data => displayStructure(data))
-    .catch(err => {
-      document.getElementById('content').innerHTML = `<b style="color:red">Gagal memuat data</b><br>${err}`;
-    });
+<div class="folder"><span>📁 Radiogram 2</span>
+    <div class="folder"><span>📁 Tahun 2025</span>
+        <div class="folder"><span>📁 Januari</span>
+            <div class="folder"><span>📁 1</span></div>
+            <div class="folder"><span>📁 2</span></div>
+            <div class="folder"><span>📁 3</span></div>
+            <div class="folder"><span>📁 4</span></div>
+            <div class="folder"><span>📁 5</span></div>
+            <div class="folder"><span>📁 6</span></div>
+            <div class="folder"><span>📁 7</span></div>
+        </div>
+    </div>
+</div>
 
-  function displayStructure(data) {
-    document.getElementById('content').innerHTML = renderFolder(data);
-  }
+<div class="folder"><span>📁 Radiogram 3</span>
+    <div class="folder"><span>📁 Tahun 2025</span>
+        <div class="folder"><span>📁 Januari</span>
+            <div class="folder"><span>📁 1</span></div>
+            <div class="folder"><span>📁 2</span></div>
+            <div class="folder"><span>📁 3</span></div>
+            <div class="folder"><span>📁 4</span></div>
+            <div class="folder"><span>📁 5</span></div>
+            <div class="folder"><span>📁 6</span></div>
+            <div class="folder"><span>📁 7</span></div>
+        </div>
+    </div>
+</div>
 
-  function renderFolder(folder) {
-    let html = `<div class="folder"><div class="folder-name" onclick="toggleFolder(this)">📁 ${folder.name}</div>`;
-    html += `<div class="children" style="display:none;">`;
-    folder.children.forEach(item => {
-      if (item.type === 'folder') {
-        html += renderFolder(item);
-      } else {
-        html += `
-          <div class="file-item">
-            📄 ${item.name}
-            <button onclick="window.open('${item.url}', '_blank')">Lihat</button>
-            <button onclick="downloadFile('${item.url}')">Unduh</button>
-            <div style="font-size:11px; color:#66ff66;">${item.date} | ${item.size}</div>
-          </div>
-        `;
-      }
-    });
-    html += `</div></div>`;
-    return html;
-  }
+<div class="folder"><span>📁 Radiogram 4</span>
+    <div class="folder"><span>📁 Tahun 2025</span>
+        <div class="folder"><span>📁 Januari</span>
+            <div class="folder"><span>📁 1</span></div>
+            <div class="folder"><span>📁 2</span></div>
+            <div class="folder"><span>📁 3</span></div>
+            <div class="folder"><span>📁 4</span></div>
+            <div class="folder"><span>📁 5</span></div>
+            <div class="folder"><span>📁 6</span></div>
+            <div class="folder"><span>📁 7</span></div>
+        </div>
+    </div>
+</div>
 
-  function toggleFolder(el) {
-    const content = el.nextElementSibling;
-    content.style.display = content.style.display === 'none' ? 'block' : 'none';
-  }
+<div class="folder"><span>📁 Radiogram 5</span>
+    <div class="folder"><span>📁 Tahun 2025</span>
+        <div class="folder"><span>📁 Januari</span>
+            <div class="folder"><span>📁 1</span></div>
+            <div class="folder"><span>📁 2</span></div>
+            <div class="folder"><span>📁 3</span></div>
+            <div class="folder"><span>📁 4</span></div>
+            <div class="folder"><span>📁 5</span></div>
+            <div class="folder"><span>📁 6</span></div>
+            <div class="folder"><span>📁 7</span></div>
+        </div>
+    </div>
+</div>
 
-  function downloadFile(url) {
-    window.open(url + '?export=download', '_blank');
-  }
+<div class="folder"><span>📁 Radiogram 6</span>
+    <div class="folder"><span>📁 Tahun 2025</span>
+        <div class="folder"><span>📁 Januari</span>
+            <div class="folder"><span>📁 1</span></div>
+            <div class="folder"><span>📁 2</span></div>
+            <div class="folder"><span>📁 3</span></div>
+            <div class="folder"><span>📁 4</span></div>
+            <div class="folder"><span>📁 5</span></div>
+            <div class="folder"><span>📁 6</span></div>
+            <div class="folder"><span>📁 7</span></div>
+        </div>
+    </div>
+</div>
 
-  function logout() {
-    if (confirm("Yakin ingin logout?")) {
-      window.location.href = 'login.html';
-    }
-  }
-  </script>
+<div class="folder"><span>📁 Radiogram 7</span>
+    <div class="folder"><span>📁 Tahun 2025</span>
+        <div class="folder"><span>📁 Januari</span>
+            <div class="folder"><span>📁 1</span></div>
+            <div class="folder"><span>📁 2</span></div>
+            <div class="folder"><span>📁 3</span></div>
+            <div class="folder"><span>📁 4</span></div>
+            <div class="folder"><span>📁 5</span></div>
+            <div class="folder"><span>📁 6</span></div>
+            <div class="folder"><span>📁 7</span></div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
