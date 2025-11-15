@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PUSLAT KODIKLATAU - Portal</title>
+
 <style>
 * {
   margin: 0;
@@ -11,7 +12,7 @@
   box-sizing: border-box;
 }
 
-/* Background video */
+/* Background Video */
 #bg-video {
   position: fixed;
   top: 0;
@@ -33,26 +34,7 @@
   z-index: -2;
 }
 
-/* Konten tengah */
-.content {
-  position: fixed;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  color: white;
-  text-align: center;
-  font-family: 'Courier New', monospace;
-  width: 90%;
-  max-width: 450px;
-}
-
-h1 {
-  font-size: 2em;
-  text-shadow: 0 0 8px #00ff00;
-}
-
-/* Tulisan atas berkedip */
+/* Teks atas BERKEDIP */
 .update-text {
   position: fixed;
   top: 40px;
@@ -61,15 +43,33 @@ h1 {
   color: #00ff00;
   font-family: 'Courier New', monospace;
   font-size: 1.5em;
-  text-shadow: 0 0 10px #00ff00;
   animation: blink 1s infinite;
-  display: none;
+  text-shadow: 0 0 10px #00ff00;
   z-index: 2;
 }
 
 @keyframes blink {
   0%, 50%, 100% { opacity: 1; }
   25%, 75% { opacity: 0; }
+}
+
+/* Konten tengah */
+.content {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  text-align: center;
+  color: white;
+  font-family: 'Courier New', monospace;
+  width: 90%;
+  max-width: 450px;
+}
+
+h1 {
+  font-size: 2em;
+  text-shadow: 0 0 8px #00ff00;
 }
 
 /* Tombol bawah */
@@ -108,10 +108,10 @@ h1 {
 <!-- Lapisan gelap -->
 <div class="overlay"></div>
 
-<!-- Teks berkedip -->
-<div class="update-text" id="updateText">DATA SEDANG DALAM PEMBAHARUAN</div>
+<!-- TEKS KEDIP -->
+<div class="update-text">DATA SEDANG DALAM PEMBAHARUAN</div>
 
-<!-- Konten -->
+<!-- Konten tengah -->
 <div class="content">
   <h1></h1>
 </div>
@@ -120,7 +120,6 @@ h1 {
 <div class="footer-button">
   <button onclick="window.location.href='database.html'">BACK TO DATABASE</button>
 </div>
-
 
 </body>
 </html>
