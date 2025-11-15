@@ -504,6 +504,9 @@ function displayAgent(agent) {
 NAMA LENGKAP         : ${agent.nama_lengkap || "-"}
 PANGKAT              : ${agent.pangkat || "-"}
 NRP/NIP              : ${agent.nrp_nip || "-"}
+NO NIK               : ${agent["no_nik"] || "-"}
+NO KTA TNI/PNS       : ${agent["no_kta_tni/pns"] || "-"}
+DI KELUARKAN TGL     : ${formatTanggalIndonesia(agent["di_keluarkan_tgl"]) }
 JABATAN              : ${agent.jabatan || "-"}
 SATKER               : ${agent.satker || "-"}
 KORPS/SPESIALISASI   : ${agent.korp_fung_spes || "-"}
@@ -522,9 +525,6 @@ MASA JABATAN         : ${masaKerja}
 
 [DATA KELENGKAPAN BERKENDARA]
 --------------------------------------------------
-NO KTA TNI/PNS       : ${agent["no_kta_tni/pns"] || "-"}
-DI KELUARKAN TGL     : ${formatTanggalIndonesia(agent["di_keluarkan_tgl"]) }
-NO NIK               : ${agent["no_nik"] || "-"}
 NO SIM A UMUM        : ${agent["no_sim_a_umum"] || "-"}
 NO SIM C UMUM        : ${agent["no_sim_c_umum"] || "-"}
 NO SIM A TNI         : ${agent["no_sim_a_tni"] || "-"}
