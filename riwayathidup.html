@@ -206,7 +206,7 @@ function goTo(url) { window.location.href = url; }
 let personnelDB = [];
 
 // URL Google Apps Script yang mengarah ke data sheet Anda
-const DATA_URL = "https://script.google.com/macros/s/AKfycbzRWVt8FF3kc_99AEtIZxhdF9L3J3aNbfdN31LN_9i58KEvtE2TDaod8eqffzmI6cO7ig/exec";
+const DATA_URL = "https://script.google.com/macros/s/1htd8sQsX2PUDvKXBqSItNf8nnh0fUsR5He3nXvU6QyQ/exec";
 
 fetch(DATA_URL)
   .then(res => res.json())
@@ -548,7 +548,7 @@ Retrieved on: ${new Date().toLocaleString()}
             docContainer.className = "doc-buttons";
 
             // Ambil link dari kolom spreadsheet
-            const mergedLink = agent["Link to merged Doc - RIWAYAT HIDUP PERSONEL PUSLAT"];
+            const mergedLink = agent["Merged Doc URL - RIWAYAT HIDUP PERSONEL PUSLAT"];
             let pdfLink = "#";
             if (mergedLink) {
                 // Pastikan link Google Drive dikonversi ke format pratinjau yang aman
