@@ -66,18 +66,14 @@ header {
     .highlight-section {
     color: #FFFF00; /* kuning terang */
     font-weight: bold;
-}
-.menu-btn {
-    background-color: black;
-    border: 2px solid #00ff00;
-    color: #00ff00;
-    padding: 10px 20px;
-    font-family: Courier New, monospace;
+        
+#excel-btn {
+    position: fixed;
+    bottom: 20px;   /* jarak dari bawah */
+    left: 20px;     /* posisi kiri (bisa diganti right:20px jika mau kanan) */
+    width: 60px;
     cursor: pointer;
-}
-.menu-btn:hover {
-    background-color: #00ff00;
-    color: black;
+    z-index: 9999;  /* supaya di atas semua elemen lain */
 }
 
 .header-buttons button:hover { background-color: #00FF00; color: black; }
