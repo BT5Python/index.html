@@ -508,7 +508,7 @@ SATKER               : ${agent.satker || "-"}
 KORPS/SPESIALISASI   : ${agent.korp_fung_spes || "-"}
 NO SKEP PENGANGKATAN : ${agent.no_skep_pengangkatan || "-"}
 TMT PENGANGKATAN     : ${formatTanggalIndonesia(agent.tmt_pengangkatan)}
-MASA DINAS           : ${agent.masa_dinas || "-"}           
+MASA DINAS           : ${hitungMasaDinas(agent.tmt_pengangkatan)}           
 TEMPAT/TGL LAHIR     : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
 AGAMA                : ${agent.agama || "-"}
 USIA                 : ${usia} Tahun
