@@ -476,15 +476,18 @@ function displayAgent(agent) {
 
 [DATA IDENTITAS]
 --------------------------------------------------
-NAMA LENGKAP       : ${agent.nama_lengkap || "-"}
-PANGKAT            : ${agent.pangkat || "-"}
-NRP/NIP            : ${agent.nrp_nip || "-"}
-JABATAN            : ${agent.jabatan || "-"}
-SATKER             : ${agent.satker || "-"}
-KORPS/SPESIALISASI : ${agent.korp_fung_spes || "-"}
-TEMPAT/TGL LAHIR   : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
-AGAMA              : ${agent.agama || "-"}
-USIA               : ${usia} Tahun
+NAMA LENGKAP         : ${agent.nama_lengkap || "-"}
+PANGKAT              : ${agent.pangkat || "-"}
+NRP/NIP              : ${agent.nrp_nip || "-"}
+JABATAN              : ${agent.jabatan || "-"}
+SATKER               : ${agent.satker || "-"}
+KORPS/SPESIALISASI   : ${agent.korp_fung_spes || "-"}
+NO SKEP PENGANGKATAN : ${agent.no_skep_pengangkatan || "-"}
+TMT PENGANGKATAN     : ${agent.tmt_pengangkatan || "-"}
+MASA DINAS           : ${agent.masa_dinas || "-"}           
+TEMPAT/TGL LAHIR     : ${agent.tempat_lahir || "-"}, ${formatTanggalIndonesia(agent.tanggal_lahir)}
+AGAMA                : ${agent.agama || "-"}
+USIA                 : ${usia} Tahun
 
 [DATA JABATAN]
 --------------------------------------------------
